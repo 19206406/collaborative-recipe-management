@@ -1,0 +1,13 @@
+services:
+  sqlserver: 
+    container_name: userdb
+    environment: 
+      - SA_PASSWORD=Sebastian@User123
+    ports:
+      - "1433:1433"
+    volumes:
+      - sqlserver-data:/var/opt/mssql
+
+volumes:
+  sqlserver-data: 
+    driver: local

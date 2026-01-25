@@ -1,0 +1,39 @@
+﻿using BuildingBlocks.CQRS;
+using User.API.PasswordHash;
+using User.API.repositories.UserRespository;
+
+namespace User.API.Features.User.RegisterUser
+{
+    public class RegisterUserCommandHandler : ICommandHandler<RegisterUserCommand, RegisterUserResult>
+    {
+        private readonly IUserRepository _userRepository;
+        private readonly IPasswordHashService _passwordHash;
+
+        public RegisterUserCommandHandler(IUserRepository userRepository, IPasswordHashService passwordHash)
+        {
+            _userRepository = userRepository;
+            _passwordHash = passwordHash;
+        }
+
+
+        public async Task<RegisterUserResult> Handle(RegisterUserCommand command, CancellationToken cancellationToken)
+        {
+
+            var passwordHashed = _passwordHash.HashPassword(command.Password); 
+
+            var newUser = new Entities.User
+            {
+                Name = command.Name,
+                Email = command.Email,
+                PasswordHash = passwordHashed,
+                CreatedAt = DateTime.UtcNow,
+                UpdatedAt = DateTime.UtcNow,
+                IsActive = 1,
+            };
+
+            var result = await _userRepository.AddUser(newUser);
+
+            return new RegisterUserResult(result); 
+        }
+    }
+}
