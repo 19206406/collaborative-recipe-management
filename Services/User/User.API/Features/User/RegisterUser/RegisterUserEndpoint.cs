@@ -5,7 +5,7 @@ namespace User.API.Features.User.RegisterUser
 {
     public record RegisterUserRequest(string Name, string Email, string Password);
 
-    public class RegisterUserEndpoint : Endpoint<RegisterUserRequest, RegisterUserResult>
+    public class RegisterUserEndpoint : Endpoint<RegisterUserRequest, RegisterUserResponse>
     {
         private readonly IMediator _mediator;
 
@@ -16,7 +16,7 @@ namespace User.API.Features.User.RegisterUser
 
         public override void Configure()
         {
-            Post("/api/user/register");
+            Post("/api/users/register");
             Summary(s =>
             {
                 s.Summary = "Registro de un nuevo usuario";

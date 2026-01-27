@@ -20,9 +20,9 @@ namespace User.API.repositories.UserRespository
             return entity.Id; 
         }
 
-        public async Task DeleteUser(int id)
+        public async Task DeleteUser(Entities.User entity)
         {
-            _context.Remove(id); 
+            _context.Users.Remove(entity);  
             await _context.SaveChangesAsync();
         }
 

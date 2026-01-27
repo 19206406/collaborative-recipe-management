@@ -1,4 +1,4 @@
 ﻿namespace User.API.Features.User.RegisterUser
 {
-    public record RegisterUserResult(int Id); 
+    public record RegisterUserResponse(int Id); 
 }

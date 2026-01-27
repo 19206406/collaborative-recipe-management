@@ -4,7 +4,7 @@ using User.API.repositories.UserRespository;
 
 namespace User.API.Features.User.RegisterUser
 {
-    public class RegisterUserCommandHandler : ICommandHandler<RegisterUserCommand, RegisterUserResult>
+    public class RegisterUserCommandHandler : ICommandHandler<RegisterUserCommand, RegisterUserResponse>
     {
         private readonly IUserRepository _userRepository;
         private readonly IPasswordHashService _passwordHash;
@@ -16,7 +16,7 @@ namespace User.API.Features.User.RegisterUser
         }
 
 
-        public async Task<RegisterUserResult> Handle(RegisterUserCommand command, CancellationToken cancellationToken)
+        public async Task<RegisterUserResponse> Handle(RegisterUserCommand command, CancellationToken cancellationToken)
         {
 
             var passwordHashed = _passwordHash.HashPassword(command.Password); 
@@ -33,7 +33,7 @@ namespace User.API.Features.User.RegisterUser
 
             var result = await _userRepository.AddUser(newUser);
 
-            return new RegisterUserResult(result); 
+            return new RegisterUserResponse(result); 
         }
     }
 }

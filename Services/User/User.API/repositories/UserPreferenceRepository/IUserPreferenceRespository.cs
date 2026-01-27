@@ -1,11 +1,16 @@
-﻿namespace User.API.repositories.UserPreferenceRepository
+﻿using User.API.Entities;
+
+namespace User.API.repositories.UserPreferenceRepository
 {
-    public interface IUserPreferenceRespository<T> where T : class 
+    public interface IUserPreferenceRespository
     {
-        Task AddPreference(T entity);
-        Task<ICollection<Entities.User>> GetPreferences(); 
-        Task<Entities.User> GetPreference(int id);
-        Task DeletePreference(int id);
-        Task UpdatePreference(T entity);
+        Task<List<UserPreference>> GetPreferences(); 
+
+        Task<Entities.User> GetUserPreferences(int id);
+        Task<bool> AddUserPreferences(int userId, List<UserPreference> items);
+        Task<bool> RemoveReferences(List<UserPreference> items);
+        Task<bool> UpdateReferences(List<UserPreference> items);
+
+        //Task<ICollection<Entities.User>> GetPreferences(); 
     }
 }

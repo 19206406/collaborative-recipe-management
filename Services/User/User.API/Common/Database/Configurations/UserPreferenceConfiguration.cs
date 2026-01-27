@@ -12,7 +12,7 @@ namespace User.API.Common.Database.Configurations
 
             builder.HasKey(up => up.Id);
 
-            builder.Property(up => up.ReferenceType)
+            builder.Property(up => up.PreferenceType)
                 .IsRequired()
                 .HasMaxLength(50)
                 .HasColumnName("reference_type");

@@ -6,6 +6,8 @@ services:
       - MSSQL_PID=Developer
     networks: 
       - microservices-network 
+  postgres: 
+    image: postgres
 
 networks:
   microservices-network: 

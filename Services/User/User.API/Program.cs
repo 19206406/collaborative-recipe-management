@@ -7,6 +7,7 @@ using System.Reflection;
 using User.API.Common.Database;
 using User.API.Exceptions;
 using User.API.PasswordHash;
+using User.API.repositories.UserPreferenceRepository;
 using User.API.repositories.UserRespository;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -32,6 +33,7 @@ builder.Services.AddMediatR(cfg =>
 }); 
 
 builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IUserPreferenceRespository, UserPreferenceRepository>(); 
 builder.Services.AddExceptionHandler<ValidationException>();
 builder.Services.AddProblemDetails();
 
