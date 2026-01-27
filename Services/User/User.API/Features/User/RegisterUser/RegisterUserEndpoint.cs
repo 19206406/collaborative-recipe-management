@@ -23,6 +23,7 @@ namespace User.API.Features.User.RegisterUser
                 s.Description = "Registro de un nuevo usuario";
             });
             Description(x => x.WithTags("Users"));
+            AllowAnonymous(); 
         }
 
         public override async Task HandleAsync(RegisterUserRequest req, CancellationToken ct)

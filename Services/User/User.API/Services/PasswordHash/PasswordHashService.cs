@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 
-namespace User.API.PasswordHash
+namespace User.API.Services.PasswordHash
 {
     public class PasswordHashService : IPasswordHashService
     {

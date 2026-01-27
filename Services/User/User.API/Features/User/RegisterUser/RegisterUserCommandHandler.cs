@@ -1,6 +1,6 @@
 ﻿using BuildingBlocks.CQRS;
-using User.API.PasswordHash;
 using User.API.repositories.UserRespository;
+using User.API.Services.PasswordHash;
 
 namespace User.API.Features.User.RegisterUser
 {

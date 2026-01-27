@@ -22,7 +22,8 @@ namespace User.API.Features.User.LoginUser
                 s.Summary = "Login del usuario";
                 s.Description = "Login del usuario para el ingreso al sistema";
             });
-            Description(x => x.WithTags("Users")); 
+            Description(x => x.WithTags("Users"));
+            AllowAnonymous(); 
         }
 
         public override async Task HandleAsync(LoginUserRequest req, CancellationToken ct)

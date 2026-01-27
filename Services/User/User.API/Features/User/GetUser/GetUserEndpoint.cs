@@ -1,6 +1,5 @@
 ﻿using FastEndpoints;
 using MediatR;
-using User.API.repositories.UserRespository;
 
 namespace User.API.Features.User.GetUser
 {
@@ -28,7 +27,9 @@ namespace User.API.Features.User.GetUser
 
         public override async Task HandleAsync(GetUserRequest req, CancellationToken ct)
         {
-            var query = new GetUserQuery(req.Id);
+            var userId = int.Parse(User.FindFirst("userId").Value ?? "0"); 
+
+            var query = new GetUserQuery(userId);
             var result = await _mediator.Send(query); 
             await Send.OkAsync(result); 
         }

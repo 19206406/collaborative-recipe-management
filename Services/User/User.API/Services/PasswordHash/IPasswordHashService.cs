@@ -1,4 +1,4 @@
-﻿namespace User.API.PasswordHash
+﻿namespace User.API.Services.PasswordHash
 {
     public interface IPasswordHashService
     {

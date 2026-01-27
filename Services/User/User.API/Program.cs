@@ -6,17 +6,12 @@ using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 using User.API.Common.Database;
 using User.API.Exceptions;
-using User.API.PasswordHash;
 using User.API.repositories.UserPreferenceRepository;
 using User.API.repositories.UserRespository;
+using User.API.Services.Jwt;
+using User.API.Services.PasswordHash;
 
 var builder = WebApplication.CreateBuilder(args);
-
-// Add services to the container.
-
-//builder.Services.AddControllers();
-//Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-//builder.Services.AddOpenApi();
 
 // FastEndpoints 
 builder.Services.AddFastEndpoints(); 
@@ -33,7 +28,8 @@ builder.Services.AddMediatR(cfg =>
 }); 
 
 builder.Services.AddScoped<IUserRepository, UserRepository>();
-builder.Services.AddScoped<IUserPreferenceRespository, UserPreferenceRepository>(); 
+builder.Services.AddScoped<IUserPreferenceRespository, UserPreferenceRepository>();
+builder.Services.AddScoped<IJwtService, JwtService>(); 
 builder.Services.AddExceptionHandler<ValidationException>();
 builder.Services.AddProblemDetails();
 
@@ -57,17 +53,5 @@ var app = builder.Build();
 
 // FastEndpoints 
 app.UseFastEndpoints().UseSwaggerGen(); 
-
-// Configure the HTTP request pipeline.
-//if (app.Environment.IsDevelopment())
-//{
-//    app.MapOpenApi();
-//}
-
-//app.UseHttpsRedirection();
-
-//app.UseAuthorization();
-
-//app.MapControllers();
 
 app.Run();
