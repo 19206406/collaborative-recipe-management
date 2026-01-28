@@ -1,5 +1,7 @@
 ﻿using BuildingBlocks.CQRS;
+using BuildingBlocks.Exceptions;
 using User.API.repositories.UserRespository;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace User.API.Features.User.GetUser
 {
@@ -17,7 +19,7 @@ namespace User.API.Features.User.GetUser
             var user = await _userRepository.GetUser(query.Id);
 
             if (user is null)
-                throw new Exception();
+                throw new NotFoundException("usuario", query.Id);
 
             var userResult = new GetUserResponse(user.Id, user.Name, user.Email, user.CreatedAt, user.UpdatedAt, user.IsActive);
 

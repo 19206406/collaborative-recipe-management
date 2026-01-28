@@ -1,4 +1,5 @@
 ﻿using BuildingBlocks.CQRS;
+using BuildingBlocks.Exceptions;
 using User.API.repositories.UserPreferenceRepository;
 
 namespace User.API.Features.UserPreference.GetUserPreferences
@@ -17,7 +18,7 @@ namespace User.API.Features.UserPreference.GetUserPreferences
             var user = await _userPreferenceRespository.GetUserPreferences(query.Id);
 
             if (user is null)
-                throw new Exception();
+                throw new NotFoundException("usuario", query.Id);
 
             var preferences = user.UserPreferences.Select(x => new PreferencesResponse(x.Id, x.PreferenceType)).ToList();
 

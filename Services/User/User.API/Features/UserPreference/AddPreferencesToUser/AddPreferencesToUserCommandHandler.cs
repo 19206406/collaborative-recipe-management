@@ -1,4 +1,5 @@
 ﻿using BuildingBlocks.CQRS;
+using BuildingBlocks.Exceptions;
 using User.API.repositories.UserPreferenceRepository;
 
 namespace User.API.Features.UserPreference.AddPreferencesToUser
@@ -18,13 +19,13 @@ namespace User.API.Features.UserPreference.AddPreferencesToUser
             var user = await _userPreferenceRespository.GetUserPreferences(command.Id);
 
             if (user is null)
-                throw new Exception();
+                throw new NotFoundException("usuario", command.Id);
 
             var newPreferences = command.UserPreferences.ToList();
             var result = await _userPreferenceRespository.AddUserPreferences(command.Id, newPreferences);
 
             if (!result)
-                throw new Exception();
+                throw new BusinessException("Ocurrio una excepción de negocio"); 
 
             var updatedUser = await _userPreferenceRespository.GetUserPreferences(command.Id);
 

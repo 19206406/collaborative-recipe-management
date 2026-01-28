@@ -1,4 +1,5 @@
 ﻿using BuildingBlocks.CQRS;
+using BuildingBlocks.Exceptions;
 using User.API.repositories.UserRespository;
 
 namespace User.API.Features.User.UpdateUser
@@ -17,7 +18,7 @@ namespace User.API.Features.User.UpdateUser
             var user = await _userRepository.GetUser(command.Id);
 
             if (user is null)
-                throw new Exception();
+                throw new NotFoundException("usuario", command.Id); 
 
             var updateUser = new Entities.User
             {

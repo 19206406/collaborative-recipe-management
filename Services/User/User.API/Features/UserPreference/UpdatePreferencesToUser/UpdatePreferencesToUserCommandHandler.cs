@@ -1,4 +1,5 @@
 ﻿using BuildingBlocks.CQRS;
+using BuildingBlocks.Exceptions;
 using User.API.repositories.UserPreferenceRepository;
 
 namespace User.API.Features.UserPreference.UpdatePreferencesToUser
@@ -18,7 +19,7 @@ namespace User.API.Features.UserPreference.UpdatePreferencesToUser
             var user = await _userPreferenceRespository.GetUserPreferences(command.UserId);
 
             if (user is null)
-                throw new Exception();
+                throw new NotFoundException("usuario", command.UserId); 
 
             var userPreferences = user.UserPreferences.ToList();
             var updatePreferences = command.UserPreferences;

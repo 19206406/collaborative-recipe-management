@@ -1,4 +1,5 @@
 ﻿using BuildingBlocks.CQRS;
+using BuildingBlocks.Exceptions;
 using MediatR;
 using User.API.repositories.UserRespository;
 
@@ -18,7 +19,7 @@ namespace User.API.Features.User.DeleteUser
             var user = await _userRepository.GetUser(command.Id);
 
             if (user is null)
-                throw new Exception(); 
+                throw new NotFoundException("usuario", command.Id); 
 
             await _userRepository.DeleteUser(user);
 
