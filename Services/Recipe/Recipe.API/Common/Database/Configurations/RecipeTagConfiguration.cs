@@ -12,8 +12,10 @@ namespace Recipe.API.Common.Database.Configurations
 
             builder.ToTable("recipe_tags");
 
-            // foreign key 
-
+            builder.Property(rt => rt.RecipeId)
+                .IsRequired()
+                .HasColumnName("recipe_id"); 
+            
             builder.Property(rt => rt.Tag)
                 .IsRequired()
                 .HasMaxLength(50)

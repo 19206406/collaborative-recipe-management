@@ -7,8 +7,6 @@ services:
       - "1433:1433"
     volumes:
       - sqlserver-data:/var/opt/mssql
-  postgres: 
-    container_name: recipedb
 
 volumes:
   sqlserver-data: 

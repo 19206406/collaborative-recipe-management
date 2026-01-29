@@ -12,7 +12,11 @@ namespace Recipe.API.Common.Database.Configurations
 
             builder.ToTable("recipes");
 
-            // foreign key usuario 
+            builder.Property(r => r.UserId)
+                .IsRequired()
+                .HasColumnName("user_id");
+
+            builder.HasIndex(r => r.UserId); 
 
             builder.Property(r => r.Title)
                 .IsRequired()
@@ -62,7 +66,24 @@ namespace Recipe.API.Common.Database.Configurations
             builder.Property(r => r.UpdatedAt)
                 .IsRequired()
                 .HasDefaultValue(DateTime.UtcNow)
-                .HasColumnName("updated_at"); 
+                .HasColumnName("updated_at");
+
+            // relaciones 
+
+            builder.HasMany(r => r.Ingredients)
+                .WithOne(i => i.Recipe)
+                .HasForeignKey(r => r.RecipeId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            builder.HasMany(r => r.Steps)
+                .WithOne(s => s.Recipe)
+                .HasForeignKey(r => r.RecipeId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            builder.HasMany(r => r.RecipeTags)
+                .WithOne(rt => rt.Recipe)
+                .HasForeignKey(rt => rt.RecipeId)
+                .OnDelete(DeleteBehavior.Cascade); 
         }
     }
 }

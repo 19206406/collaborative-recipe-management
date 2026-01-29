@@ -1,11 +1,12 @@
 using BuildingBlocks.Behaviors;
 using FastEndpoints;
 using FastEndpoints.Swagger;
+using FluentValidation;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
+using User.API;
 using User.API.Common.Database;
-using User.API.Exceptions;
 using User.API.repositories.UserPreferenceRepository;
 using User.API.repositories.UserRespository;
 using User.API.Services.Jwt;
@@ -25,12 +26,13 @@ builder.Services.AddMediatR(cfg =>
 {
     cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly());
     cfg.AddOpenBehavior(typeof(ValidationBehavior<,>));
-}); 
+});
+builder.Services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly()); 
 
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IUserPreferenceRespository, UserPreferenceRepository>();
 builder.Services.AddScoped<IJwtService, JwtService>(); 
-builder.Services.AddExceptionHandler<ValidationException>();
+builder.Services.AddExceptionHandler<User.API.Exceptions.ValidationException>();
 builder.Services.AddProblemDetails();
 
 // password Hash 
@@ -50,6 +52,9 @@ builder.Services.SwaggerDocument(options =>
 });
 
 var app = builder.Build();
+
+app.UseExceptionHandler();
+app.UseCustomExceptionHandler(); 
 
 // FastEndpoints 
 app.UseFastEndpoints().UseSwaggerGen(); 

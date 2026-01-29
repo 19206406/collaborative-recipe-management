@@ -30,7 +30,7 @@ namespace User.API.Features.User.RegisterUser
         {
             var command = new RegisterUserCommand(req.Name, req.Email, req.Password);
             var result = await _mediator.Send(command);
-            await Send.OkAsync(); 
+            await Send.OkAsync(result); 
         }
     }
 }    

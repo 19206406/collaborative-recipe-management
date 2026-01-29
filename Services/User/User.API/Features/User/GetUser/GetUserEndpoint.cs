@@ -23,13 +23,14 @@ namespace User.API.Features.User.GetUser
                 s.Description = "Obtener usuario autenticado";
             });
             Description(x => x.WithTags("Users"));
+            AllowAnonymous(); 
         }
 
         public override async Task HandleAsync(GetUserRequest req, CancellationToken ct)
         {
-            var userId = int.Parse(User.FindFirst("userId").Value ?? "0"); 
+            //var userId = int.Parse(s: User.FindFirst("userId").Value ?? "0"); 
 
-            var query = new GetUserQuery(userId);
+            var query = new GetUserQuery(req.Id);
             var result = await _mediator.Send(query); 
             await Send.OkAsync(result); 
         }

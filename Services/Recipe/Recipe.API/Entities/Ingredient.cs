@@ -8,6 +8,6 @@
         public decimal Quantity { get; set; }
         public string Unit { get; set; } = default!; 
         public int DisplayOrder { get; set; }
-        public Recipe Recipes { get; set; } = new(); 
+        public Recipe Recipe { get; set; } = new(); 
     }
 }

@@ -5,9 +5,7 @@ services:
       - ACCEPT_EULA=Y
       - MSSQL_PID=Developer
     networks: 
-      - microservices-network 
-  postgres: 
-    image: postgres
+      - microservices-network
 
 networks:
   microservices-network: 

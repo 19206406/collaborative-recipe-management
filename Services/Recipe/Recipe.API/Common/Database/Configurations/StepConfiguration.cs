@@ -12,7 +12,9 @@ namespace Recipe.API.Common.Database.Configurations
 
             builder.ToTable("steps");
 
-            // relación 
+            builder.Property(s => s.RecipeId)
+                .IsRequired()
+                .HasColumnName("recipe_id");
 
             builder.Property(s => s.StepNumber)
                 .IsRequired()

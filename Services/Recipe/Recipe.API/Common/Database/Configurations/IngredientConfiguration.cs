@@ -12,7 +12,9 @@ namespace Recipe.API.Common.Database.Configurations
 
             builder.HasKey(i => i.Id);
 
-            // el foreing key de recipe_id toca que esperar haber como se hace eso 
+            builder.Property(i => i.RecipeId)
+                .IsRequired()
+                .HasColumnName("recipe_id"); 
 
             builder.Property(i => i.Name)
                 .IsRequired()
