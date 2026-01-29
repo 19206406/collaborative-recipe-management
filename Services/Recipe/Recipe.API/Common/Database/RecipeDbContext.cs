@@ -1,7 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Recipe.API.Entities;
-using System;
-using System.Collections.Generic;
 
 namespace Recipe.API.Common.Database
 {

@@ -11,10 +11,9 @@ services:
     image: postgres:16-alpine 
     environment: 
       - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_PASSWORD=Sebastian@Postgres123
     networks: 
       - microservices-network
-    restart: unless-stopedd
 
 networks:
   microservices-network: 

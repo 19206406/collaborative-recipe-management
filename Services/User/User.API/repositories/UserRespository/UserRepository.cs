@@ -12,12 +12,12 @@ namespace User.API.repositories.UserRespository
             _context = context;
         }
         
-        public async Task<int> AddUser(Entities.User entity)
+        public async Task<Entities.User> AddUser(Entities.User entity)
         {
             _context.Users.Add(entity);
             await _context.SaveChangesAsync();
 
-            return entity.Id; 
+            return entity; 
         }
 
         public async Task DeleteUser(Entities.User entity)

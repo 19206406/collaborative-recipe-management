@@ -1,5 +1,6 @@
 ﻿using FastEndpoints;
 using MediatR;
+using User.API.Features.User.GetUser;
 
 namespace User.API.Features.User.RegisterUser
 {
@@ -30,7 +31,9 @@ namespace User.API.Features.User.RegisterUser
         {
             var command = new RegisterUserCommand(req.Name, req.Email, req.Password);
             var result = await _mediator.Send(command);
-            await Send.OkAsync(result); 
+            //await Send.OkAsync(result); 
+
+            await Send.CreatedAtAsync(GetUserEndpoint.Route, new {id = result.Id}, result); 
         }
     }
 }    

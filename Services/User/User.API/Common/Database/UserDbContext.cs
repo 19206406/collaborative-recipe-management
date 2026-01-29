@@ -19,8 +19,6 @@ namespace User.API.Common.Database
             base.OnModelCreating(modelBuilder);
         }
 
-        //POST   /api/users/register          - Registro
-        //POST   /api/users/login             - Login(devuelve JWT)
         //GET    /api/users/profile           - Perfil propio(Auth)
         //PUT    /api/users/profile           - Actualizar perfil(Auth)
         //GET    /api/users/{id}/preferences  - Preferencias de usuario

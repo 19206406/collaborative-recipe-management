@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 using User.API;
 using User.API.Common.Database;
+using User.API.Models;
 using User.API.repositories.UserPreferenceRepository;
 using User.API.repositories.UserRespository;
 using User.API.Services.Jwt;
@@ -31,14 +32,14 @@ builder.Services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
 
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IUserPreferenceRespository, UserPreferenceRepository>();
-builder.Services.AddScoped<IJwtService, JwtService>(); 
+builder.Services.AddScoped<IJwtService, JwtService>();
+builder.Services.AddJwtAuthentication(builder.Configuration); 
 builder.Services.AddExceptionHandler<User.API.Exceptions.ValidationException>();
 builder.Services.AddProblemDetails();
 
 // password Hash 
 builder.Services.AddScoped<IPasswordHashService, PasswordHashService>();
 builder.Services.AddScoped<IPasswordHasher<Object>, PasswordHasher<Object>>();
-
 
 // swagger 
 builder.Services.SwaggerDocument(options =>
@@ -54,7 +55,8 @@ builder.Services.SwaggerDocument(options =>
 var app = builder.Build();
 
 app.UseExceptionHandler();
-app.UseCustomExceptionHandler(); 
+app.UseCustomExceptionHandler();
+app.UseAuthorization(); 
 
 // FastEndpoints 
 app.UseFastEndpoints().UseSwaggerGen(); 

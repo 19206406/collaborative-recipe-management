@@ -27,5 +27,5 @@ services:
 volumes:
   sqlserver-data: 
     driver: local
-  postgres_data: 
+  postgres-data: 
     driver: local

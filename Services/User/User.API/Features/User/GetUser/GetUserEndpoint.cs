@@ -1,5 +1,6 @@
 ﻿using FastEndpoints;
 using MediatR;
+using Microsoft.Extensions.Primitives;
 
 namespace User.API.Features.User.GetUser
 {
@@ -14,16 +15,17 @@ namespace User.API.Features.User.GetUser
             _mediator = mediator;
         }
 
+        public const string Route = "api/users/{id}";
+
         public override void Configure()
         {
-            Get("/api/users/{id}");
+            Get(Route);
             Summary(s =>
             {
                 s.Summary = "Obtener usuario autenticado";
                 s.Description = "Obtener usuario autenticado";
             });
             Description(x => x.WithTags("Users"));
-            AllowAnonymous(); 
         }
 
         public override async Task HandleAsync(GetUserRequest req, CancellationToken ct)

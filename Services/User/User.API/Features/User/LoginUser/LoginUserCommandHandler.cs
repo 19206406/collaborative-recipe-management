@@ -39,6 +39,9 @@ namespace User.API.Features.User.LoginUser
             if (!verifyPassword)
                 throw new UnauthorizedException("Usuario no autorizado");
 
+            if (user.IsActive == 0)
+                throw new ForbiddenException(); 
+
             // generar token 
             var accessToken = _jwtService.GenerateAccessToken(user);
             var refreshToken = _jwtService.GenerateRefreshToken();

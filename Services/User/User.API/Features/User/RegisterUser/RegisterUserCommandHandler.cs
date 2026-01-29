@@ -1,4 +1,5 @@
 ﻿using BuildingBlocks.CQRS;
+using BuildingBlocks.Exceptions;
 using User.API.repositories.UserRespository;
 using User.API.Services.PasswordHash;
 
@@ -33,7 +34,7 @@ namespace User.API.Features.User.RegisterUser
 
             var result = await _userRepository.AddUser(newUser);
 
-            return new RegisterUserResponse(result); 
+            return new RegisterUserResponse(result.Id, result.Name, result.Email, result.CreatedAt, result.UpdatedAt, result.IsActive); 
         }
     }
 }

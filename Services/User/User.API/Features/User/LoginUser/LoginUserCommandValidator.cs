@@ -8,7 +8,7 @@ namespace User.API.Features.User.LoginUser
         {
             RuleFor(x => x.Email)
                 .NotEmpty().WithMessage("El email no puede ser vacío")
-                .EmailAddress().WithMessage("El valor no corresponde a un email");
+                .EmailAddress().WithMessage("El valor enviado no corresponde a un email");
 
             RuleFor(x => x.Password)
                 .NotEmpty().WithMessage("El password no puede ser vacío")

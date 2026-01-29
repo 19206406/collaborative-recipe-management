@@ -16,7 +16,7 @@ namespace User.API.Features.User.RegisterUser
 
             RuleFor(x => x.Password)
                 .NotEmpty().WithMessage("El password no puede ser vacío")
-                .MinimumLength(4).WithMessage("El password debe ser mayor a los 4 caracteres"); 
+                .MinimumLength(4).WithMessage("El password debe de tener como minimo 4 caracteres"); 
         }
     }
 }

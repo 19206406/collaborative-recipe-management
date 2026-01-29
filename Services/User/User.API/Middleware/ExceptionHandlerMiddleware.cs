@@ -1,6 +1,7 @@
 ﻿using BuildingBlocks.Exceptions;
 using BuildingBlocks.Exceptions.Common;
 using BuildingBlocks.Models;
+using FluentValidation;
 using System.Text.Json;
 
 namespace User.API.Middleware
@@ -32,6 +33,17 @@ namespace User.API.Middleware
 
             var problemDetails = exception switch
             {
+                ValidationException validationException => new ProblemDetailsResponse
+                {
+                    Type = "https://tools.ietf.org/html/rfc7231#section-6.5.1",
+                    Title = "One or more validation errors occurred.",
+                    Status = StatusCodes.Status400BadRequest,
+                    Instance = context.Request.Path,
+                    Errors = validationException.Errors
+                    .Select(e => e.ErrorMessage)
+                    .ToList()
+                },
+            
                 NotFoundException notFoundException => new ProblemDetailsResponse
                 {
                     Type = "https://tools.ietf.org/html/rfc7231#section-6.5.4",
