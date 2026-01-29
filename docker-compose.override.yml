@@ -8,6 +8,24 @@ services:
     volumes:
       - sqlserver-data:/var/opt/mssql
 
+  postgres: 
+    container_name: recipedb
+    environment: 
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=Sebastian@Postgres123
+      - POSTGRES_DB=recipe_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U admin"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
 volumes:
   sqlserver-data: 
+    driver: local
+  postgres_data: 
     driver: local

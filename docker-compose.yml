@@ -6,6 +6,15 @@ services:
       - MSSQL_PID=Developer
     networks: 
       - microservices-network
+  
+  postgres: 
+    image: postgres:16-alpine 
+    environment: 
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    networks: 
+      - microservices-network
+    restart: unless-stopedd
 
 networks:
   microservices-network: 

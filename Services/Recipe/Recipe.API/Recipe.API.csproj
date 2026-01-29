@@ -16,4 +16,9 @@
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="10.0.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Common\Database\Migrations\" />
+    <Folder Include="Repositories\" />
+  </ItemGroup>
+
 </Project>
