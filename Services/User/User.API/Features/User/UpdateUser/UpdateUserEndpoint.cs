@@ -25,12 +25,12 @@ namespace User.API.Features.User.UpdateUser
             Description(x => x.WithTags("Users")); 
         }
 
-        public override Task HandleAsync(UpdateUserRequest req, CancellationToken ct)
+        public override async Task HandleAsync(UpdateUserRequest req, CancellationToken ct)
         {
             var command = new UpdateUserCommand(req.Id, req.Name, req.Email, req.IsActive);
-            var result = _mediator.Send(command);
+            var result = await _mediator.Send(command);
 
-            return Send.OkAsync(); 
+            await Send.OkAsync(result); 
         }
     }
 }

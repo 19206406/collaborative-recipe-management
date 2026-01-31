@@ -7,7 +7,7 @@ namespace User.API.repositories.UserPreferenceRepository
         Task<List<UserPreference>> GetPreferences(); 
 
         Task<Entities.User> GetUserPreferences(int id);
-        Task<bool> AddUserPreferences(int userId, List<UserPreference> items);
+        Task<bool> AddUserPreferences(int userId, List<string> items);
         Task<bool> RemoveReferences(List<UserPreference> items);
         Task<bool> UpdateReferences(List<UserPreference> items);
 

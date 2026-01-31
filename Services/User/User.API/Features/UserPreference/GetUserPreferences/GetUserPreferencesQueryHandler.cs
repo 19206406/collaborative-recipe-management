@@ -22,7 +22,7 @@ namespace User.API.Features.UserPreference.GetUserPreferences
 
             var preferences = user.UserPreferences.Select(x => new PreferencesResponse(x.Id, x.PreferenceType)).ToList();
 
-            var response = new GetUserPreferencesResponse(user.Id, user.Name, user.Email, user.CreatedAt, user.IsActive, preferences);
+            var response = new GetUserPreferencesResponse(user.Id, user.Name, user.Email, user.CreatedAt, preferences);
 
             return response; 
         }

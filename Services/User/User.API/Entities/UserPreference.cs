@@ -7,7 +7,7 @@
         public string PreferenceType { get; set; } = default!;
         public DateTime CreatedAt { get; set; }
 
-        public User User { get; set; } = new();
+        public User User { get; set; } = null!;
     }
 }
 

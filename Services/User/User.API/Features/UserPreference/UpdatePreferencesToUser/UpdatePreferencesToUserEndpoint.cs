@@ -1,11 +1,11 @@
 ﻿using FastEndpoints;
 using MediatR;
+using User.API.Features.UserPreference.GetUserPreferences;
 
 namespace User.API.Features.UserPreference.UpdatePreferencesToUser
 {
-    public record UpdateReferences(int Id, string PreferenceType, DateTime CreatedAt, int UserId);
 
-    public record UpdatePreferencesToUserRequest(int Id, List<UpdateReferences> Preferences);
+    public record UpdatePreferencesToUserRequest(int Id, List<UpdatePreferences> Preferences);
 
     public class UpdatePreferencesToUserEndpoint : Endpoint<UpdatePreferencesToUserRequest, UpdatePreferencesToUserResponse>
     {
@@ -29,17 +29,7 @@ namespace User.API.Features.UserPreference.UpdatePreferencesToUser
 
         public override async Task HandleAsync(UpdatePreferencesToUserRequest req, CancellationToken ct)
         {
-            var updatePreferences = req.Preferences.Select(x =>
-                new Entities.UserPreference
-                {
-                    Id = x.Id,
-                    PreferenceType = x.PreferenceType,
-                    CreatedAt = x.CreatedAt, 
-                    UserId = x.UserId
-                }
-            ).ToList(); 
-
-            var command = new UpdatePreferencesToUserCommand(req.Id, updatePreferences);
+            var command = new UpdatePreferencesToUserCommand(req.Id, req.Preferences);
             var result = await _mediator.Send(command);
 
             await Send.OkAsync(result); 

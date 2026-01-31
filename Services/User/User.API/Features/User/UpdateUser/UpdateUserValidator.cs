@@ -11,7 +11,10 @@ namespace User.API.Features.User.UpdateUser
 
             RuleFor(x => x.Email)
                 .NotEmpty().WithMessage("El email no puede ser vacío")
-                .EmailAddress().WithMessage("El valor proporcionado no corresponde a un email"); 
+                .EmailAddress().WithMessage("El valor proporcionado no corresponde a un email");
+
+            //RuleFor(x => x.IsActive)
+            //    .NotEmpty().WithMessage("El campo de activación es requerido"); 
         }
     }
 }

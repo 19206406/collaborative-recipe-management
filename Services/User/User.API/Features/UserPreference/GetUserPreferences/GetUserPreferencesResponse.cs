@@ -2,6 +2,5 @@
 {
     public record PreferencesResponse(int Id, string PreferenceType);
     public record GetUserPreferencesResponse(
-        int Id, string Name, string Email, DateTime CreatedAt, 
-        byte IsActive, List<PreferencesResponse> Preferences); 
+        int Id, string Name, string Email, DateTime CreatedAt, List<PreferencesResponse> Preferences); 
 }

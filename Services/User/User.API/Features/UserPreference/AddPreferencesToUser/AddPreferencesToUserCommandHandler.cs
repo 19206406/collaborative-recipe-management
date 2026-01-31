@@ -1,6 +1,8 @@
 ﻿using BuildingBlocks.CQRS;
 using BuildingBlocks.Exceptions;
+using User.API.Features.UserPreference.GetUserPreferences;
 using User.API.repositories.UserPreferenceRepository;
+using User.API.repositories.UserRespository;
 
 namespace User.API.Features.UserPreference.AddPreferencesToUser
 {
@@ -8,10 +10,13 @@ namespace User.API.Features.UserPreference.AddPreferencesToUser
         : ICommandHandler<AddPreferencesToUserCommand, AddPreferencesToUserResponse>
     {
         private readonly IUserPreferenceRespository _userPreferenceRespository;
+        private readonly IUserRepository _userRepository;
 
-        public AddPreferencesToUserCommandHandler(IUserPreferenceRespository userPreferenceRespository)
+        public AddPreferencesToUserCommandHandler
+            (IUserPreferenceRespository userPreferenceRespository, IUserRepository userRepository)
         {
             _userPreferenceRespository = userPreferenceRespository;
+            _userRepository = userRepository;
         }
 
         public async Task<AddPreferencesToUserResponse> Handle(AddPreferencesToUserCommand command, CancellationToken cancellationToken)
@@ -21,15 +26,15 @@ namespace User.API.Features.UserPreference.AddPreferencesToUser
             if (user is null)
                 throw new NotFoundException("usuario", command.Id);
 
-            var newPreferences = command.UserPreferences.ToList();
+            var newPreferences = command.preferences.ToList();
             var result = await _userPreferenceRespository.AddUserPreferences(command.Id, newPreferences);
-
-            if (!result)
-                throw new BusinessException("Ocurrio una excepción de negocio"); 
 
             var updatedUser = await _userPreferenceRespository.GetUserPreferences(command.Id);
 
-            return new AddPreferencesToUserResponse(updatedUser); 
+            var preferences = updatedUser.UserPreferences.Select(x => new PreferencesResponse(x.Id, x.PreferenceType)).ToList();
+
+            return new AddPreferencesToUserResponse(updatedUser.Id, updatedUser.Name, 
+                updatedUser.Email, updatedUser.CreatedAt, preferences);  
         }
     }
 }

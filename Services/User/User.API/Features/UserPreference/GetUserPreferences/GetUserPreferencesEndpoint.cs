@@ -14,9 +14,11 @@ namespace User.API.Features.UserPreference.GetUserPreferences
             _mediator = mediator;
         }
 
+        public const string Route = "api/users/{id}/preferences"; 
+
         public override void Configure()
         {
-            Get("api/users/{id}/preferences");
+            Get(Route);
             Summary(x =>
             {
                 x.Summary = "Obtener un usuario con sus preferencias";

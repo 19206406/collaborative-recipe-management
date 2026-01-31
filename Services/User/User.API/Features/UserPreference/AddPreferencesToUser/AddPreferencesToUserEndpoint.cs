@@ -1,11 +1,12 @@
 ﻿using FastEndpoints;
 using MediatR;
+using User.API.Features.UserPreference.GetUserPreferences;
 
 namespace User.API.Features.UserPreference.AddPreferencesToUser
 {
-    public record AddPreferences(string PreferenceType); 
+    public record AddPreferences(string preference); 
 
-    public record AddPreferencesToUserRequest(int Id, List<AddPreferences> Preferences); 
+    public record AddPreferencesToUserRequest(int Id, List<string> Preferences); 
 
     public class AddPreferencesToUserEndpoint : Endpoint<AddPreferencesToUserRequest, AddPreferencesToUserResponse>
     {
@@ -30,15 +31,10 @@ namespace User.API.Features.UserPreference.AddPreferencesToUser
 
         public override async Task HandleAsync(AddPreferencesToUserRequest req, CancellationToken ct)
         {
-            var newPreferences = req.Preferences.Select(x => new Entities.UserPreference
-            {
-                PreferenceType = x.PreferenceType,
-            }).ToList(); 
-
-            var command = new AddPreferencesToUserCommand(req.Id, newPreferences);
+            var command = new AddPreferencesToUserCommand(req.Id, req.Preferences);
             var result = await _mediator.Send(command);
 
-            await Send.OkAsync(result); 
+            await Send.CreatedAtAsync(GetUserPreferencesEndpoint.Route, new { id = result.Id }, result); 
         }
     }
 }

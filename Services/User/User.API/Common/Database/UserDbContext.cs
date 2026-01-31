@@ -19,8 +19,6 @@ namespace User.API.Common.Database
             base.OnModelCreating(modelBuilder);
         }
 
-        //GET    /api/users/profile           - Perfil propio(Auth)
-        //PUT    /api/users/profile           - Actualizar perfil(Auth)
         //GET    /api/users/{id}/preferences  - Preferencias de usuario
         //PUT    /api/users/preferences       - Actualizar preferencias(Auth)
         //GET    /api/users/{id}/ basic - Info básica(para otros servicios)

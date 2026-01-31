@@ -18,22 +18,23 @@ namespace User.API.Features.User.UpdateUser
             var user = await _userRepository.GetUser(command.Id);
 
             if (user is null)
-                throw new NotFoundException("usuario", command.Id); 
+                throw new NotFoundException("usuario", command.Id);
 
-            var updateUser = new Entities.User
-            {
-                Id = user.Id,
-                Name = command.Name,
-                Email = command.Email,
-                PasswordHash = user.PasswordHash,
-                IsActive = command.IsActive,
-                CreatedAt = user.CreatedAt,
-                UpdatedAt = DateTime.UtcNow,
-            };
+            //var userByEmail = await _userRepository.GetUserByEmail(command.Email);
 
-            await _userRepository.UpdateUser(updateUser);
+            //if (userByEmail is not null)
+            //    throw new ConflictException("No se puede actualizar por favor intenta con otros valores"); 
 
-            return new UpdateUserResponse(); 
+
+            user.Name = command.Name;
+            user.Email = command.Email;
+            user.IsActive = command.IsActive;
+            user.UpdatedAt = DateTime.UtcNow; 
+
+            var updatedUser = await _userRepository.UpdateUser(user);
+
+            return new UpdateUserResponse(updatedUser.Id, updatedUser.Name, updatedUser.Email, 
+                updatedUser.CreatedAt, updatedUser.UpdatedAt, updatedUser.IsActive); 
         }
     }
 }

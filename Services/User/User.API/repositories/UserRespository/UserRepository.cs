@@ -38,10 +38,14 @@ namespace User.API.repositories.UserRespository
             return user; 
         }
 
-        public async Task UpdateUser(Entities.User entity)
+        public async Task<Entities.User> UpdateUser(Entities.User entity)
         {
             _context.Users.Update(entity); 
             await _context.SaveChangesAsync();
+
+            // recargar la entidad para obtener los valores incluso recargados
+            await _context.Entry(entity).ReloadAsync();
+            return entity; 
         }
     }
 }

@@ -2,6 +2,6 @@
 
 namespace User.API.Features.UserPreference.UpdatePreferencesToUser
 {
-    public record UpdatePreferencesToUserCommand(int UserId, List<Entities.UserPreference> UserPreferences) 
+    public record UpdatePreferencesToUserCommand(int UserId, List<UpdatePreferences> Preferences) 
         : ICommand<UpdatePreferencesToUserResponse>; 
 }

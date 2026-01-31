@@ -25,12 +25,12 @@ namespace User.API.Features.User.DeleteUser
             Description(x => x.WithTags("Users"));
         }
 
-        public override Task HandleAsync(DeleteUserRequest req, CancellationToken ct)
+        public override async Task HandleAsync(DeleteUserRequest req, CancellationToken ct)
         {
             var command = new DeleteUserCommand(req.Id);
-            var result = _mediator.Send(command);
+            var result = await _mediator.Send(command);
 
-            return Send.NoContentAsync(); 
+            await Send.NoContentAsync(); 
         }
     }
 }

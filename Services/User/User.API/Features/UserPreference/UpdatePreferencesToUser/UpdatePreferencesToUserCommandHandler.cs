@@ -1,5 +1,6 @@
 ﻿using BuildingBlocks.CQRS;
 using BuildingBlocks.Exceptions;
+using User.API.Features.UserPreference.GetUserPreferences;
 using User.API.repositories.UserPreferenceRepository;
 
 namespace User.API.Features.UserPreference.UpdatePreferencesToUser
@@ -22,32 +23,38 @@ namespace User.API.Features.UserPreference.UpdatePreferencesToUser
                 throw new NotFoundException("usuario", command.UserId); 
 
             var userPreferences = user.UserPreferences.ToList();
-            var updatePreferences = command.UserPreferences;
+            var updatePreferences = command.Preferences;
 
-            // beging logic 
-            // delete preferences that are no longer there 
-            var preferencesDelete = userPreferences
+            // remover las preferencias no existentes 
+            var preferencesToDelete = userPreferences
                 .Where(exist => !updatePreferences.Any(np => np.Id == exist.Id)).ToList();
+            await _userPreferenceRespository.RemoveReferences(preferencesToDelete);
 
-            await _userPreferenceRespository.RemoveReferences(preferencesDelete);
 
             // update existing ones 
             var preferencesToUpdate = userPreferences
                 .Where(exist => updatePreferences.Any(np => np.Id == exist.Id)).ToList();
 
+            foreach (var preference in preferencesToUpdate)
+            {
+                var map = updatePreferences.First(p => p.Id == preference.Id);
+                preference.PreferenceType = map.Preference; 
+            }
+
             await _userPreferenceRespository.UpdateReferences(preferencesToUpdate);
 
-            // add preferences 
 
+            // add preferences 
             var newPreferences = updatePreferences
                 .Where(up => up.Id == 0 || !userPreferences.Any(upr => upr.Id == up.Id))
                 .ToList();
+            List<string> preferences = newPreferences.Select(p => p.Preference.ToString()).ToList(); 
+            await _userPreferenceRespository.AddUserPreferences(command.UserId, preferences);
 
-            await _userPreferenceRespository.AddUserPreferences(command.UserId, newPreferences);
 
-            var userWithPreferences = await _userPreferenceRespository.GetUserPreferences(command.UserId);
-
-            return new UpdatePreferencesToUserResponse(userWithPreferences); 
+            var uwp = await _userPreferenceRespository.GetUserPreferences(command.UserId);
+            var resultPreferences = user.UserPreferences.Select(x => new PreferencesResponse(x.Id, x.PreferenceType)).ToList();
+            return new UpdatePreferencesToUserResponse(uwp.Id, uwp.Name, uwp.Email, uwp.CreatedAt, resultPreferences); 
         }
     }
 }

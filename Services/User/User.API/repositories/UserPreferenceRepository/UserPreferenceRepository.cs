@@ -23,25 +23,26 @@ namespace User.API.repositories.UserPreferenceRepository
         public async Task<Entities.User> GetUserPreferences(int id)
         {
             var userWithPreferences = await _context.Users
+                .AsNoTracking()
                 .Include(u => u.UserPreferences)
                 .FirstOrDefaultAsync(u => u.Id == id);
 
             return userWithPreferences; 
         }
 
-        public async Task<bool> AddUserPreferences(int userId, List<UserPreference> items)
+        public async Task<bool> AddUserPreferences(int userId, List<string> items)
         {
-            var user = await _context.Users.FindAsync(userId);
-            if (user is null) return false; 
-
-            foreach (var item in items)
+            var entities = items.Select(x => new UserPreference
             {
-                item.UserId = userId;
-                item.CreatedAt = DateTime.UtcNow; 
-            }
+                UserId = userId,
+                PreferenceType = x,
+                CreatedAt = DateTime.UtcNow
+            }); 
 
-            _context.UserPreferences.AddRange(items);
-            return await _context.SaveChangesAsync() > 0; 
+            _context.UserPreferences.AddRange(entities);
+
+            await _context.SaveChangesAsync(); 
+            return true; 
         }
 
         public async Task<bool> RemoveReferences(List<UserPreference> items)
