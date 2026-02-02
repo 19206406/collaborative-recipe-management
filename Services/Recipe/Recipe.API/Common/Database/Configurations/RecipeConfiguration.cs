@@ -38,7 +38,7 @@ namespace Recipe.API.Common.Database.Configurations
 
             builder.Property(r => r.Difficulty)
                 .IsRequired()
-                .HasMaxLength(20)
+                .HasMaxLength(40)
                 .HasColumnName("difficulty");
 
             builder.Property(r => r.Servings)

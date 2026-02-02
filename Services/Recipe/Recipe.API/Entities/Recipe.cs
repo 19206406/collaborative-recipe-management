@@ -17,8 +17,8 @@
         public DateTime UpdatedAt { get; set; }
 
         // relación 
-        public ICollection<Ingredient> Ingredients { get; set; }
-        public ICollection<Step> Steps { get; set; } 
-        public ICollection<RecipeTag> RecipeTags { get; set; }
+        public ICollection<Ingredient> Ingredients { get; set; } = new List<Ingredient>();
+        public ICollection<Step> Steps { get; set; } = new List<Step>(); 
+        public ICollection<RecipeTag> RecipeTags { get; set; } = new List<RecipeTag>();
     }
 }

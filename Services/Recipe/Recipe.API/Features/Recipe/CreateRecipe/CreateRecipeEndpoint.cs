@@ -1,6 +1,43 @@
-﻿namespace Recipe.API.Features.Recipe.CreateRecipe
+﻿using FastEndpoints;
+using MediatR;
+
+namespace Recipe.API.Features.Recipe.CreateRecipe
 {
-    public class CreateRecipeEndpoint
+    public record CreateRecipe(int UserId, string Title, string Description, int PrepTimeMinutes, int CookTimeMinutes, int Difficulty, int Servings, string ImageUrl);
+
+    public record CreateIngredient(string Name, decimal Quantity, string Unit, int DisplayOrder); 
+
+    public record CreateStep(string Instruction);
+
+    public record CreateRecipeRequest(CreateRecipe Recipe, List<CreateIngredient> Ingredients, List<CreateStep> Steps); 
+
+
+    public class CreateRecipeEndpoint : Endpoint<CreateRecipeRequest, CreateRecipeResponse>
     {
+        private readonly IMediator _mediator;
+
+        public CreateRecipeEndpoint(IMediator mediator)
+        {
+            _mediator = mediator;
+        }
+
+        public override void Configure()
+        {
+            Post("api/recipes");
+            Summary(x =>
+            {
+                x.Summary = "Crear receta";
+                x.Description = "Crear receta con todas sus relaciones ('pasos', ingredientes, tags')";
+            });
+            Description(x => x.WithTags("Recipes")); 
+        }
+
+        public override async Task HandleAsync(CreateRecipeRequest req, CancellationToken ct)
+        {
+            var command = new CreateRecipeCommand(req.Recipe, req.Ingredients, req.Steps);
+            var result = await _mediator.Send(command); 
+
+            await Send.OkAsync(result); 
+        }
     }
 }
