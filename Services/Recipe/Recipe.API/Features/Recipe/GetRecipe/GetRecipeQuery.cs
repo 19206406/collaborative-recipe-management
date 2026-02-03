@@ -2,5 +2,5 @@
 
 namespace Recipe.API.Features.Recipe.GetRecipe
 {
-    public record GetRecipeQuery() : IQuery<GetRecipeResponse>; 
+    public record GetRecipeQuery(int Id) : IQuery<GetRecipeResponse>; 
 }

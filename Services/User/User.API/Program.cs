@@ -1,4 +1,5 @@
 using BuildingBlocks.Behaviors;
+using BuildingBlocks.Jwt.Service;
 using FastEndpoints;
 using FastEndpoints.Swagger;
 using FluentValidation;
@@ -7,7 +8,6 @@ using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 using User.API;
 using User.API.Common.Database;
-using User.API.Models;
 using User.API.repositories.UserPreferenceRepository;
 using User.API.repositories.UserRespository;
 using User.API.Services.Jwt;
@@ -32,8 +32,10 @@ builder.Services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
 
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IUserPreferenceRespository, UserPreferenceRepository>();
+
 builder.Services.AddScoped<IJwtService, JwtService>();
-builder.Services.AddJwtAuthentication(builder.Configuration); 
+builder.Services.AddJwtValidation(builder.Configuration); 
+
 builder.Services.AddExceptionHandler<User.API.Exceptions.ValidationException>();
 builder.Services.AddProblemDetails();
 

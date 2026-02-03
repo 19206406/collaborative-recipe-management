@@ -2,6 +2,6 @@
 
 namespace Recipe.API.Features.Recipe.GetRecipe
 {
-    public record GetRecipeResponse(ResponseRecipe recipe, ResponseIngredient Ingredient, 
-        ResponseStep Step, ResponseTag Tag); 
+    public record GetRecipeResponse(ResponseRecipe recipe, List<ResponseIngredient> Ingredient, 
+        List<ResponseStep> Step, List<ResponseTag> Tag); 
 }

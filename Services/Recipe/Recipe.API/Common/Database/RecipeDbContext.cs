@@ -23,7 +23,7 @@ namespace Recipe.API.Common.Database
 
         //POST   /api/recipes                    - Crear receta(Auth) ---------- Listo 
         //GET    /api/recipes                    - Listar con paginación y filtros ------------ Listo
-        //GET    /api/recipes/{id}               - Detalle de receta 
+        //GET    /api/recipes/{id}               - Detalle de receta --------- listo 
         //PUT    /api/recipes/{id}               - Actualizar(Auth, solo dueño)
         //DELETE /api/recipes/{id}               - Eliminar(Auth, solo dueño)
         //GET    /api/recipes/user/{userId}      - Recetas de un usuario

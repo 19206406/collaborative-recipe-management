@@ -1,8 +1,9 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Http;
 using Microsoft.IdentityModel.Tokens;
 using System.Text.Json;
 
-namespace User.API.Services.Jwt
+namespace BuildingBlocks.Jwt.Service
 {
     public static class JwtEvents
     {
@@ -14,8 +15,8 @@ namespace User.API.Services.Jwt
                 {
                     if (context.Exception is SecurityTokenExpiredException)
                         context.Response.Headers.Add("Token-Expired", "true");
-                    return Task.CompletedTask; 
-                }, 
+                    return Task.CompletedTask;
+                },
                 OnChallenge = context =>
                 {
                     context.HandleResponse();
@@ -27,8 +28,8 @@ namespace User.API.Services.Jwt
                         message = "No está autenticado o el token es inválido"
                     });
 
-                    return context.Response.WriteAsync(result); 
-                }, 
+                    return context.Response.WriteAsync(result);
+                },
                 OnForbidden = context =>
                 {
                     context.Response.StatusCode = StatusCodes.Status403Forbidden;
@@ -39,10 +40,10 @@ namespace User.API.Services.Jwt
                         message = "No tiene permisos para acceder a este recurso"
                     });
 
-                    return context.Response.WriteAsync(result); 
+                    return context.Response.WriteAsync(result);
                 }
 
-            }; 
+            };
         }
     }
 }

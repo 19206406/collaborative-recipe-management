@@ -3,7 +3,7 @@ using MediatR;
 
 namespace Recipe.API.Features.Recipe.GetRecipe
 {
-    public record GetRecipeRequest(); 
+    public record GetRecipeRequest(int Id); 
 
     public class GetRecipeEndpoint : Endpoint<GetRecipeRequest, GetRecipeResponse>
     {
@@ -27,7 +27,7 @@ namespace Recipe.API.Features.Recipe.GetRecipe
 
         public override async Task HandleAsync(GetRecipeRequest req, CancellationToken ct)
         {
-            var query = new GetRecipeQuery();
+            var query = new GetRecipeQuery(req.Id);
             var result = await _mediator.Send(query);
 
             await Send.OkAsync(result); 

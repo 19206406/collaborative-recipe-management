@@ -1,26 +1,27 @@
-﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+﻿using BuildingBlocks.Jwt.Models;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
-using User.API.Models;
 
-namespace User.API.Services.Jwt
+namespace BuildingBlocks.Jwt.Service
 {
-    public static class AuthenticationServiceRegistration
-    { 
-        public static IServiceCollection AddJwtAuthentication(
+    public static class JwtValidationExtensions
+    {
+        // este servicio lo utiliza los servicios que validan el jwt y no lo emiten 
+        public static IServiceCollection AddJwtValidation(
             this IServiceCollection services, 
             IConfiguration configuration)
         {
-            services.Configure<JwtSettings>(configuration.GetSection("JwtSettings"));
-
-            var jwtSettings = configuration.GetSection("JwtSettings").Get<JwtSettings>();
+            var jwtSettings = new JwtSettings();
+            configuration.GetSection("JwtSettings").Bind(jwtSettings);
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
                 {
                     options.SaveToken = true;
                     options.RequireHttpsMetadata = false;
-
                     options.TokenValidationParameters = new TokenValidationParameters
                     {
                         ValidateIssuer = true,
@@ -28,7 +29,7 @@ namespace User.API.Services.Jwt
                         ValidateLifetime = true,
                         ValidateIssuerSigningKey = true,
                         ValidIssuer = jwtSettings.Issuer,
-                        ValidAudience = jwtSettings.Audience,
+                        ValidAudiences = jwtSettings.Audiences,
                         IssuerSigningKey = new SymmetricSecurityKey(
                             Encoding.UTF8.GetBytes(jwtSettings.SecretKey)),
                         ClockSkew = TimeSpan.Zero
@@ -37,8 +38,7 @@ namespace User.API.Services.Jwt
                     options.Events = JwtEvents.CustomJwtEvents();
                 });
 
-            services.AddAuthorization();
-
+            services.AddAuthentication();
             return services; 
         }
     }

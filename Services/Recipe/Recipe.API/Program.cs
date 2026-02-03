@@ -1,4 +1,5 @@
 using BuildingBlocks.Behaviors;
+using BuildingBlocks.Jwt.Service;
 using FastEndpoints;
 using FastEndpoints.Swagger;
 using Microsoft.EntityFrameworkCore;
@@ -33,7 +34,9 @@ builder.Services.SwaggerDocument(options =>
     options.AutoTagPathSegmentIndex = 0;
 });
 
-builder.Services.AddScoped<IRecipeRepository, RecipeRepository>(); 
+builder.Services.AddScoped<IRecipeRepository, RecipeRepository>();
+
+builder.Services.AddJwtValidation(builder.Configuration); 
 
 var app = builder.Build();
 

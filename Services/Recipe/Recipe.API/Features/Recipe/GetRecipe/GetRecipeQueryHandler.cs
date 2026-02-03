@@ -1,4 +1,7 @@
 ﻿using BuildingBlocks.CQRS;
+using BuildingBlocks.Exceptions;
+using Mapster;
+using Recipe.API.Features.Recipe.CreateRecipe;
 using Recipe.API.Repositories;
 
 namespace Recipe.API.Features.Recipe.GetRecipe
@@ -12,9 +15,19 @@ namespace Recipe.API.Features.Recipe.GetRecipe
             _recipeRepository = recipeRepository;
         }
 
-        public Task<GetRecipeResponse> Handle(GetRecipeQuery request, CancellationToken cancellationToken)
+        public async Task<GetRecipeResponse> Handle(GetRecipeQuery query, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            var r = await _recipeRepository.GetRecipe(query.Id);
+
+            if (r is null)
+                throw new NotFoundException("receta", query.Id);
+
+            var recipe = r.Adapt<ResponseRecipe>();
+            var ingredients = r.Adapt<List<ResponseIngredient>>().ToList();
+            var steps = r.Adapt<List<ResponseStep>>().ToList();
+            var tags = r.Adapt<List<ResponseTag>>().ToList(); 
+
+            return new GetRecipeResponse(recipe, ingredients, steps, tags); 
         }
     }
 }

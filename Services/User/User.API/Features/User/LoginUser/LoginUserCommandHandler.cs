@@ -1,7 +1,7 @@
 ﻿using BuildingBlocks.CQRS;
 using BuildingBlocks.Exceptions;
+using BuildingBlocks.Jwt.Models;
 using Microsoft.Extensions.Options;
-using User.API.Models;
 using User.API.repositories.UserRespository;
 using User.API.Services.Jwt;
 using User.API.Services.PasswordHash;

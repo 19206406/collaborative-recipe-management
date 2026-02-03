@@ -4,7 +4,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
-using User.API.Models;
+using BuildingBlocks.Jwt.Models;
 
 namespace User.API.Services.Jwt
 {
@@ -29,6 +29,12 @@ namespace User.API.Services.Jwt
                 new Claim("name", user.Name),  
             };
 
+            // agregar cada audiencia como un claim individual 
+            foreach (var audience in _jwtSettings.Audiences)
+            {
+                claims.Add(new Claim(JwtRegisteredClaimNames.Aud, audience)); 
+            }
+
             // llave y la credencial del token 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtSettings.SecretKey));
             var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
@@ -36,7 +42,6 @@ namespace User.API.Services.Jwt
             // armado del token 
             var token = new JwtSecurityToken(
                 issuer: _jwtSettings.Issuer,
-                audience: _jwtSettings.Audience,
                 claims: claims,
                 expires: DateTime.UtcNow.AddMinutes(_jwtSettings.AccessTokenExpirationMinutes),
                 signingCredentials: credentials);
@@ -75,14 +80,13 @@ namespace User.API.Services.Jwt
                     ValidateIssuer = true,
                     ValidIssuer = _jwtSettings.Issuer,
                     ValidateAudience = true,
-                    ValidAudience = _jwtSettings.Audience,
+                    ValidAudiences = _jwtSettings.Audiences,
                     ValidateLifetime = validateLifeTime,
                     ClockSkew = TimeSpan.Zero
                 }, out SecurityToken validatedToken);
-
                 return principal; 
             }
-            catch (Exception ex)
+            catch
             {
                 return null; 
             }
