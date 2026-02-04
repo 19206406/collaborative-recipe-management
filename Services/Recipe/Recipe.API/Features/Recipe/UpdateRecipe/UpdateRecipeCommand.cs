@@ -1,6 +1,7 @@
-﻿namespace Recipe.API.Features.Recipe.UpdateRecipe
+﻿using BuildingBlocks.CQRS;
+
+namespace Recipe.API.Features.Recipe.UpdateRecipe
 {
-    public class UpdateRecipeCommand
-    {
-    }
+    public record UpdateRecipeCommand(UpdateRecipe Recipe, List<UpdateIngredient> Ingredients, List<UpdateStep> Steps) 
+        : ICommand<UpdateRecipeResponse>; 
 }

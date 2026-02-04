@@ -1,6 +1,6 @@
-﻿namespace Recipe.API.Features.Recipe.RemoveRecipe
+﻿using BuildingBlocks.CQRS;
+
+namespace Recipe.API.Features.Recipe.RemoveRecipe
 {
-    public class RemoveRecipeCommand
-    {
-    }
+    public record RemoveRecipeCommand(int Id, int UserId) : ICommand; 
 }

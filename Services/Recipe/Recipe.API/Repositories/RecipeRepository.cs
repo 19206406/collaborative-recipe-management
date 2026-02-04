@@ -36,9 +36,13 @@ namespace Recipe.API.Repositories
             return recipes; 
         }
 
-        public Task<List<Entities.Recipe>> GetRecipesByUser(int userId)
+        public async Task<List<Entities.Recipe>> GetRecipesByUser(int userId)
         {
-            throw new NotImplementedException();
+            var recipes = await _context.Recipes
+                .Where(r => r.UserId == userId)
+                .ToListAsync();
+
+            return recipes; 
         }
 
         public async Task<long> NumberOfItems()
@@ -49,6 +53,14 @@ namespace Recipe.API.Repositories
         public Task RemoveRecipe(int id)
         {
             throw new NotImplementedException();
+        }
+
+        public async Task<bool> UpdateRecipeOnly(Entities.Recipe recipe)
+        {
+            _context.Recipes.Update(recipe);
+            await _context.SaveChangesAsync();
+
+            return true; 
         }
     }
 }

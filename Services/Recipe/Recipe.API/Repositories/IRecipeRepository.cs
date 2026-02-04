@@ -7,6 +7,8 @@
         Task<List<Entities.Recipe>> GetRecipesByUser(int userId); 
         Task RemoveRecipe(int id);
         Task<long> NumberOfItems();
-        Task<List<Entities.Recipe>> GetRecipePagination(int pageNumber, int pageSize); 
+        Task<List<Entities.Recipe>> GetRecipePagination(int pageNumber, int pageSize);
+
+        Task<bool> UpdateRecipeOnly(Entities.Recipe recipe);
     }
 }

@@ -3,7 +3,6 @@ using BuildingBlocks.Jwt.Service;
 using FastEndpoints;
 using FastEndpoints.Swagger;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
 using Recipe.API.Common.Database;
 using Recipe.API.Repositories;
 using System.Reflection;
@@ -35,6 +34,8 @@ builder.Services.SwaggerDocument(options =>
 });
 
 builder.Services.AddScoped<IRecipeRepository, RecipeRepository>();
+builder.Services.AddScoped<IIngredientRepository, IngredientRepository>();
+builder.Services.AddScoped<IStepRepository, StepRepository>(); 
 
 builder.Services.AddJwtValidation(builder.Configuration); 
 
