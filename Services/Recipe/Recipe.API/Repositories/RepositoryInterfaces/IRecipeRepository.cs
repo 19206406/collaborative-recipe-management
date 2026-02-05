@@ -1,4 +1,6 @@
-﻿namespace Recipe.API.Repositories
+﻿using Recipe.API.Models;
+
+namespace Recipe.API.Repositories.RepositoryInterfaces
 {
     public interface IRecipeRepository
     {
@@ -10,5 +12,6 @@
         Task<List<Entities.Recipe>> GetRecipePagination(int pageNumber, int pageSize);
 
         Task<bool> UpdateRecipeOnly(Entities.Recipe recipe);
+        Task<List<Entities.Recipe>> SearchAdvanced(RecipeSearchCriteria criteria);
     }
 }

@@ -1,7 +1,7 @@
 ﻿using BuildingBlocks.CQRS;
 using BuildingBlocks.Exceptions;
 using MediatR;
-using Recipe.API.Repositories;
+using Recipe.API.Repositories.RepositoryInterfaces;
 
 namespace Recipe.API.Features.Recipe.RemoveRecipe
 {

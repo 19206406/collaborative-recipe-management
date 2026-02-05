@@ -27,7 +27,7 @@ namespace Recipe.API.Common.Database
         //PUT    /api/recipes/{id}               - Actualizar(Auth, solo dueño) ------ listo
         //DELETE /api/recipes/{id}               - Eliminar(Auth, solo dueño) ------- listo
         //GET    /api/recipes/user/{userId}      - Recetas de un usuario ------- Listo
-        //GET    /api/recipes/search             - Búsqueda avanzada
+        //GET    /api/recipes/search             - Búsqueda avanzada ------- listo
         //PUT    /api/recipes/{id}/rating        - Actualizar rating(interno)
         //GET    /api/recipes/by-ingredients     - Para Recommendation Service
 
@@ -37,5 +37,8 @@ namespace Recipe.API.Common.Database
         //- Normalizar ingredientes a minúsculas
         //- Auto-generar tags según ingredientes(si tiene "pollo" → tag "chicken")
         //- Calcular total_time = prep_time + cook_time
+
+        //-Recibir nuevo promedio y contador desde Rating Service
+        //-Actualizar campos average_rating y rating_count
     }
 }

@@ -1,9 +1,9 @@
 ﻿using BuildingBlocks.CQRS;
-using Recipe.API.Repositories;
 using Mapster;
 using Microsoft.EntityFrameworkCore;
 using Recipe.API.Features.Recipe.CreateRecipe;
 using BuildingBlocks.Pagination;
+using Recipe.API.Repositories.RepositoryInterfaces;
 
 namespace Recipe.API.Features.Recipe.GetListOfRecipes
 {

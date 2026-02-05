@@ -1,5 +1,6 @@
 ﻿using Recipe.API.Common.Database;
 using Recipe.API.Entities;
+using Recipe.API.Repositories.RepositoryInterfaces;
 
 namespace Recipe.API.Repositories
 {

@@ -5,6 +5,7 @@ using FastEndpoints.Swagger;
 using Microsoft.EntityFrameworkCore;
 using Recipe.API.Common.Database;
 using Recipe.API.Repositories;
+using Recipe.API.Repositories.RepositoryInterfaces;
 using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);

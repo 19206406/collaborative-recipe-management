@@ -1,6 +1,6 @@
 ﻿using Recipe.API.Entities;
 
-namespace Recipe.API.Repositories
+namespace Recipe.API.Repositories.RepositoryInterfaces
 {
     public interface ITagRepository
     {

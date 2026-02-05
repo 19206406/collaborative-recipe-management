@@ -11,8 +11,8 @@
         public int Difficulty { get; set; }
         public int Servings { get; set; }
         public string ImageUrl { get; set; } = default!;
-        public decimal AverageRating { get; set; }
-        public int RatingCount { get; set; }
+        public decimal AverageRating { get; set; } // promedio de calificaciones
+        public int RatingCount { get; set; } // cuantas personas han calificado 
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
 

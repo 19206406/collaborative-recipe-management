@@ -1,5 +1,5 @@
 ﻿using BuildingBlocks.CQRS;
-using Recipe.API.Repositories;
+using Recipe.API.Repositories.RepositoryInterfaces;
 
 namespace Recipe.API.Features.Recipe.CreateRecipe
 {
