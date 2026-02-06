@@ -1,5 +1,6 @@
 ﻿using FastEndpoints;
 using MediatR;
+using Recipe.API.Features.Recipe.GetRecipe;
 
 namespace Recipe.API.Features.Recipe.CreateRecipe
 {
@@ -35,9 +36,9 @@ namespace Recipe.API.Features.Recipe.CreateRecipe
         public override async Task HandleAsync(CreateRecipeRequest req, CancellationToken ct)
         {
             var command = new CreateRecipeCommand(req.Recipe, req.Ingredients, req.Steps);
-            var result = await _mediator.Send(command); 
+            var result = await _mediator.Send(command);
 
-            await Send.OkAsync(result); 
+            await Send.CreatedAtAsync(GetRecipeEndpoint.Route, new { id = result.Recipe.Id }, result); 
         }
     }
 }

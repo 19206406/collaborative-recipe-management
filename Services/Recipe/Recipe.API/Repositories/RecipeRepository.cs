@@ -111,12 +111,13 @@ namespace Recipe.API.Repositories
             return recipes; 
         }
 
-        public async Task<bool> UpdateRecipeOnly(Entities.Recipe recipe)
+        public async Task<Entities.Recipe> UpdateRecipeOnly(Entities.Recipe recipe)
         {
             _context.Recipes.Update(recipe);
             await _context.SaveChangesAsync();
 
-            return true; 
+            await _context.Entry(recipe).ReloadAsync();
+            return recipe;
         }
     }
 }

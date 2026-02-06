@@ -8,9 +8,13 @@ namespace Recipe.API.Common.Database.Configurations
     {
         public void Configure(EntityTypeBuilder<RecipeTag> builder)
         {
-            builder.HasKey(rt => rt.Id);
 
             builder.ToTable("recipe_tags");
+
+            builder.HasKey(rt => rt.Id);
+
+            builder.Property(rt => rt.Id)
+                .HasColumnName("id"); 
 
             builder.Property(rt => rt.RecipeId)
                 .IsRequired()

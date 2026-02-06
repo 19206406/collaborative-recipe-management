@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Recipe.API.Entities;
-using YamlDotNet.Core.Tokens;
 
 namespace Recipe.API.Common.Database
 {
@@ -28,8 +28,8 @@ namespace Recipe.API.Common.Database
         //DELETE /api/recipes/{id}               - Eliminar(Auth, solo dueño) ------- listo
         //GET    /api/recipes/user/{userId}      - Recetas de un usuario ------- Listo
         //GET    /api/recipes/search             - Búsqueda avanzada ------- listo
-        //PUT    /api/recipes/{id}/rating        - Actualizar rating(interno)
-        //GET    /api/recipes/by-ingredients     - Para Recommendation Service
+        //PUT    /api/recipes/{id}/rating        - Actualizar rating(interno) ---- listo 
+        //GET    /api/recipes/by-ingredients     - Para Recommendation Service ------ no la entiendo 
 
         //1. **Crear Receta**:
         //- Validar userId del JWT
@@ -40,5 +40,9 @@ namespace Recipe.API.Common.Database
 
         //-Recibir nuevo promedio y contador desde Rating Service
         //-Actualizar campos average_rating y rating_count
+
+//        Add-Migration NombreMigracion -Project Persistence -StartupProject Api -OutputDir Migrations
+//Update-Database -Project Persistence -StartupProject Api
+
     }
 }

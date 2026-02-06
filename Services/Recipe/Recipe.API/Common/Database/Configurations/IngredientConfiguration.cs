@@ -12,6 +12,10 @@ namespace Recipe.API.Common.Database.Configurations
 
             builder.HasKey(i => i.Id);
 
+            builder.Property(i => i.Id)
+                .IsRequired()
+                .HasColumnName("id");
+
             builder.Property(i => i.RecipeId)
                 .IsRequired()
                 .HasColumnName("recipe_id"); 

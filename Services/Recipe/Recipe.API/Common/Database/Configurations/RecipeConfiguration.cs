@@ -7,10 +7,12 @@ namespace Recipe.API.Common.Database.Configurations
     {
         public void Configure(EntityTypeBuilder<Entities.Recipe> builder)
         {
+            builder.ToTable("recipes");
 
             builder.HasKey(r => r.Id);
 
-            builder.ToTable("recipes");
+            builder.Property(r => r.Id)
+                .HasColumnName("id"); 
 
             builder.Property(r => r.UserId)
                 .IsRequired()
@@ -60,12 +62,10 @@ namespace Recipe.API.Common.Database.Configurations
 
             builder.Property(r => r.CreatedAt)
                 .IsRequired()
-                .HasDefaultValue(DateTime.UtcNow)
                 .HasColumnName("created_at");
 
             builder.Property(r => r.UpdatedAt)
                 .IsRequired()
-                .HasDefaultValue(DateTime.UtcNow)
                 .HasColumnName("updated_at");
 
             // relaciones 

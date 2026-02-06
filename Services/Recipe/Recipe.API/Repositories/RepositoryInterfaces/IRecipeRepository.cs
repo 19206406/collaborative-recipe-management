@@ -11,7 +11,7 @@ namespace Recipe.API.Repositories.RepositoryInterfaces
         Task<long> NumberOfItems();
         Task<List<Entities.Recipe>> GetRecipePagination(int pageNumber, int pageSize);
 
-        Task<bool> UpdateRecipeOnly(Entities.Recipe recipe);
+        Task<Entities.Recipe> UpdateRecipeOnly(Entities.Recipe recipe);
         Task<List<Entities.Recipe>> SearchAdvanced(RecipeSearchCriteria criteria);
     }
 }

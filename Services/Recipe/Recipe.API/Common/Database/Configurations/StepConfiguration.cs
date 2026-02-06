@@ -8,9 +8,13 @@ namespace Recipe.API.Common.Database.Configurations
     {
         public void Configure(EntityTypeBuilder<Step> builder)
         {
-            builder.HasKey(s => s.Id);
 
             builder.ToTable("steps");
+
+            builder.HasKey(s => s.Id);
+
+            builder.Property(s => s.Id)
+                .HasColumnName("id"); 
 
             builder.Property(s => s.RecipeId)
                 .IsRequired()

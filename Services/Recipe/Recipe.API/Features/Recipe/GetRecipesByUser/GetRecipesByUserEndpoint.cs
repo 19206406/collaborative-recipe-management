@@ -4,7 +4,7 @@ using MediatR;
 namespace Recipe.API.Features.Recipe.GetRecipesByUser
 {
     public record GetRecipeByUserRequest(int UserId); 
-    public class GetRecipesByUserEndpoint : Endpoint<GetRecipeByUserRequest>
+    public class GetRecipesByUserEndpoint : Endpoint<GetRecipeByUserRequest, GetRecipesByUserResponse>
     {
         private readonly IMediator _mediator;
 
@@ -15,7 +15,7 @@ namespace Recipe.API.Features.Recipe.GetRecipesByUser
 
         public override void Configure()
         {
-            Get("api/recipe/user/{userId}");
+            Get("api/recipes/user/{userId}");
             Summary(x =>
             {
                 x.Summary = "obtener todas las recetas de un usuario";

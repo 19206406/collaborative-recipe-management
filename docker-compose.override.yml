@@ -7,13 +7,15 @@ services:
       - "1433:1433"
     volumes:
       - sqlserver-data:/var/opt/mssql
-
+      
   postgres: 
     container_name: recipedb
+    image: postgres:16-alpine
     environment: 
       - POSTGRES_USER=admin
-      - POSTGRES_PASSWORD=Sebastian@Postgres123
+      - POSTGRES_PASSWORD=SebastianPass123
       - POSTGRES_DB=recipe_db
+      - POSTGRES_INITDB_ARGS=--auth-host=scram-sha-256 --auth-local=scram-sha-256
     ports:
       - "5432:5432"
     volumes:
@@ -23,6 +25,9 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+    command: >
+      postgres 
+      -c password_encryption=scram-sha-256
 
 volumes:
   sqlserver-data: 

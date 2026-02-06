@@ -5,12 +5,12 @@ using MediatR;
 
 namespace Recipe.API.Features.Recipe.UpdateRecipe
 {
-    public record UpdateRecipe(int Id, int UserId, string Title, string Description, int PrepTimeMinutes, int CookTimeMinutes, int Difficulty, int Servings, string ImageUrl);
+    public record UpdateRecipe(int UserId, string Title, string Description, int PrepTimeMinutes, int CookTimeMinutes, int Difficulty, int Servings, string ImageUrl);
     public record UpdateIngredient(int Id, string Name, decimal Quantity, string Unit, int DisplayOrder);
     public record UpdateStep(int Id, int RecipeId, int StepNumber, string Instruction);
-    public record UpdateRecipeRequest(UpdateRecipe Recipe, List<UpdateIngredient> Ingredients, List<UpdateStep> Steps); 
+    public record UpdateRecipeRequest(int Id, UpdateRecipe Recipe, List<UpdateIngredient> Ingredients, List<UpdateStep> Steps); 
 
-    public class UpdateRecipeEndpoint : Endpoint<UpdateRecipeRequest>
+    public class UpdateRecipeEndpoint : Endpoint<UpdateRecipeRequest, UpdateRecipeResponse>
     {
         private readonly IMediator _mediator;
 
@@ -21,7 +21,7 @@ namespace Recipe.API.Features.Recipe.UpdateRecipe
 
         public override void Configure()
         {
-            Post("api/recipe/{id}");
+            Put("api/recipes/{id}");
             Summary(x =>
             {
                 x.Summary = "Actualizar una receta";
@@ -37,7 +37,7 @@ namespace Recipe.API.Features.Recipe.UpdateRecipe
             if (userId != req.Recipe.UserId)
                 throw new UnauthorizedException("El usuario no está autorizado para realizar esta acción");
 
-            var command = new UpdateRecipeCommand(req.Recipe, req.Ingredients, req.Steps);
+            var command = new UpdateRecipeCommand(req.Id, req.Recipe, req.Ingredients, req.Steps);
             var result = await _mediator.Send(command);
 
             await Send.OkAsync(); 

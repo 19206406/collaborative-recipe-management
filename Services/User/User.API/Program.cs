@@ -58,7 +58,7 @@ var app = builder.Build();
 
 app.UseExceptionHandler();
 app.UseCustomExceptionHandler();
-app.UseAuthorization(); 
+//app.UseAuthorization(); 
 
 // FastEndpoints 
 app.UseFastEndpoints().UseSwaggerGen(); 

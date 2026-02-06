@@ -15,7 +15,7 @@ namespace Recipe.API.Features.Recipe.UpdateRecipeRating
 
         public override void Configure()
         {
-            Put("api/recipe/{id}/rating");
+            Put("api/recipes/{id}/rating");
             Summary(x =>
             {
                 x.Summary = "Actualizar el rating de una receta";

@@ -2,6 +2,6 @@
 
 namespace Recipe.API.Features.Recipe.UpdateRecipe
 {
-    public record UpdateRecipeResponse(ResponseRecipe recipe, List<ResponseIngredient> Ingredient,
-        List<ResponseStep> Step, List<ResponseTag> Tag); 
+    public record UpdateRecipeResponse(ResponseRecipe recipe, List<ResponseIngredient> Ingredients,
+        List<ResponseStep> Steps, List<ResponseTag> Tags); 
 }

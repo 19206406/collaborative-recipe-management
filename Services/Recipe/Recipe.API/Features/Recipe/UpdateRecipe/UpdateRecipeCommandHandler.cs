@@ -26,10 +26,10 @@ namespace Recipe.API.Features.Recipe.UpdateRecipe
 
         public async Task<UpdateRecipeResponse> Handle(UpdateRecipeCommand command, CancellationToken cancellationToken)
         {
-            var recipe = await _recipeRepository.GetRecipe(command.Recipe.Id);
+            var recipe = await _recipeRepository.GetRecipe(command.Id);
 
             if (recipe is null)
-                throw new NotFoundException("receta", command.Recipe.Id);
+                throw new NotFoundException("receta", command.Id);
 
             var updatedRecipe = command.Recipe.Adapt<Entities.Recipe>(); 
             var recipeUpdated = await _recipeRepository.UpdateRecipeOnly(updatedRecipe);
@@ -112,7 +112,7 @@ namespace Recipe.API.Features.Recipe.UpdateRecipe
 
             await _tagRepository.UpdateTags(recipeTags);
 
-            var r = await _recipeRepository.GetRecipe(command.Recipe.Id);
+            var r = await _recipeRepository.GetRecipe(command.Id);
 
             var recipeUp = new ResponseRecipe(r.Id, r.UserId, r.Title, r.Description, r.PrepTimeMinutes,
                 r.CookTimeMinutes, r.Difficulty, r.Servings, r.ImageUrl, r.AverageRating, r.RatingCount, r.CreatedAt);
