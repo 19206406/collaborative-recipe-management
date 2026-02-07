@@ -5,7 +5,7 @@
   </Folder>
   <Folder Name="/Services/" />
   <Folder Name="/Services/Rating/">
-    <Project Path="../Rating.API/Rating.API.csproj" Id="c8d02583-0d85-48df-9b80-aa215a37d330" />
+    <Project Path="Services/Rating/Rating.API/Rating.API.csproj" />
   </Folder>
   <Folder Name="/Services/Recipe/">
     <Project Path="Services/Recipe/Recipe.API/Recipe.API.csproj" Id="aa2ec65a-f075-4f5e-8df4-cb6b0aa6a277" />
