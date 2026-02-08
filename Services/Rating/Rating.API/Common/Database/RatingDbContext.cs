@@ -6,7 +6,7 @@ namespace Rating.API.Common.Database
     public class RatingDbContext : DbContext
     {
         public RatingDbContext(DbContextOptions<RatingDbContext> options) : base(options)
-        {  
+        {
         }
 
         public DbSet<RatingE> Ratings { get; set; }
@@ -16,5 +16,13 @@ namespace Rating.API.Common.Database
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(RatingDbContext).Assembly); 
             base.OnModelCreating(modelBuilder);
         }
+
+
+        //POST   /api/ratings                     - Crear/Actualizar calificación(Auth) --- listo 
+        //GET    /api/ratings/recipe/{recipeId}   - Calificaciones de receta -- listo 
+        //GET    /api/ratings/user/{userId}       - Calificaciones del usuario -- listo 
+        //DELETE /api/ratings/{id}                - Eliminar calificación(Auth) -- listo
+        //GET    /api/ratings/recipe/{ recipeId}/average    - Promedio
+        //GET    /api/ratings/user/{ userId}/recipe/{recipeId}    - Rating específico
     }
 }

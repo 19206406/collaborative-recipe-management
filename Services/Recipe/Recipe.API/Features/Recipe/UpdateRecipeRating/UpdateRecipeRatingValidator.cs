@@ -7,7 +7,7 @@ namespace Recipe.API.Features.Recipe.UpdateRecipeRating
         public UpdateRecipeRatingValidator()
         {
             RuleFor(x => x.Rating)
-                .InclusiveBetween(0, 5)
+                .InclusiveBetween(1, 5)
                 .WithMessage("El rating debe estar entre 0 y 5");
         }
     }

@@ -12,6 +12,8 @@ namespace Rating.API.Common.Database.Configurations
 
             builder.HasKey(r => r.Id);
 
+            builder.HasKey(r => new { r.UserId, r.RecipeId }); 
+
             builder.Property(r => r.Id)
                 .HasColumnName("id");
 
