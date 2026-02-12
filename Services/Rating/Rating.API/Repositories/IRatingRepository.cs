@@ -14,6 +14,10 @@ namespace Rating.API.Repositories
 
         Task<List<RatingE>> GetRatingsByUserIdAsync(int userId);
 
-        Task DeleteRatingAsync(RatingE rating); 
+        Task DeleteRatingAsync(RatingE rating);
+
+        Task<double> GetAverageRatingAsync(int recipeId);
+
+        Task<int> GetSpecificRatingAsync(int userId, int recipeId); 
     }
 }

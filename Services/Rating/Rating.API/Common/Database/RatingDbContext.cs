@@ -22,7 +22,7 @@ namespace Rating.API.Common.Database
         //GET    /api/ratings/recipe/{recipeId}   - Calificaciones de receta -- listo 
         //GET    /api/ratings/user/{userId}       - Calificaciones del usuario -- listo 
         //DELETE /api/ratings/{id}                - Eliminar calificación(Auth) -- listo
-        //GET    /api/ratings/recipe/{ recipeId}/average    - Promedio
-        //GET    /api/ratings/user/{ userId}/recipe/{recipeId}    - Rating específico
+        //GET    /api/ratings/recipe/{recipeId}/average    - Promedio -- listo a medias 
+        //GET    /api/ratings/user/{userId}/recipe/{recipeId}    - Rating específico -- listo a medias 
     }
 }

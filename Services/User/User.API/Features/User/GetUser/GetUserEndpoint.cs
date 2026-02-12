@@ -1,6 +1,5 @@
 ﻿using FastEndpoints;
 using MediatR;
-using Microsoft.Extensions.Primitives;
 
 namespace User.API.Features.User.GetUser
 {

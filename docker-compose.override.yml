@@ -7,6 +7,15 @@ services:
       - "1433:1433"
     volumes:
       - sqlserver-data:/var/opt/mssql
+  
+  sqlserver2:
+    container_name: ratingdb
+    environment: 
+      - SA_PASSWORD=Sebastian@Rating123
+    ports:
+      - "1434:1433"
+    volumes:
+      - sqlserver2-data:/var/opt/mssql
       
   postgres: 
     container_name: recipedb
@@ -29,8 +38,25 @@ services:
       postgres 
       -c password_encryption=scram-sha-256
 
+  redis:
+    container_name: redis-cache
+    ports: 
+      - "6379:6379"
+    volumes:
+      - redis-data:/data
+    command: redis-server --appendonly yes
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
 volumes:
   sqlserver-data: 
     driver: local
+  sqlserver2-data:
+    driver: local
   postgres-data: 
+    driver: local
+  redis-data:
     driver: local

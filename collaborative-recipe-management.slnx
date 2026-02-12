@@ -10,6 +10,9 @@
   <Folder Name="/Services/Recipe/">
     <Project Path="Services/Recipe/Recipe.API/Recipe.API.csproj" Id="aa2ec65a-f075-4f5e-8df4-cb6b0aa6a277" />
   </Folder>
+  <Folder Name="/Services/Recommendation/">
+    <Project Path="Services/Recommendation/Recommendation.API/Recommendation.API.csproj" Id="64f6d07f-8c76-46ce-97fb-3c6653e1a38e" />
+  </Folder>
   <Folder Name="/Services/User/">
     <Project Path="Services/User/User.API/User.API.csproj" />
   </Folder>

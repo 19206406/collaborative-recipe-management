@@ -1,7 +1,10 @@
 using BuildingBlocks.Behaviors;
+using BuildingBlocks.Jwt.Service;
 using FastEndpoints;
 using FastEndpoints.Swagger;
+using FluentValidation;
 using Microsoft.EntityFrameworkCore;
+using Rating.API;
 using Rating.API.Common.Database;
 using Rating.API.Repositories;
 using System.Reflection;
@@ -22,6 +25,8 @@ builder.Services.AddMediatR(cfg =>
     cfg.AddOpenBehavior(typeof(ValidationBehavior<,>));
 });
 
+builder.Services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
+
 builder.Services.SwaggerDocument(options =>
 {
     options.DocumentSettings = s =>
@@ -32,11 +37,19 @@ builder.Services.SwaggerDocument(options =>
     options.AutoTagPathSegmentIndex = 0;
 });
 
-builder.Services.AddScoped<IRatingRepository, RatingRepository>(); 
+builder.Services.AddProblemDetails(); 
+
+builder.Services.AddScoped<IRatingRepository, RatingRepository>();
+
+builder.Services.AddJwtValidation(builder.Configuration); 
 
 var app = builder.Build();
 
+app.UseExceptionHandler();
+app.UseCustomExceptionHandler(); 
+
 // FastEndpoints 
-app.UseFastEndpoints().UseSwaggerGen(); 
+app.UseFastEndpoints();
+app.UseSwaggerGen(); 
 
 app.Run();

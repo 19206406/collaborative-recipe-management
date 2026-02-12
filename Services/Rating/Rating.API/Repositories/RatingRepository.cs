@@ -27,6 +27,15 @@ namespace Rating.API.Repositories
             await _context.SaveChangesAsync(); 
         }
 
+        public async Task<double> GetAverageRatingAsync(int recipeId)
+        {
+            var averageRating = await _context.Ratings
+                .Where(x => x.RecipeId == recipeId)
+                .AverageAsync(x => x.Rating);
+
+            return averageRating;
+        }
+
         public async Task<RatingE?> GetRating(int id)
         {
             var rating = await _context.Ratings
@@ -53,6 +62,16 @@ namespace Rating.API.Repositories
                 .ToListAsync();
 
             return ratings;
+        }
+
+        public async Task<int> GetSpecificRatingAsync(int userId, int recipeId)
+        {
+            var rating = await _context.Ratings
+                .Where(x => x.UserId == userId && x.RecipeId == recipeId)
+                .Select(x => x.Rating)
+                .FirstOrDefaultAsync();
+
+            return rating; 
         }
 
         public async Task<RatingE> UpdateRating(RatingE rating)

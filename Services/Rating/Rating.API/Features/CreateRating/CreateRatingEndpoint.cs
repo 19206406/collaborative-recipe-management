@@ -22,7 +22,8 @@ namespace Rating.API.Features.CreateRating
                 x.Summary = "Crear y actualizar una recomendación";
                 x.Description = "Crea una nueva recomendación para una receta específica. Si el usuario ya ha calificado la receta, se actualizará la calificación existente.";
             });
-            Description(x => x.WithTags("Ratings")); 
+            Description(x => x.WithTags("Ratings"));
+            AllowAnonymous(); 
         }
 
         public override async Task HandleAsync(CreateRatingRequest req, CancellationToken ct)
