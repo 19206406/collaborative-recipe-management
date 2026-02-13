@@ -1,4 +1,5 @@
 services:
+
   sqlserver: 
     container_name: userdb
     environment: 
@@ -8,6 +9,7 @@ services:
     volumes:
       - sqlserver-data:/var/opt/mssql
   
+
   sqlserver2:
     container_name: ratingdb
     environment: 
@@ -16,7 +18,8 @@ services:
       - "1434:1433"
     volumes:
       - sqlserver2-data:/var/opt/mssql
-      
+
+
   postgres: 
     container_name: recipedb
     image: postgres:16-alpine
@@ -38,6 +41,7 @@ services:
       postgres 
       -c password_encryption=scram-sha-256
 
+
   redis:
     container_name: redis-cache
     ports: 
@@ -51,6 +55,26 @@ services:
       timeout: 5s
       retries: 5
 
+
+  rabbitmq: 
+    container_name: rabbitmq-broker
+    environment: 
+      - RABBITMQ_DEFAULT_USER=admin
+      - RABBITMQ_DEFAULT_PASS=Sebastian@Rabbit123
+      - RABBITMQ_DEFAULT_VHOST=/
+    ports: 
+      - "5672:5672"
+      - "15672:15672"
+    volumes:
+      - rabbitmq-data:/var/lib/rabbitmq
+    healthcheck:
+      test: ["CMD", "rabbitmq-diagnostics", "ping"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 40s
+
+
 volumes:
   sqlserver-data: 
     driver: local
@@ -59,4 +83,6 @@ volumes:
   postgres-data: 
     driver: local
   redis-data:
+    driver: local
+  rabbitmq-data:
     driver: local

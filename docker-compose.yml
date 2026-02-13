@@ -28,6 +28,11 @@ services:
     networks: 
       - microservices-network
 
+  rabbitmq: 
+    image: rabbitmq:3.13-management-alpine
+    networks:
+      - microservices-network 
+
 networks:
   microservices-network: 
     driver: bridge
