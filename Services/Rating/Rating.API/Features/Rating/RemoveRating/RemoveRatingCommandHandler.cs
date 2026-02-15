@@ -1,0 +1,37 @@
+﻿using BuildingBlocks.CQRS;
+using BuildingBlocks.Exceptions;
+using MediatR;
+using Rating.API.Features.Clients;
+using Rating.API.Repositories;
+
+namespace Rating.API.Features.Rating.RemoveRating
+{
+    public class RemoveRatingCommandHandler : ICommandHandler<RemoveRatingCommand, Unit>
+    {
+        private readonly IRatingRepository _ratingRepository;
+        private readonly IRecipesServiceClient _recipesClient;
+
+        public RemoveRatingCommandHandler(IRatingRepository ratingRepository, IRecipesServiceClient recipesClient)
+        {
+            _ratingRepository = ratingRepository;
+            _recipesClient = recipesClient;
+        }
+
+        public async Task<Unit> Handle(RemoveRatingCommand command, CancellationToken cancellationToken)
+        {
+            bool recipeExist = await _recipesClient.RecipeExistAsync(command.Id, cancellationToken);
+
+            if (!recipeExist)
+                throw new NotFoundException("receta", command.Id);
+
+            var rating = await _ratingRepository.GetRating(command.Id);
+
+            if (rating is null)
+                throw new NotFoundException("calificación", command.Id);
+
+            await _ratingRepository.DeleteRatingAsync(rating);
+
+            return Unit.Value; 
+        }
+    }
+}
