@@ -1,9 +1,10 @@
-﻿using FastEndpoints;
+﻿using BuildingBlocks.Jwt.Claims;
+using FastEndpoints;
 using MediatR;
 
 namespace Rating.API.Features.Rating.CreateAndUpdateRating
 {
-    public record CreateAndUpdateRatingRequest(int Id, int UserId, int RecipeId, int Rating, string? Comment, bool IsToUpdate); 
+    public record CreateAndUpdateRatingRequest(int Id, int RecipeId, int Rating, string? Comment, bool IsToUpdate); 
     public class CreateAndUpdateRatingEndpoint : Endpoint<CreateAndUpdateRatingRequest, CreateAndUpdateRatingResponse>
     {
         private readonly IMediator _mediator;
@@ -22,12 +23,14 @@ namespace Rating.API.Features.Rating.CreateAndUpdateRating
                 x.Description = "Permite crear o actualizar una calificación para una receta específica.";
             });
             Description(x => x.WithTags("Ratings"));
-            AllowAnonymous(); 
         }
 
         public override async Task HandleAsync(CreateAndUpdateRatingRequest req, CancellationToken ct)
         {
-            var command = new CreateAndUpdateRatingCommand(req.Id, req.UserId, req.RecipeId, req.Rating, req.Comment, req.IsToUpdate);
+            // id del usuario del jwt  
+            var userId = HttpContext.User.GetUserId(); 
+
+            var command = new CreateAndUpdateRatingCommand(req.Id, userId, req.RecipeId, req.Rating, req.Comment, req.IsToUpdate);
             var result = await _mediator.Send(command);
 
             await Send.OkAsync(result); 

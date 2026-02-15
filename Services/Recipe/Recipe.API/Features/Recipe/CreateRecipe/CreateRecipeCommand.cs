@@ -2,6 +2,6 @@
 
 namespace Recipe.API.Features.Recipe.CreateRecipe
 {
-    public record CreateRecipeCommand(CreateRecipe Recipe, List<CreateIngredient> Ingredients, List<CreateStep> Steps) 
+    public record CreateRecipeCommand(int UserId, CreateRecipe Recipe, List<CreateIngredient> Ingredients, List<CreateStep> Steps) 
         : ICommand<CreateRecipeResponse>; 
 }

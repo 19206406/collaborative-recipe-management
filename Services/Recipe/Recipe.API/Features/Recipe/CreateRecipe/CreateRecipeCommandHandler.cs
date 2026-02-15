@@ -1,5 +1,5 @@
 ﻿using BuildingBlocks.CQRS;
-using Recipe.API.Repositories.RepositoryInterfaces;
+using Recipe.API.Repositories.RecipeRepository;
 
 namespace Recipe.API.Features.Recipe.CreateRecipe
 {
@@ -23,7 +23,7 @@ namespace Recipe.API.Features.Recipe.CreateRecipe
 
             var newRecipe = new Entities.Recipe
             {
-                UserId = recipe.UserId,
+                UserId = command.UserId,
                 Title = recipe.Title,
                 Description = recipe.Description,
                 PrepTimeMinutes = recipe.PrepTimeMinutes,
@@ -35,7 +35,7 @@ namespace Recipe.API.Features.Recipe.CreateRecipe
                 UpdatedAt = DateTime.UtcNow,
                 Ingredients = ingredients.Select(i => new Entities.Ingredient
                 {
-                    Name = i.Name,
+                    Name = i.Name.ToLower(),
                     Quantity = i.Quantity,
                     Unit = i.Unit,
                     DisplayOrder = i.DisplayOrder
@@ -47,7 +47,7 @@ namespace Recipe.API.Features.Recipe.CreateRecipe
                 }).ToList(),
                 RecipeTags = tags.Select(t => new Entities.RecipeTag
                 {
-                    Tag = t.Name
+                    Tag = t.Name.ToLower()
                 }).ToList()
             };
 

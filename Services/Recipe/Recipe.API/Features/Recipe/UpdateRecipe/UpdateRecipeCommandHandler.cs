@@ -3,7 +3,10 @@ using BuildingBlocks.Exceptions;
 using Mapster;
 using Recipe.API.Entities;
 using Recipe.API.Features.Recipe.CreateRecipe;
-using Recipe.API.Repositories.RepositoryInterfaces;
+using Recipe.API.Repositories.IngredientRepository;
+using Recipe.API.Repositories.RecipeRepository;
+using Recipe.API.Repositories.StepRepository;
+using Recipe.API.Repositories.TagRepository;
 
 namespace Recipe.API.Features.Recipe.UpdateRecipe
 {
@@ -30,6 +33,9 @@ namespace Recipe.API.Features.Recipe.UpdateRecipe
 
             if (recipe is null)
                 throw new NotFoundException("receta", command.Id);
+
+            if (command.UserId != recipe.UserId)
+                throw new UnauthorizedException("El usuario no está autorizado para realizar esta acción");
 
             var updatedRecipe = command.Recipe.Adapt<Entities.Recipe>(); 
             var recipeUpdated = await _recipeRepository.UpdateRecipeOnly(updatedRecipe);

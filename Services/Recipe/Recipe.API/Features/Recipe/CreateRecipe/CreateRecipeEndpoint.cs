@@ -1,10 +1,11 @@
-﻿using FastEndpoints;
+﻿using BuildingBlocks.Jwt.Claims;
+using FastEndpoints;
 using MediatR;
 using Recipe.API.Features.Recipe.GetRecipe;
 
 namespace Recipe.API.Features.Recipe.CreateRecipe
 {
-    public record CreateRecipe(int UserId, string Title, string Description, int PrepTimeMinutes, int CookTimeMinutes, int Difficulty, int Servings, string ImageUrl);
+    public record CreateRecipe(string Title, string Description, int PrepTimeMinutes, int CookTimeMinutes, int Difficulty, int Servings, string ImageUrl);
 
     public record CreateIngredient(string Name, decimal Quantity, string Unit, int DisplayOrder); 
 
@@ -35,7 +36,9 @@ namespace Recipe.API.Features.Recipe.CreateRecipe
 
         public override async Task HandleAsync(CreateRecipeRequest req, CancellationToken ct)
         {
-            var command = new CreateRecipeCommand(req.Recipe, req.Ingredients, req.Steps);
+            var userId = HttpContext.User.GetUserId();
+
+            var command = new CreateRecipeCommand(userId, req.Recipe, req.Ingredients, req.Steps);
             var result = await _mediator.Send(command);
 
             await Send.CreatedAtAsync(GetRecipeEndpoint.Route, new { id = result.Recipe.Id }, result); 

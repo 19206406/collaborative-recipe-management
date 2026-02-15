@@ -1,8 +1,7 @@
 ﻿using Recipe.API.Common.Database;
 using Recipe.API.Entities;
-using Recipe.API.Repositories.RepositoryInterfaces;
 
-namespace Recipe.API.Repositories
+namespace Recipe.API.Repositories.IngredientRepository
 {
     public class IngredientRepository : IIngredientRepository
     {

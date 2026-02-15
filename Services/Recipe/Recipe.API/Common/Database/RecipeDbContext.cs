@@ -21,11 +21,11 @@ namespace Recipe.API.Common.Database
             base.OnModelCreating(modelBuilder);
         }
 
-        //POST   /api/recipes                    - Crear receta(Auth) ---------- Listo 
+        //POST   /api/recipes                    - Crear receta(Auth) ---------- Listo con autenticación 
         //GET    /api/recipes                    - Listar con paginación y filtros ------------ Listo
         //GET    /api/recipes/{id}               - Detalle de receta --------- listo 
-        //PUT    /api/recipes/{id}               - Actualizar(Auth, solo dueño) ------ listo
-        //DELETE /api/recipes/{id}               - Eliminar(Auth, solo dueño) ------- listo
+        //PUT    /api/recipes/{id}               - Actualizar(Auth, solo dueño) ------ listo ------- listo con autenticación 
+        //DELETE /api/recipes/{id}               - Eliminar(Auth, solo dueño) ------- listo --------- listo con autenticación 
         //GET    /api/recipes/user/{userId}      - Recetas de un usuario ------- Listo
         //GET    /api/recipes/search             - Búsqueda avanzada ------- listo
         //PUT    /api/recipes/{id}/rating        - Actualizar rating(interno) ---- listo 

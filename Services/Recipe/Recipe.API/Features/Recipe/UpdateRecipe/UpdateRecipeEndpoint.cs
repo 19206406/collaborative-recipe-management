@@ -5,7 +5,7 @@ using MediatR;
 
 namespace Recipe.API.Features.Recipe.UpdateRecipe
 {
-    public record UpdateRecipe(int UserId, string Title, string Description, int PrepTimeMinutes, int CookTimeMinutes, int Difficulty, int Servings, string ImageUrl);
+    public record UpdateRecipe(string Title, string Description, int PrepTimeMinutes, int CookTimeMinutes, int Difficulty, int Servings, string ImageUrl);
     public record UpdateIngredient(int Id, string Name, decimal Quantity, string Unit, int DisplayOrder);
     public record UpdateStep(int Id, int RecipeId, int StepNumber, string Instruction);
     public record UpdateRecipeRequest(int Id, UpdateRecipe Recipe, List<UpdateIngredient> Ingredients, List<UpdateStep> Steps); 
@@ -34,10 +34,7 @@ namespace Recipe.API.Features.Recipe.UpdateRecipe
         {
             var userId = HttpContext.User.GetUserId();
 
-            if (userId != req.Recipe.UserId)
-                throw new UnauthorizedException("El usuario no está autorizado para realizar esta acción");
-
-            var command = new UpdateRecipeCommand(req.Id, req.Recipe, req.Ingredients, req.Steps);
+            var command = new UpdateRecipeCommand(req.Id, userId, req.Recipe, req.Ingredients, req.Steps);
             var result = await _mediator.Send(command);
 
             await Send.OkAsync(); 

@@ -29,6 +29,9 @@ namespace Rating.API.Features.Rating.RemoveRating
             if (rating is null)
                 throw new NotFoundException("calificación", command.Id);
 
+            if (command.UserId != rating.UserId)
+                throw new UnauthorizedException("El usuario no está autorizado para realizar esta acción");
+
             await _ratingRepository.DeleteRatingAsync(rating);
 
             return Unit.Value; 

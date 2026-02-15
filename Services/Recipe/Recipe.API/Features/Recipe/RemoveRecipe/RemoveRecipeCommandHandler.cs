@@ -1,7 +1,7 @@
 ﻿using BuildingBlocks.CQRS;
 using BuildingBlocks.Exceptions;
 using MediatR;
-using Recipe.API.Repositories.RepositoryInterfaces;
+using Recipe.API.Repositories.RecipeRepository;
 
 namespace Recipe.API.Features.Recipe.RemoveRecipe
 {
@@ -24,7 +24,7 @@ namespace Recipe.API.Features.Recipe.RemoveRecipe
             if (recipe.UserId != command.UserId)
                 throw new UnauthorizedException("Usuario no autorizado para ejecutar esta acción"); 
 
-            await _recipeRepository.RemoveRecipe(command.Id);
+            await _recipeRepository.RemoveRecipe(recipe);
 
             return Unit.Value; 
         }

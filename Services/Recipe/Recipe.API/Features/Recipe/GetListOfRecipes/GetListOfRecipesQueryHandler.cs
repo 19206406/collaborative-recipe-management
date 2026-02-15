@@ -1,9 +1,9 @@
 ﻿using BuildingBlocks.CQRS;
 using Mapster;
-using Microsoft.EntityFrameworkCore;
 using Recipe.API.Features.Recipe.CreateRecipe;
 using BuildingBlocks.Pagination;
-using Recipe.API.Repositories.RepositoryInterfaces;
+using Recipe.API.Repositories.RecipeRepository;
+using Recipe.API.Models;
 
 namespace Recipe.API.Features.Recipe.GetListOfRecipes
 {
@@ -20,10 +20,11 @@ namespace Recipe.API.Features.Recipe.GetListOfRecipes
         {
             var pageNumber = query.PageNumber;
             var pageSize = query.PageSize;
+            var criteria = query.criteria.Adapt<RecipeSearchCriteria>(); 
 
             var totalCount = await _recipeRepository.NumberOfItems();
 
-            var recipes = await _recipeRepository.GetRecipePagination(pageNumber, pageSize);
+            var recipes = await _recipeRepository.GetRecipePagination(pageNumber, pageSize, criteria);
 
             var mapRecipes = recipes.Adapt<List<ResponseRecipe>>().ToList();
 

@@ -6,8 +6,10 @@ using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 using Recipe.API;
 using Recipe.API.Common.Database;
-using Recipe.API.Repositories;
-using Recipe.API.Repositories.RepositoryInterfaces;
+using Recipe.API.Repositories.IngredientRepository;
+using Recipe.API.Repositories.RecipeRepository;
+using Recipe.API.Repositories.StepRepository;
+using Recipe.API.Repositories.TagRepository;
 using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);

@@ -1,7 +1,7 @@
 ﻿using BuildingBlocks.CQRS;
 using Mapster;
 using Recipe.API.Features.Recipe.CreateRecipe;
-using Recipe.API.Repositories.RepositoryInterfaces;
+using Recipe.API.Repositories.RecipeRepository;
 
 namespace Recipe.API.Features.Recipe.GetRecipesByUser
 {

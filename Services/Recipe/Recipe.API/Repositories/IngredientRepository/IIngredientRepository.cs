@@ -1,6 +1,6 @@
 ﻿using Recipe.API.Entities;
 
-namespace Recipe.API.Repositories.RepositoryInterfaces
+namespace Recipe.API.Repositories.IngredientRepository
 {
     public interface IIngredientRepository
     {

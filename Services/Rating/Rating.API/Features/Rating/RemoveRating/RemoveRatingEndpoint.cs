@@ -1,4 +1,5 @@
-﻿using FastEndpoints;
+﻿using BuildingBlocks.Jwt.Claims;
+using FastEndpoints;
 using MediatR;
 
 namespace Rating.API.Features.Rating.RemoveRating
@@ -28,8 +29,9 @@ namespace Rating.API.Features.Rating.RemoveRating
         public override async Task HandleAsync(RemoveRatingRequest req, CancellationToken ct)
         {
             // verificar autenticación y autorización para realizar esta acción 
+            var userId = HttpContext.User.GetUserId(); 
 
-            var command = new RemoveRatingCommand(req.Id);
+            var command = new RemoveRatingCommand(req.Id, userId);
             await _mediator.Send(command);
 
             await Send.NoContentAsync(); 

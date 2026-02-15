@@ -22,8 +22,12 @@ namespace Rating.API.Features.Rating.CreateAndUpdateRating
         {
             if (command.IsToUpdate)
             {
-                var rating = await _ratingRepository.GetRating(command.Id);
+                bool recipeExist = await _recipesClient.RecipeExistAsync(command.RecipeId, cancellationToken);
+                if (!recipeExist)
+                    throw new NotFoundException("receta", command.RecipeId);
 
+
+                var rating = await _ratingRepository.GetRating(command.Id);
                 if (rating is null)
                     throw new NotFoundException("calificación", command.Id);
 
@@ -49,11 +53,6 @@ namespace Rating.API.Features.Rating.CreateAndUpdateRating
                     CreatedAt = DateTime.UtcNow, 
                     UpdatedAt = DateTime.UtcNow
                 };
-
-                bool recipeExist = await _recipesClient.RecipeExistAsync(command.RecipeId, cancellationToken);
-
-                if (!recipeExist)
-                    throw new NotFoundException("receta", command.RecipeId);
 
                 var result = await _ratingRepository.AddRating(newRating);
 

@@ -4,7 +4,12 @@ using MediatR;
 
 namespace Recipe.API.Features.Recipe.GetListOfRecipes
 {
-    public class GetListOfRecipesEndpoint : Endpoint<PaginationRequest, GetListOfRecipesResponse>
+    public record SearchAdvancedRecipe(string? Title, int? PrepTimeMinutes, int? CookTimeMinutes, int? Difficulty,
+        int? Servings, string? SortBy, bool SortDescending);
+
+    public record GetListOfRecipesRequest(PaginationRequest Pagination, SearchAdvancedRecipe criteria); 
+
+    public class GetListOfRecipesEndpoint : Endpoint<GetListOfRecipesRequest, GetListOfRecipesResponse>
     {
         private readonly IMediator _mediator;
 
@@ -24,9 +29,9 @@ namespace Recipe.API.Features.Recipe.GetListOfRecipes
             Description(x => x.WithTags("Recipes")); 
         }
 
-        public override async Task HandleAsync(PaginationRequest req, CancellationToken ct)
+        public override async Task HandleAsync(GetListOfRecipesRequest req, CancellationToken ct)
         {
-            var query = new GetListOfRecipesQuery(req.PageNumber, req.PageSize);
+            var query = new GetListOfRecipesQuery(req.Pagination.PageNumber, req.Pagination.PageSize, req.criteria);
             var result = await _mediator.Send(query);
 
             await Send.OkAsync(result); 

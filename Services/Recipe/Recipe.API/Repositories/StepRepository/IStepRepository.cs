@@ -1,4 +1,4 @@
-﻿namespace Recipe.API.Repositories.RepositoryInterfaces
+﻿namespace Recipe.API.Repositories.StepRepository
 {
     public interface IStepRepository
     {
