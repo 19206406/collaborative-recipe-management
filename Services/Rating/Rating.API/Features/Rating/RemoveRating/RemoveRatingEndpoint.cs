@@ -1,4 +1,6 @@
 ﻿using BuildingBlocks.Jwt.Claims;
+using BuildingBlocks.Messaging.Events.RatingEvents;
+using BuildingBlocks.Messaging.RabbitMQ;
 using FastEndpoints;
 using MediatR;
 
@@ -9,10 +11,12 @@ namespace Rating.API.Features.Rating.RemoveRating
     public class RemoveRatingEndpoint : Endpoint<RemoveRatingRequest>
     {
         private readonly IMediator _mediator;
+        private readonly IMessagePublisher _messagePublisher;
 
-        public RemoveRatingEndpoint(IMediator mediator)
+        public RemoveRatingEndpoint(IMediator mediator, IMessagePublisher messagePublisher)
         {
             _mediator = mediator;
+            _messagePublisher = messagePublisher;
         }
 
         public override void Configure()
@@ -32,7 +36,15 @@ namespace Rating.API.Features.Rating.RemoveRating
             var userId = HttpContext.User.GetUserId(); 
 
             var command = new RemoveRatingCommand(req.Id, userId);
-            await _mediator.Send(command);
+            var result = await _mediator.Send(command);
+
+            await _messagePublisher.PublishAsync("rating.deleted", new RatingDeleteEvent
+            {
+                Id = result.Id, 
+                RecipeId = req.Id,
+                UserId = userId, 
+                Rating = result.Rating,
+            });  
 
             await Send.NoContentAsync(); 
         }

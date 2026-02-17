@@ -3,10 +3,11 @@ using BuildingBlocks.Exceptions;
 using MediatR;
 using Rating.API.Features.Clients;
 using Rating.API.Repositories;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace Rating.API.Features.Rating.RemoveRating
 {
-    public class RemoveRatingCommandHandler : ICommandHandler<RemoveRatingCommand, Unit>
+    public class RemoveRatingCommandHandler : ICommandHandler<RemoveRatingCommand, RemoveRatingResponse>
     {
         private readonly IRatingRepository _ratingRepository;
         private readonly IRecipesServiceClient _recipesClient;
@@ -17,7 +18,7 @@ namespace Rating.API.Features.Rating.RemoveRating
             _recipesClient = recipesClient;
         }
 
-        public async Task<Unit> Handle(RemoveRatingCommand command, CancellationToken cancellationToken)
+        public async Task<RemoveRatingResponse> Handle(RemoveRatingCommand command, CancellationToken cancellationToken)
         {
             bool recipeExist = await _recipesClient.RecipeExistAsync(command.Id, cancellationToken);
 
@@ -34,7 +35,7 @@ namespace Rating.API.Features.Rating.RemoveRating
 
             await _ratingRepository.DeleteRatingAsync(rating);
 
-            return Unit.Value; 
+            return new RemoveRatingResponse(rating.Id, rating.UserId, rating.RecipeId, rating.Rating); 
         }
     }
 }

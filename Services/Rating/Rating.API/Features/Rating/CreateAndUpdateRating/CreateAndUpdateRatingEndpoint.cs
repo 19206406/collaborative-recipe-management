@@ -1,4 +1,6 @@
 ﻿using BuildingBlocks.Jwt.Claims;
+using BuildingBlocks.Messaging.Events.RatingEvents;
+using BuildingBlocks.Messaging.RabbitMQ;
 using FastEndpoints;
 using MediatR;
 
@@ -8,10 +10,12 @@ namespace Rating.API.Features.Rating.CreateAndUpdateRating
     public class CreateAndUpdateRatingEndpoint : Endpoint<CreateAndUpdateRatingRequest, CreateAndUpdateRatingResponse>
     {
         private readonly IMediator _mediator;
+        private readonly IMessagePublisher _messagePublisher;
 
-        public CreateAndUpdateRatingEndpoint(IMediator mediator)
+        public CreateAndUpdateRatingEndpoint(IMediator mediator, IMessagePublisher messagePublisher)
         {
             _mediator = mediator;
+            _messagePublisher = messagePublisher;
         }
 
         public override void Configure()
@@ -32,6 +36,18 @@ namespace Rating.API.Features.Rating.CreateAndUpdateRating
 
             var command = new CreateAndUpdateRatingCommand(req.Id, userId, req.RecipeId, req.Rating, req.Comment, req.IsToUpdate);
             var result = await _mediator.Send(command);
+
+            // publicar evento de creación de evento 
+            await _messagePublisher.PublishAsync("rating.created", new RatingCreateAndUpdateEvent
+            {
+                RatingId = result.Id,
+                RecipeId = req.RecipeId,
+                UserId = userId,
+                Rating = req.Rating,
+                Comment = req.Comment,
+                IsToUpdate = req.IsToUpdate, 
+                PublishedAt = DateTime.UtcNow
+            }); 
 
             await Send.OkAsync(result); 
         }

@@ -22,9 +22,9 @@ namespace Recipe.API.Features.Recipe.UpdateRecipeRating
             if (recipe is null)
                 throw new NotFoundException("receta", command.Id);
 
-            var newAverage = (recipe.AverageRating * recipe.RatingCount + command.Rating) / (recipe.RatingCount + 1); 
-            recipe.RatingCount += 1;
-            recipe.AverageRating = newAverage;
+            // actualizar
+            var updateAverage = (recipe.AverageRating * recipe.RatingCount + command.Rating) / recipe.RatingCount;
+            recipe.AverageRating = updateAverage;
 
             var updatedRecipe = await _recipeRepository.UpdateRecipeOnly(recipe);
 

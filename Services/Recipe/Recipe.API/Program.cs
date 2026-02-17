@@ -1,5 +1,6 @@
 using BuildingBlocks.Behaviors;
 using BuildingBlocks.Jwt.Service;
+using BuildingBlocks.Messaging.Extensions;
 using FastEndpoints;
 using FastEndpoints.Swagger;
 using FluentValidation;
@@ -16,6 +17,10 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddFastEndpoints();
+
+builder.Services.AddRabbitMQMessaging(builder.Configuration);
+//builder.Services.AddRabbitMQConsumers<RatingCreatedConsumer>(); // debo de implementarlos 
+//builder.Services.AddRabbitMQConsumers<RatingDeletedConsumer>(); 
 
 builder.Services.AddDbContext<RecipeDbContext>(options =>
 {

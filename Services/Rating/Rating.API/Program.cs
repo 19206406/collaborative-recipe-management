@@ -51,22 +51,28 @@ builder.Services.AddHttpClient<IRecipesServiceClient, RecipesServiceClient>(clie
 
     client.DefaultRequestHeaders.Add("Accept", "application/json");
     client.DefaultRequestHeaders.Add("User-Agent", "RatingsService/1.0");
-}); 
+});
 
+// RabbitMQ --- publicador 
+builder.Services.AddRabbitMQMessaging(builder.Configuration); 
 
+// db context
 builder.Services.AddDbContext<RatingDbContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("RatingDb"));
 }); 
 
+// mediatR 
 builder.Services.AddMediatR(cfg =>
 {
     cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly());
     cfg.AddOpenBehavior(typeof(ValidationBehavior<,>));
 });
 
+// validators 
 builder.Services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
 
+// swagger 
 builder.Services.SwaggerDocument(options =>
 {
     options.DocumentSettings = s =>
@@ -79,8 +85,10 @@ builder.Services.SwaggerDocument(options =>
 
 builder.Services.AddProblemDetails(); 
 
+// repositorios 
 builder.Services.AddScoped<IRatingRepository, RatingRepository>();
 
+// jwt 
 builder.Services.AddJwtValidation(builder.Configuration); 
 
 var app = builder.Build();
