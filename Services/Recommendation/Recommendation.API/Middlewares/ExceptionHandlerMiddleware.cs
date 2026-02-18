@@ -3,8 +3,9 @@ using BuildingBlocks.Exceptions.Common;
 using BuildingBlocks.Models;
 using FluentValidation;
 using System.Text.Json;
+using InvalidOperationException = BuildingBlocks.Exceptions.InvalidOperationException;
 
-namespace Rating.API.Middleware
+namespace Recommendation.API.Middlewares
 {
     public class ExceptionHandlerMiddleware
     {
@@ -88,6 +89,15 @@ namespace Rating.API.Middleware
                     Errors = new List<string> { conflictException.Message }
                 },
 
+                InvalidOperationException invalidOperation => new ProblemDetailsResponse
+                {
+                    Type = "https://tools.ietf.org/html/rfc7231#section-6.5.1",
+                    Title = "InvalidOperation",
+                    Status = StatusCodes.Status400BadRequest,
+                    Instance = context.Request.Path,
+                    Errors = new List<string> { invalidOperation.Message }
+                },
+
                 BaseException baseException => new ProblemDetailsResponse
                 {
                     Type = GetTypeForStatusCode(MapExceptionToStatusCode(baseException)),
@@ -131,6 +141,7 @@ namespace Rating.API.Middleware
                 "Unauthorized" => StatusCodes.Status401Unauthorized,
                 "Forbidden" => StatusCodes.Status403Forbidden,
                 "Conflict" => StatusCodes.Status409Conflict,
+                "InvalidOperation" => StatusCodes.Status400BadRequest,
                 _ => StatusCodes.Status500InternalServerError
             };
         }

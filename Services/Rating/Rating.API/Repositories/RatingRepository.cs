@@ -44,9 +44,9 @@ namespace Rating.API.Repositories
             return rating; 
         }
 
-        public Task<List<RatingE>> GetRatingsByRecipeIdAsync(int recipeId)
+        public async Task<List<RatingE>> GetRatingsByRecipeIdAsync(int recipeId)
         {
-            var ratings = _context.Ratings
+            var ratings = await _context.Ratings
                 .AsNoTracking()
                 .Where(x => x.RecipeId == recipeId)
                 .ToListAsync();

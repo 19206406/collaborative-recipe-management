@@ -5,6 +5,9 @@
     <Project Path="BuildingBlocks/BuildingBlocks/BuildingBlocks.csproj" Id="ceb5f3ed-e543-4bf6-92a1-55a542d461e9" />
   </Folder>
   <Folder Name="/Services/" />
+  <Folder Name="/Services/Notification/">
+    <Project Path="Services/Notification/Notification.API/Notification.API.csproj" Id="d79b18f7-ea75-4978-8c5c-5d0c40d15bf6" />
+  </Folder>
   <Folder Name="/Services/Rating/">
     <Project Path="Services/Rating/Rating.API/Rating.API.csproj" />
   </Folder>

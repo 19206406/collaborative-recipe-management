@@ -1,5 +1,4 @@
-﻿using BuildingBlocks.Exceptions;
-using InvalidOperationException = BuildingBlocks.Exceptions.InvalidOperationException;
+﻿using InvalidOperationException = BuildingBlocks.Exceptions.InvalidOperationException;
 
 namespace Rating.API.Features.Clients
 {
