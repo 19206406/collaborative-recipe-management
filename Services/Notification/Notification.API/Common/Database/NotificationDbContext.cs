@@ -17,11 +17,11 @@ namespace Notification.API.Common.Database
             base.OnModelCreating(modelBuilder);
         }
 
-        //        GET    /api/notifications              - Notificaciones del usuario(Auth)
-        //        PUT    /api/notifications/{id}/read    - Marcar como leída(Auth)
-        //        PUT    /api/notifications/read-all     - Marcar todas como leídas(Auth)
-        //        POST   /api/notifications/rating-received - (Interno) Rating recibido
-        //        GET    /api/notifications/preferences  - Preferencias(Auth)
+        //        GET    /api/notifications              - Notificaciones del usuario(Auth) ------- listo 
+        //        PUT    /api/notifications/{id}/read    - Marcar como leída(Auth) ------- listo 
+        //        PUT    /api/notifications/read-all     - Marcar todas como leídas(Auth) ------- listo 
+        //        POST   /api/notifications/rating-received - (Interno) Rating recibido -- no lo entiendo 
+        //        GET    /api/notifications/preferences  - Preferencias(Auth) listo 
         //        PUT    /api/notifications/preferences  - Actualizar preferencias(Auth)
     }
 }

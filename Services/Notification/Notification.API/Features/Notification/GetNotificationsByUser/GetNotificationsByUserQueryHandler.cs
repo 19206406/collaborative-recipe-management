@@ -1,7 +1,7 @@
 ﻿using BuildingBlocks.CQRS;
 using Notification.API.Repositories.NotificationRepository;
 
-namespace Notification.API.Features.GetNotificationsByUser
+namespace Notification.API.Features.Notification.GetNotificationsByUser
 {
     public class GetNotificationsByUserQueryHandler : IQueryHandler<GetNotificationsByUserQuery, GetNotificationsByUserResponse>
     {

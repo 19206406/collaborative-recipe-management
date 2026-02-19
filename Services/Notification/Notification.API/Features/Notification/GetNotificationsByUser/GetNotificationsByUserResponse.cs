@@ -1,4 +1,4 @@
-﻿namespace Notification.API.Features.GetNotificationsByUser
+﻿namespace Notification.API.Features.Notification.GetNotificationsByUser
 {
     public record NotificationResponse(
         int Id, int UserId, string Type, 
