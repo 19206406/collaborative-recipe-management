@@ -13,5 +13,9 @@ namespace Recipe.API.Repositories.RecipeRepository
 
         Task<Entities.Recipe> UpdateRecipeOnly(Entities.Recipe recipe);
         Task<List<Entities.Recipe>> SearchAdvanced(RecipeSearchCriteria criteria);
+
+        Task<List<Entities.Recipe>> GetRecipesByIngredientsAsync(List<string> ingredients);
+
+        Task<List<Entities.Recipe>> GetTopRecipesAsync(); 
     }
 }

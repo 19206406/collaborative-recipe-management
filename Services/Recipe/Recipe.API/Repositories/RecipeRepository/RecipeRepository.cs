@@ -23,7 +23,10 @@ namespace Recipe.API.Repositories.RecipeRepository
 
         public async Task<Entities.Recipe> GetRecipe(int id)
         {
-            var recipe = await _context.Recipes.AsNoTracking()
+            var recipe = await _context.Recipes
+                .Include(r => r.Ingredients)
+                .Include(r => r.Steps)
+                .Include(r => r.RecipeTags)
                 .FirstOrDefaultAsync(r => r.Id == id);
 
             return recipe;  
@@ -153,6 +156,36 @@ namespace Recipe.API.Repositories.RecipeRepository
 
             await _context.Entry(recipe).ReloadAsync();
             return recipe;
+        }
+
+        public async Task<List<Entities.Recipe>> GetRecipesByIngredientsAsync(List<string> ingredients)
+        {
+            var count = ingredients.Count;
+
+            return await _context.Recipes
+                .Where(r =>
+                    r.Ingredients
+                        .Where(i => ingredients.Contains(i.Name))
+                        .Select(i => i.Name)
+                        .Distinct()
+                        .Count() == count)
+                .ToListAsync();
+        }
+
+        public async Task<List<Entities.Recipe>> GetTopRecipesAsync()
+        {
+            var trending = await _context.Recipes
+                .Select(r => new {
+                    Recipe = r,
+                    Score = (r.AverageRating * r.RatingCount) /
+                            (((DateTime.UtcNow - r.CreatedAt).Days) + 2m)
+                })
+                .OrderByDescending(x => x.Score)
+                .Take(20)
+                .Select(x => x.Recipe)
+                .ToListAsync();
+
+            return trending; 
         }
     }
 }

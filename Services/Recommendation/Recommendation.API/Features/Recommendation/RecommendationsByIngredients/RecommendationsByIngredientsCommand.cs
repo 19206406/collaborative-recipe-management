@@ -1,6 +1,7 @@
-﻿namespace Recommendation.API.Features.Recommendation.RecommendationsByIngredients
+﻿using BuildingBlocks.CQRS;
+using Recommendation.API.Common.Dtos;
+
+namespace Recommendation.API.Features.Recommendation.RecommendationsByIngredients
 {
-    public class RecommendationsByIngredientsCommand
-    {
-    }
+    public record RecommendationsByIngredientsCommand(int UserId, List<string> Ingredients) : ICommand<List<IngredientMatchDto>>; 
 }
