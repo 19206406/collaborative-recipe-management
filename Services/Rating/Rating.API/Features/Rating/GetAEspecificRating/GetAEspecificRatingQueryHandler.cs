@@ -18,7 +18,7 @@ namespace Rating.API.Features.Rating.GetAEspecificRating
 
         public async Task<GetAEspecificRatingResponse> Handle(GetAEspecificRatingQuery query, CancellationToken cancellationToken)
         {
-            //TODO : Implementar si un usuario existe 
+            // TODO: Implementar si un usuario existe 
 
             bool recipeExist = await _recipesClient.RecipeExistAsync(query.RecipeId, cancellationToken);
 

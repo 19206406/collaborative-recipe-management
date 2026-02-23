@@ -13,7 +13,6 @@ namespace Recommendation.API.Features.Recommendation.GetTrendingRecipes
 
         private static readonly TimeSpan CacheDuration = TimeSpan.FromMinutes(15);
         private const string CacheKey = "trending:top20";
-        private const int TopCount = 20; 
 
         public GetTrendingRecipesQueryHandler(ICacheService cache, IRecipeServiceClient recipeService)
         {
@@ -27,18 +26,15 @@ namespace Recommendation.API.Features.Recommendation.GetTrendingRecipes
             if (cached is not null)
                 return cached;
 
-            var recipes = await _recipeService.GetByIngredientsAsync(new List<string> { });
-            
-            // formula de trending: score = (average_rating * rating_count) / (days_since_created + 2)
+            var recipes = await _recipeService.GetTopRecipes();
 
-            var trending = recipe
+            // la formula para calcular el score o el trending se aplica directamente en el servicio de recipe 
+            // para que de esta forma sea mucho más eficiente trayendo los elementos y calcular esto. 
 
-        }
+            await _cache.SetAsync(CacheKey, recipes, CacheDuration); 
 
-        private static double CalcaulateTrendingScore(RecipeDto recipe)
-        {
-            var daysSinceCreated = (DateTime.UtcNow - recipe.recipe.CreatedAt).TotalDays;
-            return (double)(recipe.recipe.AverageRating * recipe.recipe.RatingCount) / (daysSinceCreated + 2); 
+            return recipes; 
+
         }
     }
 }

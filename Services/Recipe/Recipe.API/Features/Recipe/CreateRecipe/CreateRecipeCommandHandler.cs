@@ -14,7 +14,7 @@ namespace Recipe.API.Features.Recipe.CreateRecipe
 
         public async Task<CreateRecipeResponse> Handle(CreateRecipeCommand command, CancellationToken cancellationToken)
         {
-            //TODO=validacion de que un usuario exista para luego ya que toco que conectar servicios
+            // TODO: validacion de que un usuario exista para luego ya que toco que conectar servicios
 
             var recipe = command.Recipe;
             var ingredients = command.Ingredients.ToList();

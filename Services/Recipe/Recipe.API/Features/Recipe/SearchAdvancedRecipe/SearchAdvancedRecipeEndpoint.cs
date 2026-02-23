@@ -4,7 +4,7 @@ using MediatR;
 namespace Recipe.API.Features.Recipe.SearchAdvancedRecipe
 {
     public record SearchAdvancedRecipeRequest(string? Title, int? PrepTimeMinutes, int? CookTimeMinutes, int? Difficulty,
-        int? Servings, string? SortBy, bool SortDescending); 
+        int? Servings, string? SortBy, bool SortDescending, List<string>? Tags); 
     public class SearchAdvancedRecipeEndpoint : Endpoint<SearchAdvancedRecipeRequest, SearchAdvancedRecipeResponse>
     {
         private readonly IMediator _mediator;
@@ -29,7 +29,7 @@ namespace Recipe.API.Features.Recipe.SearchAdvancedRecipe
         public override async Task HandleAsync(SearchAdvancedRecipeRequest req, CancellationToken ct)
         {
             var query = new SearchAdvancedRecipeQuery(req.Title, req.PrepTimeMinutes, req.CookTimeMinutes,
-                req.Difficulty, req.Servings, req.SortBy, req.SortDescending);
+                req.Difficulty, req.Servings, req.SortBy, req.SortDescending, req.Tags);
 
             var result = await _mediator.Send(query);
 

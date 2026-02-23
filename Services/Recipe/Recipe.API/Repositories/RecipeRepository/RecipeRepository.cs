@@ -34,7 +34,10 @@ namespace Recipe.API.Repositories.RecipeRepository
 
         public async Task<List<Entities.Recipe>> GetRecipePagination(int pageNumber, int pageSize, RecipeSearchCriteria criteria)
         {
-            IQueryable<Entities.Recipe> query = _context.Recipes.Include(r => r.Title);
+            IQueryable<Entities.Recipe> query = _context.Recipes
+                .Include(r => r.Ingredients)
+                .Include(r => r.Steps)
+                .Include(r => r.RecipeTags); 
 
             // aplicar filtros 
 
@@ -49,6 +52,10 @@ namespace Recipe.API.Repositories.RecipeRepository
 
             if (criteria.Difficulty.HasValue)
                 query = query.Where(r => r.Difficulty == criteria.Difficulty.Value);
+
+            // filtrar por tags 
+            if (criteria.Tags is not null && criteria.Tags.Any())
+                query = query.Where(r => r.RecipeTags.Any(rt => criteria.Tags.Contains(rt.Tag))); 
 
             // "Title", "Difficulty", "PrepTimeMinutes"
             if (!string.IsNullOrEmpty(criteria.SortBy))
@@ -66,6 +73,10 @@ namespace Recipe.API.Repositories.RecipeRepository
                     "difficulty" => criteria.SortDescending
                         ? query.OrderByDescending(r => r.Difficulty)
                         : query.OrderBy(r => r.Difficulty),
+
+                    "CreatedAt" => criteria.SortDescending
+                        ? query.OrderByDescending(r => r.CreatedAt)
+                        : query.OrderBy(r => r.CreatedAt),
 
                     _ => query.OrderBy(r => r.Id)
                 };
@@ -98,6 +109,8 @@ namespace Recipe.API.Repositories.RecipeRepository
 
             if (criteria.Difficulty.HasValue)
                 query = query.Where(r => r.Difficulty == criteria.Difficulty.Value);
+
+            // TODO: debo de agregar ordenamiento por rating y novedad 
 
             // "Title", "Difficulty", "PrepTimeMinutes"
             if (!string.IsNullOrEmpty(criteria.SortBy))

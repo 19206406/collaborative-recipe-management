@@ -9,5 +9,6 @@
         public int? Servings { get; set; }
         public string? SortBy { get; set; } // "Title", "Difficulty", "PrepTimeMinutes", etc. 
         public bool SortDescending { get; set; }
+        public List<string>? Tags { get; set; } // busquedad por preferencias 
     }
 }
