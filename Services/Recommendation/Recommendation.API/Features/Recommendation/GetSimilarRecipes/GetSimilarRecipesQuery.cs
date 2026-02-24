@@ -3,5 +3,5 @@ using Recommendation.API.Common.Dtos;
 
 namespace Recommendation.API.Features.Recommendation.GetSimilarRecipes
 {
-    public record GetSimilarRecipesQuery(int UserId) : IQuery<List<RecipeDto>>; 
+    public record GetSimilarRecipesQuery(int recipeId) : IQuery<List<RecipeDto>>; 
 }

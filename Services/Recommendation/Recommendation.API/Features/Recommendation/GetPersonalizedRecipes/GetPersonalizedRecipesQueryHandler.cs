@@ -43,6 +43,7 @@ namespace Recommendation.API.Features.Recommendation.GetPersonalizedRecipes
             var userRatings = await _ratingService.GetRatingsByUserAsync(query.UserId);
 
             // exluir recetas ya calificadas por el usuario 
+            // TODO: debo de excluir estas recetas 
             var alreadyRatedIds = userRatings.Select(r => r.RecipeId).ToHashSet();
 
             // obtener recetas que coincidan con las preferencias del usuario 

@@ -53,6 +53,46 @@ namespace Recommendation.API.Features.Clients.RecipeClient
             }
         }
 
+        public async Task<RecipeDto> GetRecipeAsync(int recipeId, CancellationToken cancellationToken)
+        {
+            try
+            {
+                var endpoint = $"api/recipes/get-only-recipe/{recipeId}";
+                var recipe = await _httpClient.GetAsync(endpoint, cancellationToken);
+
+                return recipe.Adapt<RecipeDto>(); 
+            }
+            catch (HttpRequestException ex)
+            {
+                throw new
+                    InvalidOperationException("No se puede comunicar con recipeService. Es posible que el servicio no esté disponible.");
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
+
+        public async Task<List<RecipeDto>> GetSimilarRecipesAsync(int recipeId, CancellationToken cancellationToken = default)
+        {
+            try
+            {
+                var endpoint = $"api/recommendations/similar/{recipeId}";
+                var recipes = await _httpClient.GetAsync(endpoint, cancellationToken);
+
+                return recipes.Adapt<List<RecipeDto>>();    
+            }
+            catch (HttpRequestException ex)
+            {
+                throw new
+                    InvalidOperationException("No se puede comunicar con recipeService. Es posible que el servicio no esté disponible.");
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
+
         public async Task<List<RecipeDto>> GetTopRecipes(CancellationToken cancellation)
         {
             try

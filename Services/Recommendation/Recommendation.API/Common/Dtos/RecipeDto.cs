@@ -5,6 +5,6 @@
     public record ResponseIngredient(int Id, string Name, decimal Quantity, string Unit, int DisplayOrder);
     public record ResponseStep(int Id, int StepNumber, string Instruction);
     public record ResponseTag(int Id, string Tag);
-    public record RecipeDto(ResponseRecipe recipe, List<ResponseIngredient> Ingredients,
+    public record RecipeDto(ResponseRecipe Recipe, List<ResponseIngredient> Ingredients,
         List<ResponseStep> Steps, List<ResponseTag> Tags); 
 }

@@ -26,9 +26,12 @@ namespace Recommendation.API.Features.Recommendation.GetSimilarRecipes
             Description(x => x.WithTags("Recommendations")); 
         }
 
-        public override Task HandleAsync(GetSimilarRecipesRequest req, CancellationToken ct)
+        public override async Task HandleAsync(GetSimilarRecipesRequest req, CancellationToken ct)
         {
-            var query = new GetSimilarRecipesQuery(req.recipeId); 
+            var query = new GetSimilarRecipesQuery(req.recipeId);
+            var result = await _mediator.Send(query);
+
+            await Send.OkAsync(result); 
         }
     }
 }
