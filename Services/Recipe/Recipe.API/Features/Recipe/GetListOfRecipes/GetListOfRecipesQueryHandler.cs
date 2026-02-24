@@ -20,7 +20,7 @@ namespace Recipe.API.Features.Recipe.GetListOfRecipes
         {
             var pageNumber = query.PageNumber;
             var pageSize = query.PageSize;
-            var criteria = query.criteria.Adapt<RecipeSearchCriteria>(); 
+            var criteria = query.Criteria.Adapt<RecipeSearchCriteria>(); 
 
             var totalCount = await _recipeRepository.NumberOfItems();
 

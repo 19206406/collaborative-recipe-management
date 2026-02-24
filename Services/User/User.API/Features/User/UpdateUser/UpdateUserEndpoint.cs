@@ -16,7 +16,7 @@ namespace User.API.Features.User.UpdateUser
 
         public override void Configure()
         {
-            Put("api/users/{id}");
+            Put("/api/users/{id}");
             Summary(s =>
             {
                 s.Summary = "Actualizar un usuario";

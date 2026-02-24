@@ -14,7 +14,7 @@ namespace User.API.Features.UserPreference.GetUserPreferences
             _mediator = mediator;
         }
 
-        public const string Route = "api/users/{id}/preferences"; 
+        public const string Route = "/api/users/{id}/preferences"; 
 
         public override void Configure()
         {

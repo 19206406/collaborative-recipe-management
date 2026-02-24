@@ -1,6 +1,5 @@
 ﻿using FastEndpoints;
 using MediatR;
-using User.API.Features.UserPreference.GetUserPreferences;
 
 namespace User.API.Features.UserPreference.UpdatePreferencesToUser
 {
@@ -18,7 +17,7 @@ namespace User.API.Features.UserPreference.UpdatePreferencesToUser
 
         public override void Configure()
         {
-            Put("api/users/{id}/preferences");
+            Put("/api/users/{id}/preferences");
             Summary(x =>
             {
                 x.Summary = "Actualizar preferencias de usuario";

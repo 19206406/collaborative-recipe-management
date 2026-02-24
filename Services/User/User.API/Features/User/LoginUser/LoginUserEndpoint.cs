@@ -16,7 +16,7 @@ namespace User.API.Features.User.LoginUser
 
         public override void Configure()
         {
-            Post("api/users/login");
+            Post("/api/users/login");
             Summary(s =>
             {
                 s.Summary = "Login del usuario";

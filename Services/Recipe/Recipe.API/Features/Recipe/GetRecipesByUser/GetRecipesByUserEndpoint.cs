@@ -15,7 +15,7 @@ namespace Recipe.API.Features.Recipe.GetRecipesByUser
 
         public override void Configure()
         {
-            Get("api/recipes/user/{userId}");
+            Get("/api/recipes/user/{userId}");
             Summary(x =>
             {
                 x.Summary = "obtener todas las recetas de un usuario";

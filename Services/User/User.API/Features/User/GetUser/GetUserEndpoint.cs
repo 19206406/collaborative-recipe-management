@@ -14,7 +14,7 @@ namespace User.API.Features.User.GetUser
             _mediator = mediator;
         }
 
-        public const string Route = "api/users/{id}";
+        public const string Route = "/api/users/{id}";
 
         public override void Configure()
         {

@@ -1,4 +1,5 @@
 ﻿using BuildingBlocks.CQRS;
+using Mapster;
 using Notification.API.Repositories.NotificationRepository;
 
 namespace Notification.API.Features.Notification.GetNotificationsByUser
@@ -15,9 +16,9 @@ namespace Notification.API.Features.Notification.GetNotificationsByUser
         public async Task<GetNotificationsByUserResponse> Handle(GetNotificationsByUserQuery query, CancellationToken cancellationToken)
         {
             var notifications = await _notificationRepository.GetNotificationsByUserIdAsync(query.UserId);
-            var mapNotifications = notifications.
+            var mapNotifications = notifications.Adapt<List<NotificationResponse>>(); 
 
-            return new GetNotificationsByUserResponse(); 
+            return new GetNotificationsByUserResponse(mapNotifications); 
         }
     }
 }

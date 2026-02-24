@@ -14,7 +14,8 @@ namespace Recommendation.API.Common.Cache
             if (value.IsNullOrEmpty)
                 return null;
 
-            return JsonSerializer.Deserialize<T>(value!); 
+            var json = (string)value!;
+            return JsonSerializer.Deserialize<T>(json);
         }
 
         public async Task RemoveAsync(string key)

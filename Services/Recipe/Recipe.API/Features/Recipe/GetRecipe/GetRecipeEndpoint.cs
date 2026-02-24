@@ -14,8 +14,7 @@ namespace Recipe.API.Features.Recipe.GetRecipe
             _mediator = mediator;
         }
 
-
-        public const string Route = "api/recipes/{id}"; 
+        public const string Route = "/api/recipes/{id}"; 
 
         public override void Configure()
         {

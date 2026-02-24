@@ -16,7 +16,7 @@ namespace Recipe.API.Features.Recipe.RemoveRecipe
 
         public override void Configure()
         {
-            Delete("api/recipes/{id}");
+            Delete("/api/recipes/{id}");
             Summary(x =>
             {
                 x.Summary = "Eliminar receta";

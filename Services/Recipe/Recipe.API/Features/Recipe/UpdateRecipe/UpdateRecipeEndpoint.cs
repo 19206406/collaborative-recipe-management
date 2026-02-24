@@ -21,7 +21,7 @@ namespace Recipe.API.Features.Recipe.UpdateRecipe
 
         public override void Configure()
         {
-            Put("api/recipes/{id}");
+            Put("/api/recipes/{id}");
             Summary(x =>
             {
                 x.Summary = "Actualizar una receta";

@@ -15,7 +15,7 @@ namespace Recipe.API.Features.Recipe.GetOnlyRecipe
 
         public override void Configure()
         {
-            Get("api/recipes/get-only-recipe/{Id}");
+            Get("/api/recipes/get-only-recipe/{Id}");
             Summary(x =>
             {
                 x.Summary = "Obtener solo la receta";

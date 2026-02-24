@@ -25,7 +25,7 @@ namespace Recipe.API.Features.Recipe.CreateRecipe
 
         public override void Configure()
         {
-            Post("api/recipes");
+            Post("/api/recipes");
             Summary(x =>
             {
                 x.Summary = "Crear receta";

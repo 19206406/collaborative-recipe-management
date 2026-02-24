@@ -14,7 +14,7 @@ namespace Recipe.API.Features.Recipe.GetTopRecipes
 
         public override void Configure()
         {
-            Get("api/recipes/trending");
+            Get("/api/recipes/trending");
             Summary(x =>
             {
                 x.Summary = "Recetas trending"; 

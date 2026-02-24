@@ -83,8 +83,8 @@ namespace Recommendation.API.Features.Recommendation.RecommendationsByIngredient
 
             return new IngredientMatchDto
             {
-                RecipeId = recipe.recipe.Id,
-                Title = recipe.recipe.Title,
+                RecipeId = recipe.Recipe.Id,
+                Title = recipe.Recipe.Title,
                 MatchPercentage = Math.Round(matchPercentage, 2),
                 MatchedIngredients = matched.ToList(),
                 MissingIngredients = missing.ToList()

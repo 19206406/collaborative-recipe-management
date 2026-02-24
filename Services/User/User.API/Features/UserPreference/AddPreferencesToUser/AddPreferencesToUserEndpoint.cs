@@ -19,7 +19,7 @@ namespace User.API.Features.UserPreference.AddPreferencesToUser
 
         public override void Configure()
         {
-            Post("api/users/{id}/preferences");
+            Post("/api/users/{id}/preferences");
             Summary(x =>
             {
                 x.Summary = "Agregar preferencias";
