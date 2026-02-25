@@ -30,7 +30,7 @@ namespace Notification.API.Features.Notification.MarkAsRead
             var command = new MarkAsReadCommand(req.Id, req.Read);
             var result = await _mediator.Send(command);
 
-            await _mediator.Send(result); 
+            await Send.OkAsync(result); 
         }
     }
 }

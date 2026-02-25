@@ -4,9 +4,8 @@ using MediatR;
 
 namespace Notification.API.Features.Notification.GetNotificationsByUser
 {
-    public record GetNotificationsByUserRequest(); 
 
-    public class GetNotificationsByUserEndpoint : Endpoint<GetNotificationsByUserRequest, GetNotificationsByUserResponse>
+    public class GetNotificationsByUserEndpoint : EndpointWithoutRequest<GetNotificationsByUserResponse>
     {
         private readonly IMediator _mediator;
 
@@ -26,7 +25,7 @@ namespace Notification.API.Features.Notification.GetNotificationsByUser
             Description(x => x.WithTags("Notifications")); 
         }
 
-        public override async Task HandleAsync(GetNotificationsByUserRequest req, CancellationToken ct)
+        public override async Task HandleAsync(CancellationToken ct)
         {
             var userId = HttpContext.User.GetUserId();
 

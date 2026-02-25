@@ -3,21 +3,49 @@ services:
   sqlserver: 
     container_name: userdb
     environment: 
-      - SA_PASSWORD=Sebastian@User123
+      - MSSQL_SA_PASSWORD=Sebastian@User123
     ports:
       - "1433:1433"
     volumes:
       - sqlserver-data:/var/opt/mssql
+    healthcheck:
+      test: ["CMD-SHELL", "/opt/mssql-tools18/bin/sqlcmd -S localhost -U sa -P Sebastian@User123 -Q 'SELECT 1' -No"]
+      interval: 15s
+      timeout: 10s
+      retries: 10
+      start_period: 30s
   
 
   sqlserver2:
     container_name: ratingdb
     environment: 
-      - SA_PASSWORD=Sebastian@Rating123
+      - MSSQL_SA_PASSWORD=Sebastian@Rating123
     ports:
       - "1434:1433"
     volumes:
       - sqlserver2-data:/var/opt/mssql
+    healthcheck:
+      test: ["CMD-SHELL", "/opt/mssql-tools18/bin/sqlcmd -S localhost -U sa Sebastian@Rating123 -Q 'SELECT 1' -No"]
+      interval: 15s
+      timeout: 10s
+      retries: 10
+      start_period: 30s
+
+
+  sqlserver3:
+    container_name: notificationdb
+    environment: 
+      - MSSQL_SA_PASSWORD=Sebastian@Notification123
+    ports:
+      - "1435:1433"
+    volumes:
+      - sqlserver3-data:/var/opt/mssql 
+    healthcheck:
+      test: ["CMD-SHELL", "/opt/mssql-tools18/bin/sqlcmd -S localhost -U sa -P Sebastian@Notification123 -Q 'SELECT 1' -No"]
+      interval: 15s
+      timeout: 10s
+      retries: 10
+      start_period: 30s
 
 
   postgres: 
@@ -25,21 +53,21 @@ services:
     image: postgres:16-alpine
     environment: 
       - POSTGRES_USER=admin
-      - POSTGRES_PASSWORD=SebastianPass123
+      - POSTGRES_PASSWORD=Sebastian@Postgres123
       - POSTGRES_DB=recipe_db
-      - POSTGRES_INITDB_ARGS=--auth-host=scram-sha-256 --auth-local=scram-sha-256
     ports:
       - "5432:5432"
     volumes:
       - postgres-data:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U admin"]
+      test: ["CMD-SHELL", "pg_isready -U admin recipe_db"]
       interval: 10s
       timeout: 5s
       retries: 5
+      start_period: 15s
     command: >
       postgres 
-      -c password_encryption=scram-sha-256
+      -c password_encryption=md5
 
 
   redis:
@@ -79,6 +107,8 @@ volumes:
   sqlserver-data: 
     driver: local
   sqlserver2-data:
+    driver: local
+  sqlserver3-data: 
     driver: local
   postgres-data: 
     driver: local

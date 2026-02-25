@@ -1,3 +1,4 @@
+using BuildingBlocks.Behaviors;
 using FastEndpoints;
 using FastEndpoints.Swagger;
 using FluentValidation;
@@ -25,6 +26,13 @@ builder.Services.AddSingleton<ICacheService, CacheService>();
 // HTTP Clients 
 var servicesUrls = builder.Configuration.GetSection("ServicesUrls");
 var httpSettings = builder.Configuration.GetSection("HttpClientSettings");
+
+// mediatr 
+builder.Services.AddMediatR(cfg =>
+{
+    cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly());
+    cfg.AddOpenBehavior(typeof(ValidationBehavior<,>));
+});
 
 // recipe client 
 builder.Services.AddHttpClient<IRecipeServiceClient, RecipeServiceClient>(client =>

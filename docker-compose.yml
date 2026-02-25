@@ -1,4 +1,5 @@
 services:
+
   sqlserver: 
     image: mcr.microsoft.com/mssql/server:2022-latest
     environment: 
@@ -15,11 +16,16 @@ services:
     networks: 
       - microservices-network
   
+  sqlserver3: 
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    environment:
+      - ACCEPT_EULA=Y
+      - MSSQL_PID=Developer
+    networks:
+      - microservices-network
+  
   postgres: 
     image: postgres:16-alpine 
-    environment: 
-      - POSTGRES_USER=admin
-      - POSTGRES_PASSWORD=Sebastian@Postgres123
     networks: 
       - microservices-network
   
