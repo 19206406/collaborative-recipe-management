@@ -1,5 +1,7 @@
-﻿using FastEndpoints;
+﻿using BuildingBlocks.Jwt.Claims;
+using FastEndpoints;
 using MediatR;
+using InvalidOperationException = BuildingBlocks.Exceptions.InvalidOperationException;
 
 namespace User.API.Features.User.DeleteUser
 {
@@ -27,6 +29,10 @@ namespace User.API.Features.User.DeleteUser
 
         public override async Task HandleAsync(DeleteUserRequest req, CancellationToken ct)
         {
+            var userId = HttpContext.User.GetUserId();
+
+            if (userId != req.Id)
+                throw new InvalidOperationException("No tienes permiso de ejectar esta acción verifica la acción"); 
             var command = new DeleteUserCommand(req.Id);
             var result = await _mediator.Send(command);
 

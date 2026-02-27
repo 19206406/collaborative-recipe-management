@@ -1,11 +1,12 @@
-﻿using FastEndpoints;
+﻿using BuildingBlocks.Jwt.Claims;
+using FastEndpoints;
 using MediatR;
 
 namespace User.API.Features.User.GetUser
 {
     public record GetUserRequest(int Id); 
 
-    public class GetUserEndpoint : Endpoint<GetUserRequest, GetUserResponse>
+    public class GetUserEndpoint : EndpointWithoutRequest<GetUserResponse>
     {
         private readonly IMediator _mediator;
 
@@ -14,24 +15,25 @@ namespace User.API.Features.User.GetUser
             _mediator = mediator;
         }
 
-        public const string Route = "/api/users/{id}";
+        public const string Route = "api/users/profile";
 
         public override void Configure()
         {
-            Get(Route);
+            Get("api/users/profile");
             Summary(s =>
             {
                 s.Summary = "Obtener usuario autenticado";
                 s.Description = "Obtener usuario autenticado";
             });
             Description(x => x.WithTags("Users"));
+            //AllowAnonymous(); 
         }
 
-        public override async Task HandleAsync(GetUserRequest req, CancellationToken ct)
+        public override async Task HandleAsync(CancellationToken ct)
         {
-            //var userId = int.Parse(s: User.FindFirst("userId").Value ?? "0"); 
+            var userId = HttpContext.User.GetUserId();
 
-            var query = new GetUserQuery(req.Id);
+            var query = new GetUserQuery(userId);
             var result = await _mediator.Send(query); 
             await Send.OkAsync(result); 
         }

@@ -12,7 +12,7 @@ using User.API.Common.Database;
 namespace User.API.Common.Database.Migrations
 {
     [DbContext(typeof(UserDbContext))]
-    [Migration("20260128004908_Initial-Migration")]
+    [Migration("20260225193314_InitialMigration")]
     partial class InitialMigration
     {
         /// <inheritdoc />
@@ -29,7 +29,8 @@ namespace User.API.Common.Database.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("id");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
@@ -74,7 +75,8 @@ namespace User.API.Common.Database.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("id");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
@@ -89,7 +91,8 @@ namespace User.API.Common.Database.Migrations
                         .HasColumnName("reference_type");
 
                     b.Property<int>("UserId")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("user_id");
 
                     b.HasKey("Id");
 

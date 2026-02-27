@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Recipe.API.Entities;
 
 namespace Recipe.API.Common.Database

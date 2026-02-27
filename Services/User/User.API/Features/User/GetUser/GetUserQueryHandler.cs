@@ -1,7 +1,6 @@
 ﻿using BuildingBlocks.CQRS;
 using BuildingBlocks.Exceptions;
 using User.API.repositories.UserRespository;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace User.API.Features.User.GetUser
 {

@@ -15,7 +15,7 @@ namespace User.API.Common.Database.Migrations
                 name: "users",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
+                    id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     email = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
@@ -26,34 +26,34 @@ namespace User.API.Common.Database.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_users", x => x.Id);
+                    table.PrimaryKey("PK_users", x => x.id);
                 });
 
             migrationBuilder.CreateTable(
                 name: "user_preferences",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
+                    id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    UserId = table.Column<int>(type: "int", nullable: false),
+                    user_id = table.Column<int>(type: "int", nullable: false),
                     reference_type = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     created_at = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_user_preferences", x => x.Id);
+                    table.PrimaryKey("PK_user_preferences", x => x.id);
                     table.ForeignKey(
-                        name: "FK_user_preferences_users_UserId",
-                        column: x => x.UserId,
+                        name: "FK_user_preferences_users_user_id",
+                        column: x => x.user_id,
                         principalTable: "users",
-                        principalColumn: "Id",
+                        principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_user_preferences_UserId",
+                name: "IX_user_preferences_user_id",
                 table: "user_preferences",
-                column: "UserId");
+                column: "user_id");
 
             migrationBuilder.CreateIndex(
                 name: "IX_users_email",

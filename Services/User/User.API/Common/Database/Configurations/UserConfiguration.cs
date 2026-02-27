@@ -11,6 +11,9 @@ namespace User.API.Common.Database.Configurations
 
             builder.HasKey(u => u.Id);
 
+            builder.Property(u => u.Id)
+                .HasColumnName("id"); 
+
             builder.Property(u => u.Name)
                 .IsRequired()
                 .HasMaxLength(100)
@@ -25,7 +28,7 @@ namespace User.API.Common.Database.Configurations
                 .IsUnique(); 
 
             builder.Property(u => u.PasswordHash)
-                //.IsRequired() por el momento todavía no 
+                .IsRequired() // por el momento todavía no 
                 .HasColumnType("nvarchar(max)")
                 .HasColumnName("password_hash");
 

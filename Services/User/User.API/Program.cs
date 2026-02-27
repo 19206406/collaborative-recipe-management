@@ -1,4 +1,5 @@
 using BuildingBlocks.Behaviors;
+using BuildingBlocks.Jwt.Models;
 using BuildingBlocks.Jwt.Service;
 using FastEndpoints;
 using FastEndpoints.Swagger;
@@ -15,33 +16,43 @@ using User.API.Services.PasswordHash;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// FastEndpoints 
-builder.Services.AddFastEndpoints(); 
-
+// db Context 
 builder.Services.AddDbContext<UserDbContext>(options =>
 {
-    options.UseSqlServer(builder.Configuration.GetConnectionString("RecipeUserDb")); 
+    options.UseSqlServer(builder.Configuration.GetConnectionString("RecipeUserDb"));
 });
 
+// MediatR 
 builder.Services.AddMediatR(cfg =>
 {
     cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly());
     cfg.AddOpenBehavior(typeof(ValidationBehavior<,>));
 });
-builder.Services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly()); 
 
+// validators 
+builder.Services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
+
+// repositories 
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IUserPreferenceRespository, UserPreferenceRepository>();
 
-builder.Services.AddScoped<IJwtService, JwtService>();
-builder.Services.AddJwtValidation(builder.Configuration); 
+// servicio de jwt 
+builder.Services.Configure<JwtSettings>(builder.Configuration.GetSection("JwtSettings"));
+builder.Services.AddJwtValidation(builder.Configuration); // ← Esto agrega Authentication
 
-builder.Services.AddExceptionHandler<User.API.Exceptions.ValidationException>();
-builder.Services.AddProblemDetails();
+// ← AGREGAR ESTO: Authorization se necesita cuando usas UseAuthorization() antes de FastEndpoints
+builder.Services.AddAuthorization();
+
+builder.Services.AddScoped<IJwtService, JwtService>();
 
 // password Hash 
 builder.Services.AddScoped<IPasswordHashService, PasswordHashService>();
 builder.Services.AddScoped<IPasswordHasher<Object>, PasswordHasher<Object>>();
+
+builder.Services.AddProblemDetails();
+
+// FastEndpoints
+builder.Services.AddFastEndpoints();
 
 // swagger 
 builder.Services.SwaggerDocument(options =>
@@ -51,16 +62,21 @@ builder.Services.SwaggerDocument(options =>
         s.Title = "user-service-api";
         s.Version = "v1";
     };
-    options.AutoTagPathSegmentIndex = 0; 
+    options.AutoTagPathSegmentIndex = 0;
 });
 
 var app = builder.Build();
 
+// middlewares de excepciones 
 app.UseExceptionHandler();
 app.UseCustomExceptionHandler();
-//app.UseAuthorization(); 
 
-// FastEndpoints 
-app.UseFastEndpoints().UseSwaggerGen(); 
+// ORDEN CORRECTO: Authentication → Authorization → FastEndpoints
+app.UseAuthentication();
+app.UseAuthorization();
+
+// FastEndpoints
+app.UseFastEndpoints()
+   .UseSwaggerGen();
 
 app.Run();

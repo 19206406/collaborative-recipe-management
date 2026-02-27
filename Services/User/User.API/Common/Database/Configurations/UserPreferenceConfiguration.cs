@@ -12,6 +12,12 @@ namespace User.API.Common.Database.Configurations
 
             builder.HasKey(up => up.Id);
 
+            builder.Property(up => up.Id)
+                .HasColumnName("id");
+
+            builder.Property(up => up.UserId)
+                .HasColumnName("user_id"); 
+
             builder.Property(up => up.PreferenceType)
                 .IsRequired()
                 .HasMaxLength(50)

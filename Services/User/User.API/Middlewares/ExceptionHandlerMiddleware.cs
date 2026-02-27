@@ -4,7 +4,7 @@ using BuildingBlocks.Models;
 using FluentValidation;
 using System.Text.Json;
 
-namespace User.API.Middleware
+namespace User.API.Middlewares
 {
     public class ExceptionHandlerMiddleware
     {

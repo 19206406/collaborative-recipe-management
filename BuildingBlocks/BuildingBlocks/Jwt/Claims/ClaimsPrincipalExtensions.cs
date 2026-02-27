@@ -26,5 +26,10 @@ namespace BuildingBlocks.Jwt.Claims
             if (claim is null) throw new UnauthorizedException("Nombre no encontrado");
             return claim.Value; 
         }
+
+        public static bool IsAuthenticated(this ClaimsPrincipal user)
+        {
+            return user.Identity?.IsAuthenticated ?? false; 
+        }
     }
 }

@@ -1,5 +1,4 @@
-﻿using BuildingBlocks.Jwt.Models;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
@@ -9,12 +8,11 @@ namespace BuildingBlocks.Jwt.Service
 {
     public static class JwtValidationExtensions
     {
-        // este servicio lo utiliza los servicios que validan el jwt y no lo emiten 
         public static IServiceCollection AddJwtValidation(
-            this IServiceCollection services, 
+            this IServiceCollection services,
             IConfiguration configuration)
         {
-            var jwtSettings = new JwtSettings();
+            var jwtSettings = new BuildingBlocks.Jwt.Models.JwtSettings();
             configuration.GetSection("JwtSettings").Bind(jwtSettings);
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -34,12 +32,13 @@ namespace BuildingBlocks.Jwt.Service
                             Encoding.UTF8.GetBytes(jwtSettings.SecretKey)),
                         ClockSkew = TimeSpan.Zero
                     };
-
                     options.Events = JwtEvents.CustomJwtEvents();
                 });
 
-            services.AddAuthentication();
-            return services; 
+            // Agregamos Authorization para que funcione con el middleware estándar
+            services.AddAuthorization();
+
+            return services;
         }
     }
 }

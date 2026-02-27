@@ -1,9 +1,10 @@
-﻿using FastEndpoints;
+﻿using BuildingBlocks.Jwt.Claims;
+using FastEndpoints;
 using MediatR;
 
 namespace User.API.Features.User.UpdateUser
 {
-    public record UpdateUserRequest(int Id, string Name, string Email, byte IsActive); 
+    public record UpdateUserRequest(string Name, string Email, byte IsActive); 
 
     public class UpdateUserEndpoint : Endpoint<UpdateUserRequest, UpdateUserResponse>
     {
@@ -16,7 +17,7 @@ namespace User.API.Features.User.UpdateUser
 
         public override void Configure()
         {
-            Put("/api/users/{id}");
+            Put("/api/users/profile");
             Summary(s =>
             {
                 s.Summary = "Actualizar un usuario";
@@ -27,7 +28,8 @@ namespace User.API.Features.User.UpdateUser
 
         public override async Task HandleAsync(UpdateUserRequest req, CancellationToken ct)
         {
-            var command = new UpdateUserCommand(req.Id, req.Name, req.Email, req.IsActive);
+            var userId = HttpContext.User.GetUserId(); 
+            var command = new UpdateUserCommand(userId, req.Name, req.Email, req.IsActive);
             var result = await _mediator.Send(command);
 
             await Send.OkAsync(result); 
