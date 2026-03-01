@@ -21,7 +21,7 @@ namespace Recipe.API.Repositories.RecipeRepository
             return recipe; 
         }
 
-        public async Task<Entities.Recipe> GetRecipe(int id)
+        public async Task<Entities.Recipe?> GetRecipe(int id)
         {
             var recipe = await _context.Recipes
                 .Include(r => r.Ingredients)
@@ -34,10 +34,10 @@ namespace Recipe.API.Repositories.RecipeRepository
 
         public async Task<List<Entities.Recipe>> GetRecipePagination(int pageNumber, int pageSize, RecipeSearchCriteria criteria)
         {
-            IQueryable<Entities.Recipe> query = _context.Recipes
-                .Include(r => r.Ingredients)
-                .Include(r => r.Steps)
-                .Include(r => r.RecipeTags); 
+            IQueryable<Entities.Recipe> query = _context.Recipes;
+                //.Include(r => r.Ingredients)
+                //.Include(r => r.Steps)
+                //.Include(r => r.RecipeTags); 
 
             // aplicar filtros 
 
@@ -50,8 +50,8 @@ namespace Recipe.API.Repositories.RecipeRepository
             if (criteria.CookTimeMinutes.HasValue)
                 query = query.Where(r => r.CookTimeMinutes >= criteria.CookTimeMinutes.Value);
 
-            if (criteria.Difficulty.HasValue)
-                query = query.Where(r => r.Difficulty == criteria.Difficulty.Value);
+            if (!string.IsNullOrEmpty(criteria.Difficulty))
+                query = query.Where(r => r.Difficulty == criteria.Difficulty);
 
             // filtrar por tags 
             if (criteria.Tags is not null && criteria.Tags.Any())
@@ -83,7 +83,6 @@ namespace Recipe.API.Repositories.RecipeRepository
             }
 
             var recipes = await query
-                .OrderBy(x => x.Difficulty)
                 .Skip(pageSize * (pageNumber - 1))
                 .Take(pageSize)
                 .ToListAsync();
@@ -93,7 +92,7 @@ namespace Recipe.API.Repositories.RecipeRepository
 
         public async Task<List<Entities.Recipe>> SearchAdvanced(RecipeSearchCriteria criteria)
         {
-            IQueryable<Entities.Recipe> query = _context.Recipes.Include(r => r.Title);
+            IQueryable<Entities.Recipe> query = _context.Recipes.Include(r => r.RecipeTags);
 
             // luego de esto aplicamos los filtros si se pasaron 
             // cada if agrega una condición al query 
@@ -107,8 +106,8 @@ namespace Recipe.API.Repositories.RecipeRepository
             if (criteria.CookTimeMinutes.HasValue)
                 query = query.Where(r => r.CookTimeMinutes >= criteria.CookTimeMinutes.Value);
 
-            if (criteria.Difficulty.HasValue)
-                query = query.Where(r => r.Difficulty == criteria.Difficulty.Value);
+            if (criteria.Difficulty != "")
+                query = query.Where(r => r.Difficulty == criteria.Difficulty);
 
             // TODO: debo de agregar ordenamiento por rating y novedad 
 

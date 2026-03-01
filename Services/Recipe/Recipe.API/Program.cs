@@ -18,23 +18,28 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddFastEndpoints();
 
+// rabbitmq 
 builder.Services.AddRabbitMQMessaging(builder.Configuration);
 //builder.Services.AddRabbitMQConsumers<RatingCreatedConsumer>(); // debo de implementarlos 
 //builder.Services.AddRabbitMQConsumers<RatingDeletedConsumer>(); 
 
+// dbContest 
 builder.Services.AddDbContext<RecipeDbContext>(options =>
 {
     options.UseNpgsql(builder.Configuration.GetConnectionString("RecipeDb")); 
 });
 
+// mediatr 
 builder.Services.AddMediatR(cfg =>
 {
     cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly());
     cfg.AddOpenBehavior(typeof(ValidationBehavior<,>));
 });
 
+// validaciones 
 builder.Services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly()); 
 
+// swagger 
 builder.Services.SwaggerDocument(options =>
 {
     options.DocumentSettings = s =>
@@ -45,21 +50,29 @@ builder.Services.SwaggerDocument(options =>
     options.AutoTagPathSegmentIndex = 0;
 });
 
+// validaciones 
 builder.Services.AddProblemDetails(); 
 
+// repositorios 
 builder.Services.AddScoped<IRecipeRepository, RecipeRepository>();
 builder.Services.AddScoped<IIngredientRepository, IngredientRepository>();
 builder.Services.AddScoped<IStepRepository, StepRepository>();
 builder.Services.AddScoped<ITagRepository, TagRepositoy>(); 
 
+// configuración de JWT para validación
 builder.Services.AddJwtValidation(builder.Configuration); 
 
 var app = builder.Build();
 
+// jwt autenticación 
+app.UseAuthentication();
+app.UseAuthorization(); 
+
+// validaciones middleware
 app.UseExceptionHandler();
 app.UseCustomExceptionHandler();
-//app.UseAuthorization(); // talvez hay que quitar
 
+// middleware de fastendpoints
 app.UseFastEndpoints();
 app.UseSwaggerGen(); 
 

@@ -24,7 +24,8 @@ namespace Recipe.API.Features.Recipe.GetRecipe
                 x.Summary = "Obtener una receta";
                 x.Description = "Obtener una receta con detalles";
             });
-            Description(x => x.WithTags("Recipes")); 
+            Description(x => x.WithTags("Recipes"));
+            AllowAnonymous(); 
         }
 
         public override async Task HandleAsync(GetRecipeRequest req, CancellationToken ct)

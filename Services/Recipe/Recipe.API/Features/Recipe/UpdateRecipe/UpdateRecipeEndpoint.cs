@@ -37,7 +37,7 @@ namespace Recipe.API.Features.Recipe.UpdateRecipe
             var command = new UpdateRecipeCommand(req.Id, userId, req.Recipe, req.Ingredients, req.Steps);
             var result = await _mediator.Send(command);
 
-            await Send.OkAsync(); 
+            await Send.OkAsync(result); 
         }
     }
 }

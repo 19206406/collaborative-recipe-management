@@ -37,7 +37,9 @@ namespace Recipe.API.Features.Recipe.UpdateRecipe
             if (command.UserId != recipe.UserId)
                 throw new UnauthorizedException("El usuario no está autorizado para realizar esta acción");
 
-            var updatedRecipe = command.Recipe.Adapt<Entities.Recipe>(); 
+            var updatedRecipe = command.Recipe.Adapt<Entities.Recipe>();
+            updatedRecipe.Id = command.Id;
+            updatedRecipe.UserId = command.UserId; 
             var recipeUpdated = await _recipeRepository.UpdateRecipeOnly(updatedRecipe);
 
             // Ingredientes ----------- 
@@ -71,6 +73,7 @@ namespace Recipe.API.Features.Recipe.UpdateRecipe
                 .ToList();
 
             List<Ingredient> ingredients = newIngredients.Adapt<List<Ingredient>>();
+            ingredients.ForEach(i => i.RecipeId = command.Id); 
             await _ingredientRepository.AddIngredients(ingredients);
 
             // Steps ----- 
@@ -101,6 +104,7 @@ namespace Recipe.API.Features.Recipe.UpdateRecipe
                 .ToList();
 
             List<Step> steps = newSteps.Adapt<List<Step>>();
+            steps.ForEach(s => s.RecipeId = command.Id); 
             await _stepRepository.AddSteps(steps);
 
             // Tags -------------------
@@ -134,13 +138,3 @@ namespace Recipe.API.Features.Recipe.UpdateRecipe
         }
     }
 }
-
-
-//var recipeUpdating = command.Recipe;
-//recipe.Title = command.Recipe.Title;
-//recipe.Description = command.Recipe.Description;
-//recipe.PrepTimeMinutes = command.Recipe.PrepTimeMinutes;
-//recipe.CookTimeMinutes = command.Recipe.CookTimeMinutes;
-//recipe.Difficulty = command.Recipe.Difficulty;
-//recipe.Servings = command.Recipe.Servings;
-//recipe.ImageUrl = command.Recipe.ImageUrl;

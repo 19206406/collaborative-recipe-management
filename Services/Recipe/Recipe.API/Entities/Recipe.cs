@@ -8,7 +8,7 @@
         public string Description { get; set; } = default!;
         public int PrepTimeMinutes { get; set; }
         public int CookTimeMinutes { get; set; }
-        public int Difficulty { get; set; }
+        public string Difficulty { get; set; } = default!; 
         public int Servings { get; set; }
         public string ImageUrl { get; set; } = default!;
         public decimal AverageRating { get; set; } // promedio de calificaciones

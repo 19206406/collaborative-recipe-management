@@ -26,7 +26,8 @@ namespace Recipe.API.Features.Recipe.GetListOfRecipes
                 x.Summary = "Obtener recetas";
                 x.Description = "Obtiene todas las recetas con paginación y filtros incluidos";
             });
-            Description(x => x.WithTags("Recipes")); 
+            Description(x => x.WithTags("Recipes"));
+            AllowAnonymous(); 
         }
 
         public override async Task HandleAsync(GetListOfRecipesRequest req, CancellationToken ct)

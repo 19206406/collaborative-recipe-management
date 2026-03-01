@@ -23,9 +23,9 @@ namespace Recipe.API.Features.Recipe.GetRecipe
                 throw new NotFoundException("receta", query.Id);
 
             var recipe = r.Adapt<ResponseRecipe>();
-            var ingredients = r.Adapt<List<ResponseIngredient>>().ToList();
-            var steps = r.Adapt<List<ResponseStep>>().ToList();
-            var tags = r.Adapt<List<ResponseTag>>().ToList(); 
+            var ingredients = r.Ingredients.Adapt<List<ResponseIngredient>>().ToList();
+            var steps = r.Steps.Adapt<List<ResponseStep>>().ToList();
+            var tags = r.RecipeTags.Adapt<List<ResponseTag>>().ToList(); 
 
             return new GetRecipeResponse(recipe, ingredients, steps, tags); 
         }

@@ -15,19 +15,22 @@ namespace Recipe.API.Repositories.IngredientRepository
         public async Task<bool> AddIngredients(List<Ingredient> items)
         {
             _context.Ingredients.AddRange(items);
-            return await _context.SaveChangesAsync() > 0;
+            await _context.SaveChangesAsync();
+            return true; 
         }
 
         public async Task<bool> RemoveIngredients(List<Ingredient> items)
         {
             _context.Ingredients.RemoveRange(items);
-            return await _context.SaveChangesAsync() > 0; 
+            await _context.SaveChangesAsync();
+            return true; 
         }
 
         public async Task<bool> UpdateIngredients(List<Ingredient> items)
         {
             _context.Ingredients.UpdateRange(items);
-            return await _context.SaveChangesAsync() > 0; 
+            await _context.SaveChangesAsync();
+            return true; 
         }
     }
 }

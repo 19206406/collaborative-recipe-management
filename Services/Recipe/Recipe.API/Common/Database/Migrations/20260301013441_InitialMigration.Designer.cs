@@ -12,7 +12,7 @@ using Recipe.API.Common.Database;
 namespace Recipe.API.Common.Database.Migrations
 {
     [DbContext(typeof(RecipeDbContext))]
-    [Migration("20260206234730_InitialMigration")]
+    [Migration("20260301013441_InitialMigration")]
     partial class InitialMigration
     {
         /// <inheritdoc />
@@ -20,7 +20,7 @@ namespace Recipe.API.Common.Database.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "10.0.2")
+                .HasAnnotation("ProductVersion", "10.0.3")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
@@ -93,9 +93,10 @@ namespace Recipe.API.Common.Database.Migrations
                         .HasColumnType("text")
                         .HasColumnName("description");
 
-                    b.Property<int>("Difficulty")
+                    b.Property<string>("Difficulty")
+                        .IsRequired()
                         .HasMaxLength(40)
-                        .HasColumnType("integer")
+                        .HasColumnType("character varying(40)")
                         .HasColumnName("difficulty");
 
                     b.Property<string>("ImageUrl")

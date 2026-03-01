@@ -5,14 +5,10 @@ using Recipe.API.Features.Recipe.GetRecipe;
 
 namespace Recipe.API.Features.Recipe.CreateRecipe
 {
-    public record CreateRecipe(string Title, string Description, int PrepTimeMinutes, int CookTimeMinutes, int Difficulty, int Servings, string ImageUrl);
-
+    public record CreateRecipe(string Title, string Description, int PrepTimeMinutes, int CookTimeMinutes, string Difficulty, int Servings, string? ImageUrl);
     public record CreateIngredient(string Name, decimal Quantity, string Unit, int DisplayOrder); 
-
     public record CreateStep(string Instruction);
-
     public record CreateRecipeRequest(CreateRecipe Recipe, List<CreateIngredient> Ingredients, List<CreateStep> Steps); 
-
 
     public class CreateRecipeEndpoint : Endpoint<CreateRecipeRequest, CreateRecipeResponse>
     {

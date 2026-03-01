@@ -23,7 +23,7 @@ namespace Recipe.API.Common.Database.Migrations
                     description = table.Column<string>(type: "text", nullable: false),
                     prep_time_minutes = table.Column<int>(type: "integer", nullable: false),
                     cook_time_minutes = table.Column<int>(type: "integer", nullable: false),
-                    difficulty = table.Column<int>(type: "integer", maxLength: 40, nullable: false),
+                    difficulty = table.Column<string>(type: "character varying(40)", maxLength: 40, nullable: false),
                     servings = table.Column<int>(type: "integer", nullable: false),
                     image_url = table.Column<string>(type: "text", nullable: false),
                     average_rating = table.Column<decimal>(type: "numeric(3,2)", nullable: false, defaultValue: 0m),
