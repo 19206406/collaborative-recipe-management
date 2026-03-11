@@ -21,7 +21,8 @@ namespace Recipe.API.Features.Recipe.GetRecipesByIngredients
                 x.Summary = "Obtener recetas";
                 x.Description = "Obtener recetas por medio de una lista de ingredientes";
             });
-            Description(x => x.WithTags("Recipes")); 
+            Description(x => x.WithTags("Recipes"));
+            AllowAnonymous(); 
         }
 
         public override async Task HandleAsync(GetRecipesByIngredientsRequest req, CancellationToken ct)

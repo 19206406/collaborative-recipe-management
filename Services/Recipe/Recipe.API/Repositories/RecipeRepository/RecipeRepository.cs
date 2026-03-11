@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Namotion.Reflection;
 using Recipe.API.Common.Database;
 using Recipe.API.Models;
 
@@ -24,6 +25,7 @@ namespace Recipe.API.Repositories.RecipeRepository
         public async Task<Entities.Recipe?> GetRecipe(int id)
         {
             var recipe = await _context.Recipes
+                .AsSplitQuery() // dividir la soconsulta en varios selects y no en unico Join 
                 .Include(r => r.Ingredients)
                 .Include(r => r.Steps)
                 .Include(r => r.RecipeTags)
@@ -161,13 +163,16 @@ namespace Recipe.API.Repositories.RecipeRepository
             await _context.SaveChangesAsync();
         }
 
-        public async Task<Entities.Recipe> UpdateRecipeOnly(Entities.Recipe recipe)
+        public Task UpdateRecipeOnly(Entities.Recipe recipe)
         {
-            _context.Recipes.Update(recipe);
-            await _context.SaveChangesAsync();
+            // causante del tracker 
+            if (_context.Entry(recipe).State == EntityState.Detached)
+                _context.Entry(recipe).State = EntityState.Modified;
 
-            await _context.Entry(recipe).ReloadAsync();
-            return recipe;
+            // la receta fue llamada con el mismo dbContext ya se dectecta como modificada 
+            // solo es guardar cambios con SaveChangesAsync(); 
+
+            return Task.CompletedTask; 
         }
 
         public async Task<List<Entities.Recipe>> GetRecipesByIngredientsAsync(List<string> ingredients)
@@ -198,6 +203,11 @@ namespace Recipe.API.Repositories.RecipeRepository
                 .ToListAsync();
 
             return trending; 
+        }
+
+        public async Task<Entities.Recipe?> GetRecipeOnly(int id)
+        {
+            return await _context.Recipes.FirstOrDefaultAsync(r => r.Id == id); 
         }
     }
 }

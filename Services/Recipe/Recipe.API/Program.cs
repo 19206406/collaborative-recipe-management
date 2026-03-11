@@ -11,6 +11,7 @@ using Recipe.API.Repositories.IngredientRepository;
 using Recipe.API.Repositories.RecipeRepository;
 using Recipe.API.Repositories.StepRepository;
 using Recipe.API.Repositories.TagRepository;
+using Recipe.API.Repositories.UnitOfWork;
 using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -53,11 +54,12 @@ builder.Services.SwaggerDocument(options =>
 // validaciones 
 builder.Services.AddProblemDetails(); 
 
-// repositorios 
+// repositorios FRom
 builder.Services.AddScoped<IRecipeRepository, RecipeRepository>();
 builder.Services.AddScoped<IIngredientRepository, IngredientRepository>();
 builder.Services.AddScoped<IStepRepository, StepRepository>();
-builder.Services.AddScoped<ITagRepository, TagRepositoy>(); 
+builder.Services.AddScoped<ITagRepository, TagRepositoy>();
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>(); 
 
 // configuración de JWT para validación
 builder.Services.AddJwtValidation(builder.Configuration); 

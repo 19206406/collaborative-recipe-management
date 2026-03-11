@@ -2,5 +2,5 @@
 
 namespace Recipe.API.Features.Recipe.UpdateRecipeRating
 {
-    public record UpdateRecipeRatingCommand(int Id, decimal Rating) : ICommand<UpdateRecipeRatingResponse>; 
+    public record UpdateRecipeRatingCommand(int Id, decimal NewAverage, int NewRatingCount) : ICommand<UpdateRecipeRatingResponse>; 
 }

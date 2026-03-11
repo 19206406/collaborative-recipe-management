@@ -4,6 +4,9 @@ namespace Recipe.API.Repositories.TagRepository
 {
     public interface ITagRepository
     {
-        Task<bool> UpdateTags(List<RecipeTag> items); 
+        Task<List<RecipeTag>> GetTagsByIdRecipeAsync(int recipeId); 
+        Task AddTagAsync(RecipeTag tag);
+        Task UpdateTagAsync(RecipeTag tag);
+        Task DeleteTagAsync(int id); 
     }
 }

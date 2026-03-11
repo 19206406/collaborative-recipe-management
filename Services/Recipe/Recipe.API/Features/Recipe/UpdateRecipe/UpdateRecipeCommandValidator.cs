@@ -25,7 +25,6 @@ namespace Recipe.API.Features.Recipe.UpdateRecipe
             RuleFor(x => x.Recipe.Servings)
                 .NotEmpty().WithMessage("Debes de establecer el numero de porciones de la receta");
 
-
             RuleForEach(x => x.Ingredients)
                 .ChildRules(ing =>
                 {

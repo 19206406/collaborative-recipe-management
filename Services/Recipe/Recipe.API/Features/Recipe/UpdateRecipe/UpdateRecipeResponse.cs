@@ -1,7 +1,16 @@
-﻿using Recipe.API.Features.Recipe.CreateRecipe;
-
-namespace Recipe.API.Features.Recipe.UpdateRecipe
+﻿namespace Recipe.API.Features.Recipe.UpdateRecipe
 {
-    public record UpdateRecipeResponse(ResponseRecipe recipe, List<ResponseIngredient> Ingredients,
-        List<ResponseStep> Steps, List<ResponseTag> Tags); 
+    public record CollectionSummary(int created, int updated, int deleted); 
+    public record UpdateRecipeResponse(
+        int Id, 
+        string Title, 
+        string Description, 
+        int PrepTimeMinutes, 
+        int CookTimeMinutes, 
+        string Difficulty, 
+        int Servings, 
+        string ImageUrl, 
+        DateTime UpdatedAt,
+        RecipeUpdateSummary Summary
+        ); 
 }

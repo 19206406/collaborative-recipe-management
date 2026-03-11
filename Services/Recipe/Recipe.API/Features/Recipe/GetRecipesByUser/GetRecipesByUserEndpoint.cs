@@ -21,11 +21,13 @@ namespace Recipe.API.Features.Recipe.GetRecipesByUser
                 x.Summary = "obtener todas las recetas de un usuario";
                 x.Description = "obtener todas las recetas de un usuario";
             });
-            Description(x => x.WithTags("Recipes")); 
+            Description(x => x.WithTags("Recipes"));
+            AllowAnonymous(); 
         }
 
         public override async Task HandleAsync(GetRecipeByUserRequest req, CancellationToken ct)
         {
+            // TODO: verificar que el usuario si exista esto se hace por medio del otro servico 
             var query = new GetRecipesByUserQuery(req.UserId);
             var result = await _mediator.Send(query);
 
