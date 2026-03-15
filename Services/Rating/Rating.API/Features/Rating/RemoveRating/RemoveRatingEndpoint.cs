@@ -38,13 +38,13 @@ namespace Rating.API.Features.Rating.RemoveRating
             var command = new RemoveRatingCommand(req.Id, userId);
             var result = await _mediator.Send(command);
 
-            await _messagePublisher.PublishAsync("rating.deleted", new RatingDeleteEvent
-            {
-                Id = result.Id, 
-                RecipeId = req.Id,
-                UserId = userId, 
-                Rating = result.Rating,
-            });  
+            //await _messagePublisher.PublishAsync("rating.deleted", new RatingDeleteEvent
+            //{
+            //    Id = result.Id, 
+            //    RecipeId = req.Id,
+            //    UserId = userId, 
+            //    Rating = result.Rating,
+            //});  
 
             await Send.NoContentAsync(); 
         }

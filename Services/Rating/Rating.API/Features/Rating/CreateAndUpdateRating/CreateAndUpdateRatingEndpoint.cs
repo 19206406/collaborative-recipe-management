@@ -6,7 +6,7 @@ using MediatR;
 
 namespace Rating.API.Features.Rating.CreateAndUpdateRating
 {
-    public record CreateAndUpdateRatingRequest(int Id, int RecipeId, int Rating, string? Comment, bool IsToUpdate); 
+    public record CreateAndUpdateRatingRequest(int Id, int RecipeId, int Rating, string? Comment, bool IsToUpdate = false); 
     public class CreateAndUpdateRatingEndpoint : Endpoint<CreateAndUpdateRatingRequest, CreateAndUpdateRatingResponse>
     {
         private readonly IMediator _mediator;
@@ -20,7 +20,7 @@ namespace Rating.API.Features.Rating.CreateAndUpdateRating
 
         public override void Configure()
         {
-            Put("api/ratings");
+            Post("/api/ratings");
             Summary(x =>
             {
                 x.Summary = "Crear o actualizar una calificación";
@@ -38,16 +38,16 @@ namespace Rating.API.Features.Rating.CreateAndUpdateRating
             var result = await _mediator.Send(command);
 
             // publicar evento de creación de evento 
-            await _messagePublisher.PublishAsync("rating.created", new RatingCreateAndUpdateEvent
-            {
-                RatingId = result.Id,
-                RecipeId = req.RecipeId,
-                UserId = userId,
-                Rating = req.Rating,
-                Comment = req.Comment,
-                IsToUpdate = req.IsToUpdate, 
-                PublishedAt = DateTime.UtcNow
-            }); 
+            //await _messagePublisher.PublishAsync("rating.created", new RatingCreateAndUpdateEvent
+            //{
+            //    RatingId = result.Id,
+            //    RecipeId = req.RecipeId,
+            //    UserId = userId,
+            //    Rating = req.Rating,
+            //    Comment = req.Comment,
+            //    IsToUpdate = req.IsToUpdate, 
+            //    PublishedAt = DateTime.UtcNow
+            //}); 
 
             await Send.OkAsync(result); 
         }

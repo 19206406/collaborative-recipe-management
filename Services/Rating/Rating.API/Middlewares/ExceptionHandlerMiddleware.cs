@@ -50,6 +50,7 @@ namespace Rating.API.Middlewares
                     Type = "https://tools.ietf.org/html/rfc7231#section-6.5.4",
                     Title = "Resource not found",
                     Status = StatusCodes.Status404NotFound,
+                    Instance = context.Request.Path, 
                     Errors = new List<string> { notFoundException.Message }
                 },
 

@@ -18,7 +18,7 @@ namespace Rating.API.Repositories
             _context.Ratings.Add(rating);
             await _context.SaveChangesAsync();
 
-            return rating; 
+            return rating;
         }
 
         public async Task DeleteRatingAsync(RatingE rating)
@@ -64,11 +64,10 @@ namespace Rating.API.Repositories
             return ratings;
         }
 
-        public async Task<int> GetSpecificRatingAsync(int userId, int recipeId)
+        public async Task<RatingE?> GetSpecificRatingAsync(int userId, int recipeId)
         {
             var rating = await _context.Ratings
                 .Where(x => x.UserId == userId && x.RecipeId == recipeId)
-                .Select(x => x.Rating)
                 .FirstOrDefaultAsync();
 
             return rating; 

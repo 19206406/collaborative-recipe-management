@@ -18,6 +18,6 @@ namespace Rating.API.Repositories
 
         Task<double> GetAverageRatingAsync(int recipeId);
 
-        Task<int> GetSpecificRatingAsync(int userId, int recipeId); 
+        Task<RatingE?> GetSpecificRatingAsync(int userId, int recipeId); 
     }
 }

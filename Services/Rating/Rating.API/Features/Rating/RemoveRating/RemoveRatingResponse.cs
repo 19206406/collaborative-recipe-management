@@ -1,4 +1,4 @@
 ﻿namespace Rating.API.Features.Rating.RemoveRating
 {
-    public record RemoveRatingResponse(int Id, int UserId, int RecipeId, int Rating); 
+    public record RemoveRatingResponse(int Id, int UserId, int RecipeId, int Rating, string? Comment); 
 }

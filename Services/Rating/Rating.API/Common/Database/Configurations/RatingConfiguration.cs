@@ -12,18 +12,19 @@ namespace Rating.API.Common.Database.Configurations
 
             builder.HasKey(r => r.Id);
 
-            builder.HasKey(r => new { r.UserId, r.RecipeId }); 
+            builder.HasIndex(r => new { r.UserId, r.RecipeId })
+                .IsUnique();
 
             builder.Property(r => r.Id)
                 .HasColumnName("id");
 
             builder.Property(r => r.UserId)
                 .IsRequired()
-                .HasColumnName("userId");
+                .HasColumnName("user_id");
 
             builder.Property(r => r.RecipeId)
                 .IsRequired()
-                .HasColumnName("recipeId"); 
+                .HasColumnName("recipe_id"); 
 
             builder.Property(r => r.Rating)
                 .IsRequired()
@@ -35,13 +36,11 @@ namespace Rating.API.Common.Database.Configurations
 
             builder.Property(r => r.CreatedAt)
                 .IsRequired()
-                .HasColumnType("datetime")
-                .HasColumnName("createdAt");
+                .HasColumnName("created_at");
 
             builder.Property(r => r.UpdatedAt)
                 .IsRequired()
-                .HasColumnType("datetime")
-                .HasColumnName("updatedAt");
+                .HasColumnName("updated_at");
 
         }
     }

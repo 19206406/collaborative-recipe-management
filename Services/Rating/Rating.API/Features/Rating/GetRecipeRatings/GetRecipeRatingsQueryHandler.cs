@@ -19,10 +19,10 @@ namespace Rating.API.Features.Rating.GetRecipeRatings
 
         public async Task<GetRecipeRatingsResponse> Handle(GetRecipeRatingsQuery query, CancellationToken cancellationToken)
         {
-            bool recipeExist = await _recipesClient.RecipeExistAsync(query.RecipeId, cancellationToken);
+            //bool recipeExist = await _recipesClient.RecipeExistAsync(query.RecipeId, cancellationToken);
 
-            if (!recipeExist)
-                throw new NotFoundException("receta", query.RecipeId);
+            //if (!recipeExist)
+            //    throw new NotFoundException("receta", query.RecipeId);
 
             var ratings = await _ratingRepository.GetRatingsByRecipeIdAsync(query.RecipeId);
 

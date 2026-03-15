@@ -18,10 +18,10 @@ namespace Rating.API.Features.Rating.GetAverageRating
 
         public async Task<GetAverageRatingResponse> Handle(GetAverageRatingQuery query, CancellationToken cancellationToken)
         {
-            bool recipeExist = await _recipesClient.RecipeExistAsync(query.RecipeId, cancellationToken);
+            //bool recipeExist = await _recipesClient.RecipeExistAsync(query.RecipeId, cancellationToken);
 
-            if (!recipeExist)
-                throw new NotFoundException("receta", query.RecipeId);
+            //if (!recipeExist)
+            //    throw new NotFoundException("receta", query.RecipeId);
 
             var averageRating = await _ratingRepository.GetAverageRatingAsync(query.RecipeId);
 

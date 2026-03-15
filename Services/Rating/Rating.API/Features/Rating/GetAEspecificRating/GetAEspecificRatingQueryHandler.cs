@@ -20,14 +20,14 @@ namespace Rating.API.Features.Rating.GetAEspecificRating
         {
             // TODO: Implementar si un usuario existe 
 
-            bool recipeExist = await _recipesClient.RecipeExistAsync(query.RecipeId, cancellationToken);
+            //bool recipeExist = await _recipesClient.RecipeExistAsync(query.RecipeId, cancellationToken);
 
-            if (!recipeExist)
-                throw new NotFoundException("receta", query.RecipeId);
+            //if (!recipeExist)
+            //    throw new NotFoundException("receta", query.RecipeId);
 
             var rating = await _ratingRepository.GetSpecificRatingAsync(query.UserId, query.RecipeId);
 
-            return new GetAEspecificRatingResponse(query.UserId, query.RecipeId, rating); 
+            return new GetAEspecificRatingResponse(query.UserId, query.RecipeId, rating.Rating, rating.Comment, rating.CreatedAt, rating.UpdatedAt); 
         }
     }
 }
