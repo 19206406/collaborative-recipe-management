@@ -37,17 +37,17 @@ namespace Rating.API.Features.Rating.CreateAndUpdateRating
             var command = new CreateAndUpdateRatingCommand(req.Id, userId, req.RecipeId, req.Rating, req.Comment, req.IsToUpdate);
             var result = await _mediator.Send(command);
 
-            // publicar evento de creación de evento 
-            //await _messagePublisher.PublishAsync("rating.created", new RatingCreateAndUpdateEvent
-            //{
-            //    RatingId = result.Id,
-            //    RecipeId = req.RecipeId,
-            //    UserId = userId,
-            //    Rating = req.Rating,
-            //    Comment = req.Comment,
-            //    IsToUpdate = req.IsToUpdate, 
-            //    PublishedAt = DateTime.UtcNow
-            //}); 
+            //publicar evento de creación de evento o de actualizaciòn 
+            await _messagePublisher.PublishAsync("rating.created", new RatingCreateAndUpdateEvent
+            {
+                RatingId = result.Id,
+                RecipeId = req.RecipeId,
+                UserId = userId,
+                Rating = req.Rating,
+                Comment = req.Comment,
+                IsToUpdate = req.IsToUpdate,
+                PublishedAt = DateTime.UtcNow
+            });
 
             await Send.OkAsync(result); 
         }

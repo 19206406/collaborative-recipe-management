@@ -1,5 +1,5 @@
 services:
-
+  # ----- bases de datos 
   sqlserver: 
     image: mcr.microsoft.com/mssql/server:2022-latest
     environment: 
@@ -37,6 +37,48 @@ services:
   rabbitmq: 
     image: rabbitmq:3.13-management-alpine
     networks:
+      - microservices-network 
+
+
+  # -- Microservicios --------------------------- 
+  user-api: 
+    image: user-api
+    build: 
+      context: . 
+      dockerfile: Services/User/User.API/Dockerfile 
+    networks: 
+      - microservices-network 
+  
+  recipe-api: 
+    image: recipe-api
+    build: 
+      context: . 
+      dockerfile: Services/Recipe/Recipe.API/Dockerfile 
+    networks: 
+      - microservices-network 
+  
+  rating-api: 
+    image: rating-api
+    build: 
+      context: .
+      dockerfile: Services/Rating/Rating.API/Dockerfile 
+    networks: 
+      - microservices-network 
+
+  recommendation-api: 
+    image: recommendation-api 
+    build: 
+      context: . 
+      dockerfile: Services/Recommendation/Recommendation.API/Dockerfile 
+    networks: 
+      - microservices-network 
+
+  notification-api: 
+    image: notification-api 
+    build: 
+      context: . 
+      dockerfile: Services/Notification/Notification.API/Dockerfile 
+    networks: 
       - microservices-network 
 
 networks:

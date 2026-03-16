@@ -19,6 +19,9 @@ namespace Notification.API.Common.Database.Configurations
                 .IsRequired()
                 .HasColumnName("user_id");
 
+            builder.HasIndex(x => x.UserId)
+                .IsUnique(); 
+
             builder.Property(x => x.EmailNotifications)
                 .IsRequired()
                 .HasColumnName("email_notifications");
