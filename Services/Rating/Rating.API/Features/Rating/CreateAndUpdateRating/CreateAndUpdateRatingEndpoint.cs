@@ -11,11 +11,13 @@ namespace Rating.API.Features.Rating.CreateAndUpdateRating
     {
         private readonly IMediator _mediator;
         private readonly IMessagePublisher _messagePublisher;
+        private readonly ILogger<CreateAndUpdateRatingEndpoint> _logger;
 
-        public CreateAndUpdateRatingEndpoint(IMediator mediator, IMessagePublisher messagePublisher)
+        public CreateAndUpdateRatingEndpoint(IMediator mediator, IMessagePublisher messagePublisher, ILogger<CreateAndUpdateRatingEndpoint> logger)
         {
             _mediator = mediator;
             _messagePublisher = messagePublisher;
+            _logger = logger;
         }
 
         public override void Configure()
@@ -32,24 +34,33 @@ namespace Rating.API.Features.Rating.CreateAndUpdateRating
         public override async Task HandleAsync(CreateAndUpdateRatingRequest req, CancellationToken ct)
         {
             // id del usuario del jwt  
-            var userId = HttpContext.User.GetUserId(); 
+            var userId = HttpContext.User.GetUserId();
 
             var command = new CreateAndUpdateRatingCommand(req.Id, userId, req.RecipeId, req.Rating, req.Comment, req.IsToUpdate);
             var result = await _mediator.Send(command);
 
-            //publicar evento de creación de evento o de actualizaciòn 
-            await _messagePublisher.PublishAsync("rating.created", new RatingCreateAndUpdateEvent
+            try
             {
-                RatingId = result.Id,
-                RecipeId = req.RecipeId,
-                UserId = userId,
-                Rating = req.Rating,
-                Comment = req.Comment,
-                IsToUpdate = req.IsToUpdate,
-                PublishedAt = DateTime.UtcNow
-            });
+                //publicar evento de creación de evento o de actualizaciòn 
+                await _messagePublisher.PublishAsync("rating.created", new RatingCreateAndUpdateEvent
+                {
+                    RatingId = req.Id,
+                    RecipeId = req.RecipeId,
+                    UserId = userId,
+                    Rating = req.Rating,
+                    Comment = req.Comment,
+                    IsToUpdate = req.IsToUpdate,
+                    PublishedAt = DateTime.UtcNow
+                });
 
-            await Send.OkAsync(result); 
+                _logger.LogInformation("Evento CreateAndUpdateRating creado exitosamente"); 
+            }
+            catch (Exception eventEx)
+            {
+                _logger.LogError(eventEx, "Rating guardado con cambios exitosamente en base de datos, pero evento CreateAndUpdateRating No publicado"); 
+            }
+
+            await Send.OkAsync(result);
         }
     }
 }

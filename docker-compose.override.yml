@@ -106,89 +106,89 @@ services:
 
   # ----------- microservicios 
 
-  user-api: 
-    container_name: user-api
-    environment: 
-      - ASPNETCORE_ENVIROMENT=Development
-      - ASPNETCORE_URLS=http://+:8080
-      - ConnectionStrings__RecipeUserDb=Server=userdb,1433;Database=RecipeUserDb;User Id=sa;Password=Sebastian@User123;TrustServerCertificate=True;MultipleActiveResultSets=true
-    ports:
-      - "5001:8080"
-    depends_on:
-      sqlserver: 
-        condition: service_healthy
+  # user-api: 
+  #   container_name: user-api
+  #   environment: 
+  #     - ASPNETCORE_ENVIROMENT=Development
+  #     - ASPNETCORE_URLS=http://+:8080
+  #     - ConnectionStrings__RecipeUserDb=Server=userdb,1433;Database=RecipeUserDb;User Id=sa;Password=Sebastian@User123;TrustServerCertificate=True;MultipleActiveResultSets=true
+  #   ports:
+  #     - "5001:8080"
+  #   depends_on:
+  #     sqlserver: 
+  #       condition: service_healthy
 
-  recipe-api: 
-    container_name: recipe-api
-    environment: 
-      - ASPNETCORE_ENVIROMENT=Development
-      - ASPNETCORE_URLS=http://+:8080
-      - ConnectionStrings__RecipeDb=Host=Host=recipedb;Port=5432;Database=recipe_db;Username=admin;Password=Sebastian@Postgres123;Include Error Detail=true
-      - Redis__ConnectionString=redis-cache:6379
-      - RabbitMQ__Host=amqp://admin:Sebastian@Rabbit123@rabbitmq-broker:5672/
-    ports:
-      - "5002:8080"
-    depends_on:
-      postgres: 
-        condition: service_healthy
-      redis: 
-        condition: service_healthy
-      rabbitmq: 
-        condition: service_healthy
+  # recipe-api: 
+  #   container_name: recipe-api
+  #   environment: 
+  #     - ASPNETCORE_ENVIROMENT=Development
+  #     - ASPNETCORE_URLS=http://+:8080
+  #     - ConnectionStrings__RecipeDb=Host=Host=recipedb;Port=5432;Database=recipe_db;Username=admin;Password=Sebastian@Postgres123;Include Error Detail=true
+  #     - Redis__ConnectionString=redis-cache:6379
+  #     - RabbitMQ__Host=amqp://admin:Sebastian@Rabbit123@rabbitmq-broker:5672/
+  #   ports:
+  #     - "5002:8080"
+  #   depends_on:
+  #     postgres: 
+  #       condition: service_healthy
+  #     redis: 
+  #       condition: service_healthy
+  #     rabbitmq: 
+  #       condition: service_healthy
 
-  rating-api: 
-    container_name: rating-api
-    environment: 
-      - ASPNETCORE_ENVIROMENT=Development
-      - ASPNETCORE_URLS=http://+:8080
-      - ConnectionStrings__RatingDb=Server=ratingdb,1433;Database=RatingDb;User Id=sa;Password=Sebastian@Rating123;TrustServerCertificate=True;MultipleActiveResultSets=true
-      - RabbitMQ__Host=amqp://admin:Sebastian@Rabbit123@rabbitmq-broker:5672/
-      - Services__RecipeAPI=http://recipe-api:8080
-    ports:
-      - "5003:8080"
-    depends_on:
-      sqlserver2: 
-        condition: service_healthy
-      rabbitmq: 
-        condition: service_healthy
-      recipe-api: 
-        condition: service_healthy
+  # rating-api: 
+  #   container_name: rating-api
+  #   environment: 
+  #     - ASPNETCORE_ENVIROMENT=Development
+  #     - ASPNETCORE_URLS=http://+:8080
+  #     - ConnectionStrings__RatingDb=Server=ratingdb,1433;Database=RatingDb;User Id=sa;Password=Sebastian@Rating123;TrustServerCertificate=True;MultipleActiveResultSets=true
+  #     - RabbitMQ__Host=amqp://admin:Sebastian@Rabbit123@rabbitmq-broker:5672/
+  #     - Services__RecipeAPI=http://recipe-api:8080
+  #   ports:
+  #     - "5003:8080"
+  #   depends_on:
+  #     sqlserver2: 
+  #       condition: service_healthy
+  #     rabbitmq: 
+  #       condition: service_healthy
+  #     recipe-api: 
+  #       condition: service_healthy
 
-  recommendation-api: 
-    container_name: recommendation-api
-    environment: 
-      - ASPNETCORE_ENVIROMENT=Development
-      - ASPNETCORE_URLS=http://+:8080
-      - Services__RecipeAPI=http://recipe-api:8080
-      - Services__RatingAPI=http://rating-api:8080
-    ports:
-      - "5004:8080"
-    depends_on: 
-      recipe-api: 
-        condition: service_started
-      rating-api: 
-        condition: service_started
+  # recommendation-api: 
+  #   container_name: recommendation-api
+  #   environment: 
+  #     - ASPNETCORE_ENVIROMENT=Development
+  #     - ASPNETCORE_URLS=http://+:8080
+  #     - Services__RecipeAPI=http://recipe-api:8080
+  #     - Services__RatingAPI=http://rating-api:8080
+  #   ports:
+  #     - "5004:8080"
+  #   depends_on: 
+  #     recipe-api: 
+  #       condition: service_started
+  #     rating-api: 
+  #       condition: service_started
 
-  notification-api: 
-    container_name: notification-api
-    environment: 
-      - ASPNETCORE_ENVIROMENT=Development
-      - ASPNETCORE_URLS=http://+:8080
-      - ConnectionStrings__NotificationDb=Server=notificationdb,1433;Database=RecipeNotificationDb;User Id=sa;Password=Sebastian@Notification123;TrustServerCertificate=True;MultipleActiveResultSets=true
-      - RabbitMQ__Host=amqp://admin:Sebastian@Rabbit123@rabbitmq-broker:5672/
-      - Services__RecipeAPI=http://recipe-api:8080
-      - Services__RatingAPI=http://rating-api:8080
-    ports:
-      - "5005:8080"
-    depends_on:
-      sqlserver3: 
-        condition: service_healthy
-      rabbitmq: 
-        condition: service_healthy
-      recipe-api: 
-        condition: service_started
-      rating-api: 
-        condition: service_started
+  # notification-api: 
+  #   container_name: notification-api
+  #   environment: 
+  #     - ASPNETCORE_ENVIROMENT=Development
+  #     - ASPNETCORE_URLS=http://+:8080
+  #     - ConnectionStrings__NotificationDb=Server=notificationdb,1433;Database=RecipeNotificationDb;User Id=sa;Password=Sebastian@Notification123;TrustServerCertificate=True;MultipleActiveResultSets=true
+  #     - RabbitMQ__Host=amqp://admin:Sebastian@Rabbit123@rabbitmq-broker:5672/
+  #     - Services__RecipeAPI=http://recipe-api:8080
+  #     - Services__RatingAPI=http://rating-api:8080
+  #   ports:
+  #     - "5005:8080"
+  #   depends_on:
+  #     sqlserver3: 
+  #       condition: service_healthy
+  #     rabbitmq: 
+  #       condition: service_healthy
+  #     recipe-api: 
+  #       condition: service_started
+  #     rating-api: 
+  #       condition: service_started
 
 
 volumes:

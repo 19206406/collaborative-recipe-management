@@ -63,9 +63,9 @@ namespace Rating.API.Features.Rating.CreateAndUpdateRating
                 if (rating is not null)
                     throw new InvalidOperationException("No puedes ejecutar esta acción de nuevo"); 
 
-                var result = await _ratingRepository.AddRating(newRating);
+                //var result = await _ratingRepository.AddRating(newRating);
 
-                return result.Adapt<CreateAndUpdateRatingResponse>();
+                return rating.Adapt<CreateAndUpdateRatingResponse>();
             }
         }
     }
