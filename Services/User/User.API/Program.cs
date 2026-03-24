@@ -1,4 +1,5 @@
 using BuildingBlocks.Behaviors;
+using BuildingBlocks.Extensions;
 using BuildingBlocks.Jwt.Models;
 using BuildingBlocks.Jwt.Service;
 using FastEndpoints;
@@ -66,6 +67,9 @@ builder.Services.SwaggerDocument(options =>
 });
 
 var app = builder.Build();
+
+// migracion de la base de datos en automatico 
+await app.ApplyMigrationsAsync<UserDbContext>(); 
 
 // middlewares de excepciones 
 app.UseExceptionHandler();

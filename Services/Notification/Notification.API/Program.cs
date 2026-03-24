@@ -1,4 +1,5 @@
 using BuildingBlocks.Behaviors;
+using BuildingBlocks.Extensions;
 using FastEndpoints;
 using FastEndpoints.Swagger;
 using FluentValidation;
@@ -59,6 +60,9 @@ builder.Services.AddScoped<INotificationRepository, NotificationRepository>();
 builder.Services.AddScoped<INotificationPreferenceRepository, NotificationPreferenceRepository>();
 
 var app = builder.Build();
+
+// migraciones en automatico 
+await app.ApplyMigrationsAsync<NotificationDbContext>(); 
 
 app.UseCors(); 
 

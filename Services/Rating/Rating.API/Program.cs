@@ -1,4 +1,5 @@
 using BuildingBlocks.Behaviors;
+using BuildingBlocks.Extensions;
 using BuildingBlocks.Jwt.Service;
 using BuildingBlocks.Messaging.Extensions;
 using FastEndpoints;
@@ -92,6 +93,9 @@ builder.Services.AddScoped<IRatingRepository, RatingRepository>();
 builder.Services.AddJwtValidation(builder.Configuration); 
 
 var app = builder.Build();
+
+// migración en automatico 
+await app.ApplyMigrationsAsync<RatingDbContext>(); 
 
 app.UseCors(); // cors 
 

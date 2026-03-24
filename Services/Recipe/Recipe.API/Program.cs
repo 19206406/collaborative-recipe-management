@@ -1,4 +1,5 @@
 using BuildingBlocks.Behaviors;
+using BuildingBlocks.Extensions;
 using BuildingBlocks.Jwt.Service;
 using BuildingBlocks.Messaging.Extensions;
 using FastEndpoints;
@@ -65,6 +66,8 @@ builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddJwtValidation(builder.Configuration); 
 
 var app = builder.Build();
+// migración en automatico 
+await app.ApplyMigrationsAsync<RecipeDbContext>(); 
 
 // jwt autenticación 
 app.UseAuthentication();
