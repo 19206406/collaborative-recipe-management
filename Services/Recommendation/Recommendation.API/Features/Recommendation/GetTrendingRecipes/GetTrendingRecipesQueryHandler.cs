@@ -23,7 +23,7 @@ namespace Recommendation.API.Features.Recommendation.GetTrendingRecipes
         public async Task<List<RecipeDto>> Handle(GetTrendingRecipesQuery request, CancellationToken cancellationToken)
         {
             var cached = await _cache.GetAsync<List<RecipeDto>>(CacheKey);
-            if (cached is not null)
+            if (cached is not null) 
                 return cached;
 
             var recipes = await _recipeService.GetTopRecipes();

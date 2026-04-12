@@ -5,3 +5,4 @@ namespace Recommendation.API.Features.Recommendation.GetTrendingRecipes
 {
     public record GetTrendingRecipesQuery() : IQuery<List<RecipeDto>>; 
 }
+ 

@@ -20,11 +20,6 @@ namespace Rating.API.Features.Rating.RemoveRating
 
         public async Task<RemoveRatingResponse> Handle(RemoveRatingCommand command, CancellationToken cancellationToken)
         {
-            //bool recipeExist = await _recipesClient.RecipeExistAsync(command.Id, cancellationToken);
-
-            //if (!recipeExist)
-            //    throw new NotFoundException("receta", command.Id);
-
             var rating = await _ratingRepository.GetRating(command.Id);
 
             if (rating is null)

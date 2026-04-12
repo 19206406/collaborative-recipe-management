@@ -6,6 +6,7 @@
         public int RecipeId { get; set; }
         public int UserId { get; set; }
         public int Rating { get; set; }
+        public int OldRating { get; set; }
         public string? Comment { get; set; }
         public bool IsToUpdate { get; set; }
         public DateTime PublishedAt { get; set; }

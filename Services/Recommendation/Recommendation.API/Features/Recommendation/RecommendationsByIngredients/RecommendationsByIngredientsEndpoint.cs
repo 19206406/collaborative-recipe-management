@@ -5,7 +5,7 @@ using Recommendation.API.Common.Dtos;
 
 namespace Recommendation.API.Features.Recommendation.RecommendationsByIngredients
 {
-    public record RecommendationsByIngredientsRequest(List<string> ingredients); 
+    public record RecommendationsByIngredientsRequest(int UserId, List<string> Ingredients); 
 
     public class RecommendationsByIngredientsEndpoint : Endpoint<RecommendationsByIngredientsRequest, List<IngredientMatchDto>>
     {
@@ -24,13 +24,13 @@ namespace Recommendation.API.Features.Recommendation.RecommendationsByIngredient
                 x.Summary = "Recomendaciones de recetas";
                 x.Description = "Recomienda recetas por medio de una lista de ingredientes además trae las recetas que tengan un cierto porcentaje de match";
             });
-            Description(x => x.WithTags("Recommendations")); 
+            Description(x => x.WithTags("Recommendations"));
+            AllowAnonymous(); 
         }
 
         public override async Task HandleAsync(RecommendationsByIngredientsRequest req, CancellationToken ct)
         {
-            var userId = HttpContext.User.GetUserId(); 
-            var command = new RecommendationsByIngredientsCommand(userId, req.ingredients);
+            var command = new RecommendationsByIngredientsCommand(req.UserId, req.Ingredients);
             var result = await _mediator.Send(command);
 
             await Send.OkAsync(result); 

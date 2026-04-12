@@ -35,7 +35,7 @@ namespace User.API.repositories.UserPreferenceRepository
             var entities = items.Select(x => new UserPreference
             {
                 UserId = userId,
-                PreferenceType = x,
+                PreferenceType = x.ToLower(),
                 CreatedAt = DateTime.UtcNow
             }); 
 

@@ -14,8 +14,6 @@ namespace Recipe.API.Features.Recipe.CreateRecipe
 
         public async Task<CreateRecipeResponse> Handle(CreateRecipeCommand command, CancellationToken cancellationToken)
         {
-            // TODO: validacion de que un usuario exista para luego ya que toco que conectar servicios
-
             var recipe = command.Recipe;
             var ingredients = command.Ingredients.ToList();
             var steps = command.Steps.ToList();
@@ -42,7 +40,7 @@ namespace Recipe.API.Features.Recipe.CreateRecipe
                 }).ToList(), 
                 Steps = steps.Select((s, i) => new Entities.Step
                 { 
-                    StepNumber = i + 1, 
+                    StepNumber = s.StepNumber, 
                     Instruction = s.Instruction
                 }).ToList(),
                 RecipeTags = tags.Select(t => new Entities.RecipeTag
@@ -54,7 +52,7 @@ namespace Recipe.API.Features.Recipe.CreateRecipe
             var r = await _recipeRepository.AddRecipe(newRecipe);
 
             var recipeCreated = new ResponseRecipe(r.Id, r.UserId, r.Title, r.Description, r.PrepTimeMinutes, 
-                r.CookTimeMinutes, r.Difficulty, r.Servings, r.ImageUrl, r.AverageRating, r.RatingCount, r.CreatedAt);
+                r.CookTimeMinutes, r.Difficulty, r.Servings, r.ImageUrl, r.AverageRating, r.RatingCount, r.CreatedAt, r.UpdatedAt);
 
             var ingredientsCreated = r.Ingredients.Select(ing => new ResponseIngredient(ing.Id, ing.Name, ing.Quantity,
                 ing.Unit, ing.DisplayOrder)).ToList(); 

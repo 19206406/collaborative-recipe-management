@@ -13,6 +13,9 @@ namespace Recipe.API.Repositories.RecipeRepository
         Task<List<Entities.Recipe>> GetRecipePagination(int pageNumber, int pageSize, RecipeSearchCriteria criteria);
 
         Task UpdateRecipeOnly(Entities.Recipe recipe);
+
+        Task UpdateRatingRecipeOnly();
+
         Task<List<Entities.Recipe>> SearchAdvanced(RecipeSearchCriteria criteria);
 
         Task<List<Entities.Recipe>> GetRecipesByIngredientsAsync(List<string> ingredients);

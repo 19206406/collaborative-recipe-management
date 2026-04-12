@@ -26,7 +26,7 @@ namespace Recommendation.API.Features.Clients.UserClient
             catch (HttpRequestException ex)
             {
                 throw new
-                    InvalidOperationException("No se puede comunicar con userService. Es posible que el servicio no esté disponible.");
+                    InvalidOperationException("No se puede comunicar con UserService. Es posible que el servicio no esté disponible.");
             }
             catch (Exception ex)
             {
@@ -58,7 +58,7 @@ namespace Recommendation.API.Features.Clients.UserClient
             catch (HttpRequestException ex)
             {
                 throw new
-                    InvalidOperationException("No se puede comunicar con userService. Es posible que el servicio no esté disponible.");
+                    InvalidOperationException("No se puede comunicar con UserService. Es posible que el servicio no esté disponible.");
             }
             catch (Exception ex)
             {

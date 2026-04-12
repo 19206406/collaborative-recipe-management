@@ -7,39 +7,58 @@ namespace Recipe.API.Consumers
 {
     public class RatingCreateAndUpdateConsumer : RabbitMQConsumer<RatingCreateAndUpdateEvent>
     {
-        private readonly IRecipeRepository _recipeRepository;
+        private readonly ILogger<RatingCreateAndUpdateConsumer> _logger;
+        private readonly IServiceScopeFactory _scopeFactory;
 
         protected override string QueueName => "rating.created"; 
 
         public RatingCreateAndUpdateConsumer(
             IOptions<RabbitMQSettings> settings, 
             ILogger<RatingCreateAndUpdateConsumer> logger,
-            IRecipeRepository recipeRepository)
+            IServiceScopeFactory scopeFactory)
             : base(settings, logger)
         {
-            _recipeRepository = recipeRepository;
+            _logger = logger;
+            _scopeFactory = scopeFactory;
         }
 
         protected override async Task ProcessMessageAsync(RatingCreateAndUpdateEvent message)
         {
-            Logger.LogInformation("Nuevo rating creado o actualizado por userId: {userId}", message.UserId);
+            using var scope = _scopeFactory.CreateScope();
 
-            var recipe = await _recipeRepository.GetRecipe(message.RecipeId);
+            var recipeRepository = scope.ServiceProvider
+                .GetRequiredService<IRecipeRepository>(); 
 
-            if (message.IsToUpdate) // para actualizar 
+            var recipe = await recipeRepository.GetRecipeOnly(message.RecipeId);
+
+            if (recipe is null)
             {
-                var updateAverage = (recipe.AverageRating * recipe.RatingCount + message.Rating) / recipe.RatingCount;
-                recipe.AverageRating = updateAverage;
-
-                await _recipeRepository.UpdateRecipeOnly(recipe); 
+                _logger.LogWarning(
+                    "Receta con ID {RecipeId} no encontrada. Mensaje descartado.",
+                    message.RecipeId);
+                return;
             }
-            else // para crear 
+
+            if (message.IsToUpdate) 
+            {
+                var updateAverage = (recipe.AverageRating * recipe.RatingCount - message.OldRating + message.Rating) / recipe.RatingCount;
+                recipe.AverageRating = updateAverage;
+                recipe.UpdatedAt = DateTime.UtcNow;
+
+                await recipeRepository.UpdateRatingRecipeOnly();
+                _logger.LogInformation("Evento RatingAndUpdateConsumer consumido correctamente para actualizar rating desde recipe " +
+                    "y cambio de la puntuación promedio de la receta"); 
+            }
+            else 
             {
                 var newAverage = (recipe.AverageRating * recipe.RatingCount + message.Rating) / (recipe.RatingCount + 1);
                 recipe.RatingCount += 1;
                 recipe.AverageRating = newAverage;
+                recipe.UpdatedAt = DateTime.UtcNow;
 
-                await _recipeRepository.UpdateRecipeOnly(recipe);
+                await recipeRepository.UpdateRatingRecipeOnly();
+                _logger.LogInformation("Evento RatingAndUpdateConsumer consumido correctamente para crear rating desde recipe " +
+                    "y cambio de la puntuación promedio de la receta");
             }
 
             await Task.CompletedTask; 

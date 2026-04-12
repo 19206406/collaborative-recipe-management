@@ -14,20 +14,14 @@ namespace BuildingBlocks.Messaging.RabbitMQ
         private readonly RabbitMQSettings _settings;
         private IConnection? _connection;
         private IChannel? _channel;
-        private readonly JsonSerializerOptions _jsonOptions; 
+        private readonly JsonSerializerOptions _jsonOptions;
 
-        // nombre de la cola a consumir (debe ser definido por clases hijas) 
         protected abstract string QueueName { get; }
-
-        // prefetch count - cantidad de mensajes a procesar en paralelo 
-        // por defecto 1 - prcesa un mensaje a la vez 
         protected virtual ushort PrefetchCount => 1;
-
-        // define si la cola debe ser durable 
-        protected virtual bool QueueDurable => true; 
+        protected virtual bool QueueDurable => true;
 
         protected RabbitMQConsumer(
-            IOptions<RabbitMQSettings> settings, 
+            IOptions<RabbitMQSettings> settings,
             ILogger<RabbitMQConsumer<T>> logger)
         {
             _settings = settings.Value;
@@ -36,30 +30,26 @@ namespace BuildingBlocks.Messaging.RabbitMQ
             {
                 PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
                 PropertyNameCaseInsensitive = true
-            }; 
+            };
         }
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
-            stoppingToken.ThrowIfCancellationRequested(); 
+            stoppingToken.ThrowIfCancellationRequested();
 
             try
             {
-                await InitializeRabbitMQAsync(cancellationToken: stoppingToken);
-
-                // mantener el servicio en ejecución 
-                await Task.Delay(Timeout.Infinite, stoppingToken); 
-
-
+                await InitializeRabbitMQAsync(stoppingToken);
+                await Task.Delay(Timeout.Infinite, stoppingToken);
             }
             catch (OperationCanceledException)
             {
-                Logger.LogInformation("Consumidor detenido: {Queue}", QueueName); 
+                Logger.LogInformation("Consumidor detenido: {Queue}", QueueName);
             }
             catch (Exception ex)
             {
                 Logger.LogError(ex, "Error al inicializar consumidor para cola '{Queue}'", QueueName);
-                throw; 
+                throw;
             }
         }
 
@@ -74,13 +64,12 @@ namespace BuildingBlocks.Messaging.RabbitMQ
                 VirtualHost = _settings.VirtualHost,
                 AutomaticRecoveryEnabled = true,
                 NetworkRecoveryInterval = TimeSpan.FromSeconds(10),
-                // ConsumerDispatchConcurrency = true  // Importante para async/await
+                ConsumerDispatchConcurrency = PrefetchCount  // ✅ ushort, no bool
             };
 
             _connection = await factory.CreateConnectionAsync(cancellationToken);
             _channel = await _connection.CreateChannelAsync(cancellationToken: cancellationToken);
 
-            // declarar la cola 
             await _channel.QueueDeclareAsync(
                 queue: QueueName,
                 durable: QueueDurable,
@@ -95,11 +84,8 @@ namespace BuildingBlocks.Messaging.RabbitMQ
                 global: false,
                 cancellationToken: cancellationToken);
 
-            Logger.LogInformation(
-                "Consumidor iniciado. Esperando mensajes en cola: '{Queue}",
-                QueueName);
+            Logger.LogInformation("Consumidor iniciado. Esperando mensajes en cola: '{Queue}'", QueueName);
 
-            // Configurar el consumidor asincrono 
             var consumer = new AsyncEventingBasicConsumer(_channel);
             consumer.ReceivedAsync += OnMessageReceivedAsync;
 
@@ -107,7 +93,7 @@ namespace BuildingBlocks.Messaging.RabbitMQ
                 queue: QueueName,
                 autoAck: false,
                 consumer: consumer,
-                cancellationToken: cancellationToken); 
+                cancellationToken: cancellationToken);
         }
 
         private async Task OnMessageReceivedAsync(object sender, BasicDeliverEventArgs eventArgs)
@@ -119,72 +105,62 @@ namespace BuildingBlocks.Messaging.RabbitMQ
                 var body = eventArgs.Body.ToArray();
                 var messageJson = Encoding.UTF8.GetString(body);
 
-                Logger.LogInformation(
-                "Mensaje recibido de '{Queue}' - ID: {MessageId}",
-                QueueName,
-                messageId);
+                Logger.LogInformation("Mensaje recibido de '{Queue}' - ID: {MessageId}", QueueName, messageId);
+                Logger.LogDebug("Contenido: {Message}", messageJson);
 
-                Logger.LogDebug("Contenido: {Menssage}", messageJson);
-
-                var message = JsonSerializer.Deserialize<T>(messageJson, _jsonOptions); 
+                var message = JsonSerializer.Deserialize<T>(messageJson, _jsonOptions);
 
                 if (message is null)
                 {
-                    Logger.LogWarning("Mensaje null despues de deserailizar. Rechanzando mensaje.");
+                    Logger.LogWarning("Mensaje null después de deserializar. Rechazando mensaje.");
                     await _channel!.BasicNackAsync(eventArgs.DeliveryTag, false, false);
-                    return; 
+                    return;
                 }
 
-                // procesar el mensaje 
                 await ProcessMessageAsync(message);
-
-                // hacer ack del mensaje (confirmar que se procesó exitosamente)    
                 await _channel!.BasicAckAsync(eventArgs.DeliveryTag, false);
 
-                Logger.LogInformation(
-                    "Mensaje procesado exitosamente - ID: {MessageId}", messageId); 
-            } 
+                Logger.LogInformation("Mensaje procesado exitosamente - ID: {MessageId}", messageId);
+            }
             catch (JsonException jsonEx)
             {
                 Logger.LogError(jsonEx, "Error al deserializar mensaje - ID: {MessageId}. Mensaje rechazado.", messageId);
-
-                // rechazar sin requeue (mensaje malformado no se puede procesar) 
-                await _channel!.BasicNackAsync(eventArgs.DeliveryTag, false, false); 
+                await _channel!.BasicNackAsync(eventArgs.DeliveryTag, false, false);
             }
             catch (Exception ex)
             {
                 Logger.LogError(ex, "Error al procesar mensaje - ID: {MessageId}", messageId);
-
-                // rechazar con requeue (intentar procesar nuevamente)
-                await _channel!.BasicNackAsync(eventArgs.DeliveryTag, false, true); 
+                await _channel!.BasicNackAsync(eventArgs.DeliveryTag, false, false); // cambio a false 
             }
         }
 
-        // metodo que implementa o contiene la logica de procesamiento del mensaje 
-        protected abstract Task ProcessMessageAsync(T message); 
+        protected abstract Task ProcessMessageAsync(T message);
 
-        public override async void Dispose()
+        public override async Task StopAsync(CancellationToken cancellationToken)
         {
+            await base.StopAsync(cancellationToken);
+
             try
             {
-                if (_channel is not null)
-                {
-                    await _channel.CloseAsync();
-                    _channel.Dispose(); 
-                } 
+                if (_channel?.IsOpen == true)
+                    await _channel.CloseAsync(cancellationToken);
 
-                if (_connection is not null)
-                {
-                    await _connection.CloseAsync();
-                    _connection.Dispose();
-                }
+                if (_connection?.IsOpen == true)
+                    await _connection.CloseAsync(cancellationToken);
 
-                Logger.LogInformation("Consumidor detenido y conexión cerradoa: '{Queue}'", QueueName); 
-            } 
+                Logger.LogInformation("Consumidor detenido y conexión cerrada: '{Queue}'", QueueName);
+            }
             catch (Exception ex)
             {
-                Logger.LogError(ex, "Error al cerrar consumidor"); 
+                Logger.LogError(ex, "Error al cerrar consumidor");
             }
+        }
+
+        public override void Dispose()
+        {
+            _channel?.Dispose();
+            _connection?.Dispose();
+            base.Dispose();
         }
     }
 }

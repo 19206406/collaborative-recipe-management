@@ -1,7 +1,6 @@
 ﻿using BuildingBlocks.CQRS;
 using BuildingBlocks.Exceptions;
 using Mapster;
-using Recipe.API.Features.Recipe.CreateRecipe;
 using Recipe.API.Repositories.RecipeRepository;
 
 namespace Recipe.API.Features.Recipe.GetOnlyRecipe
@@ -22,7 +21,7 @@ namespace Recipe.API.Features.Recipe.GetOnlyRecipe
             if (recipe is null)
                 throw new NotFoundException("receta", query.Id);
 
-            var response = new GetOnlyRecipeResponse(recipe.Adapt<ResponseRecipe>());
+            var response = recipe.Adapt<GetOnlyRecipeResponse>(); 
             return response; 
         }
     }

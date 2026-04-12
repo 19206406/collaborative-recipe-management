@@ -10,13 +10,11 @@ namespace User.API.Features.UserPreference.AddPreferencesToUser
         : ICommandHandler<AddPreferencesToUserCommand, AddPreferencesToUserResponse>
     {
         private readonly IUserPreferenceRespository _userPreferenceRespository;
-        private readonly IUserRepository _userRepository;
 
         public AddPreferencesToUserCommandHandler
             (IUserPreferenceRespository userPreferenceRespository, IUserRepository userRepository)
         {
             _userPreferenceRespository = userPreferenceRespository;
-            _userRepository = userRepository;
         }
 
         public async Task<AddPreferencesToUserResponse> Handle(AddPreferencesToUserCommand command, CancellationToken cancellationToken)

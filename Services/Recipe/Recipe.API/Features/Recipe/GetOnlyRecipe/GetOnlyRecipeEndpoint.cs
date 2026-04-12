@@ -21,7 +21,8 @@ namespace Recipe.API.Features.Recipe.GetOnlyRecipe
                 x.Summary = "Obtener solo la receta";
                 x.Description = "Obtener solo una receta teniendo solo la información basica";
             });
-            Description(x => x.WithTags("Recipes")); 
+            Description(x => x.WithTags("Recipes"));
+            AllowAnonymous(); 
         }
 
         public override async Task HandleAsync(GetOnlyRecipeRequest req, CancellationToken ct)

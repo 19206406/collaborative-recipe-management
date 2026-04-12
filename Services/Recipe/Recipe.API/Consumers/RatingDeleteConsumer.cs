@@ -7,29 +7,53 @@ namespace Recipe.API.Consumers
 {
     public class RatingDeleteConsumer : RabbitMQConsumer<RatingDeleteEvent>
     {
-        private readonly IRecipeRepository _recipeRepository;
+        private readonly ILogger<RatingDeleteConsumer> _logger;
+        private readonly IServiceScopeFactory _scopeFactory;
 
         protected override string QueueName => "rating.deleted";
 
         public RatingDeleteConsumer(
             IOptions<RabbitMQSettings> settings,
             ILogger<RatingDeleteConsumer> logger, 
-            IRecipeRepository recipeRepository) : base(settings, logger)
+            IServiceScopeFactory scopeFactory
+            ) : base(settings, logger)
         {
-            _recipeRepository = recipeRepository;
+            _logger = logger;
+            _scopeFactory = scopeFactory;
         }
 
         protected override async Task ProcessMessageAsync(RatingDeleteEvent message)
         {
-            Logger.LogInformation("Rating eliminado por el usuario con Id: {userId}", message.UserId);
+            using var scope = _scopeFactory.CreateScope();
 
-            var recipe = await _recipeRepository.GetRecipe(message.RecipeId);
+            var recipeRepository = scope.ServiceProvider
+                .GetRequiredService<IRecipeRepository>(); 
 
-            var updateAverage = (recipe.AverageRating * recipe.RatingCount - message.Rating) / (recipe.RatingCount - 1);
-            recipe.RatingCount -= 1;
-            recipe.AverageRating = updateAverage;
+            var recipe = await recipeRepository.GetRecipe(message.RecipeId);
 
-            await _recipeRepository.UpdateRecipeOnly(recipe);
+            if (recipe is null)
+            {
+                _logger.LogWarning("Receta con ID {RecipeId} no encontrada. Mensaje descartado", 
+                    message.RecipeId);
+                return; 
+            }
+
+            if (recipe.RatingCount <= 1)
+            {
+                recipe.AverageRating = 0;
+                recipe.RatingCount = 0; 
+            }
+            else 
+            {
+                var updateAverage = (recipe.AverageRating * recipe.RatingCount - message.Rating) / (recipe.RatingCount - 1);
+                recipe.RatingCount -= 1;
+                recipe.AverageRating = updateAverage;
+                recipe.UpdatedAt = DateTime.UtcNow; 
+            }
+
+            await recipeRepository.UpdateRatingRecipeOnly();
+            _logger.LogInformation("Evento RatingDeleteEvent consumido correctamente para eliminar rating desde recipe " +
+                "y cambio de la puntución promedio de la receta"); 
 
             await Task.CompletedTask; 
         }

@@ -8,6 +8,7 @@ using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 using Recipe.API;
 using Recipe.API.Common.Database;
+using Recipe.API.Consumers;
 using Recipe.API.Repositories.IngredientRepository;
 using Recipe.API.Repositories.RecipeRepository;
 using Recipe.API.Repositories.StepRepository;
@@ -22,8 +23,8 @@ builder.Services.AddFastEndpoints();
 
 // rabbitmq 
 builder.Services.AddRabbitMQMessaging(builder.Configuration);
-//builder.Services.AddRabbitMQConsumers<RatingCreatedConsumer>(); // debo de implementarlos 
-//builder.Services.AddRabbitMQConsumers<RatingDeletedConsumer>(); 
+builder.Services.AddRabbitMQConsumer<RatingCreateAndUpdateConsumer>(); 
+builder.Services.AddRabbitMQConsumer<RatingDeleteConsumer>(); 
 
 // dbContest 
 builder.Services.AddDbContext<RecipeDbContext>(options =>
@@ -66,8 +67,9 @@ builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddJwtValidation(builder.Configuration); 
 
 var app = builder.Build();
+
 // migración en automatico 
-await app.ApplyMigrationsAsync<RecipeDbContext>(); 
+//await app.ApplyMigrationsAsync<RecipeDbContext>(); 
 
 // jwt autenticación 
 app.UseAuthentication();

@@ -48,12 +48,13 @@ namespace Rating.API.Features.Rating.CreateAndUpdateRating
                     RecipeId = req.RecipeId,
                     UserId = userId,
                     Rating = req.Rating,
+                    OldRating = req.IsToUpdate ? result.OldRating : 0,
                     Comment = req.Comment,
                     IsToUpdate = req.IsToUpdate,
                     PublishedAt = DateTime.UtcNow
                 });
 
-                _logger.LogInformation("Evento CreateAndUpdateRating creado exitosamente"); 
+                _logger.LogInformation("Evento CreateAndUpdateRating publicado exitosamente"); 
             }
             catch (Exception eventEx)
             {

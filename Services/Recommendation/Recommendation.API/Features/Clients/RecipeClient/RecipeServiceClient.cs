@@ -15,14 +15,25 @@ namespace Recommendation.API.Features.Clients.RecipeClient
 
         public async Task<List<RecipeDto>> GetByIngredientsAsync(List<string> ingredients)
         {
-            var query = HttpUtility.ParseQueryString(string.Empty);
-            foreach (var ingredient in ingredients)
-                query.Add("ingredients", ingredient);
+            try
+            {
+                var query = HttpUtility.ParseQueryString(string.Empty);
+                foreach (var ingredient in ingredients)
+                    query.Add("ingredients", ingredient);
 
-            var result = await _httpClient.GetFromJsonAsync<List<RecipeDto>>(
-                $"/api/recipes/by-ingredients?{query}");
+                var result = await _httpClient.GetFromJsonAsync<List<RecipeDto>>(
+                    $"/api/recipes/by-ingredients?{query}");
 
-            return result ?? []; 
+                return result ?? [];
+            } 
+            catch (HttpRequestException ex)
+            {
+                throw new InvalidOperationException("No se puede comunicar con recipeService. Es posible que el servicio no esté disponible."); 
+            }
+            catch (Exception ex)
+            {
+                throw; 
+            }
         }
 
         public async Task<List<RecipeDto>> GetPersonalizedRecipesAsync(List<string>? tags, CancellationToken cancellationToken)

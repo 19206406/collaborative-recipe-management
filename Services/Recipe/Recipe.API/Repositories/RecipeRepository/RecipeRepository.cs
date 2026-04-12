@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Namotion.Reflection;
 using Recipe.API.Common.Database;
 using Recipe.API.Models;
 
@@ -186,6 +185,8 @@ namespace Recipe.API.Repositories.RecipeRepository
                         .Select(i => i.Name)
                         .Distinct()
                         .Count() == count)
+                .Include(r => r.Ingredients)
+                .Include(r => r.RecipeTags)
                 .ToListAsync();
         }
 
@@ -208,6 +209,11 @@ namespace Recipe.API.Repositories.RecipeRepository
         public async Task<Entities.Recipe?> GetRecipeOnly(int id)
         {
             return await _context.Recipes.FirstOrDefaultAsync(r => r.Id == id); 
+        }
+
+        public async Task UpdateRatingRecipeOnly()
+        {
+            await _context.SaveChangesAsync(); 
         }
     }
 }

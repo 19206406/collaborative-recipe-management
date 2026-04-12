@@ -31,7 +31,7 @@ namespace Recommendation.API.Features.Recommendation.GetSimilarRecipes
             if (recipe is null)
                 return [];
 
-            var tags = recipe.Tags.Select(r => r.Tag).ToList();
+            var tags = recipe.RecipeTags.Select(r => r.Tag).ToList();
             var similar = await _recipeService.GetPersonalizedRecipesAsync(tags);
 
             await _cache.SetAsync(cacheKey, similar, CacheDuration);

@@ -22,14 +22,12 @@ namespace Rating.API.Features.Clients
                 // si retorna un 200  
                 if (response.IsSuccessStatusCode)
                 {
-                    var content = await response.Content.ReadAsStringAsync(cancellationToken);
                     return true; 
                 }
 
                 // si retornar un 404 
                 if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
                 {
-                    var content = await response.Content.ReadAsStringAsync(cancellationToken);
                     return false; 
                 }
 
@@ -39,7 +37,7 @@ namespace Rating.API.Features.Clients
             catch (HttpRequestException ex)
             {
                 throw new 
-                    InvalidOperationException("No se puede comunicar con RecipesService. Es posible que el servicio no esté disponible.");
+                    InvalidOperationException("No se puede comunicar con RecipeService. Es posible que el servicio no esté disponible.");
             }
             catch (Exception ex)
             {

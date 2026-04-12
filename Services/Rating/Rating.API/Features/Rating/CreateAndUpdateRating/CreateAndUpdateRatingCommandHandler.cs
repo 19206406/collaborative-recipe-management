@@ -1,6 +1,5 @@
 ﻿using BuildingBlocks.CQRS;
 using BuildingBlocks.Exceptions;
-using Mapster;
 using Rating.API.Entities;
 using Rating.API.Features.Clients;
 using Rating.API.Repositories;
@@ -21,13 +20,14 @@ namespace Rating.API.Features.Rating.CreateAndUpdateRating
 
         public async Task<CreateAndUpdateRatingResponse> Handle(CreateAndUpdateRatingCommand command, CancellationToken cancellationToken)
         {
+            bool recipeExist = await _recipesClient.RecipeExistAsync(command.RecipeId, cancellationToken);
+            if (!recipeExist)
+                throw new NotFoundException("receta", command.RecipeId);
+
             if (command.IsToUpdate)
             {
-                //bool recipeExist = await _recipesClient.RecipeExistAsync(command.RecipeId, cancellationToken);
-                //if (!recipeExist)
-                //    throw new NotFoundException("receta", command.RecipeId);
-                
                 var rating = await _ratingRepository.GetRating(command.Id);
+                int oldRating = rating.Rating; 
                 if (rating is null)
                     throw new NotFoundException("calificación", command.Id);
 
@@ -35,18 +35,16 @@ namespace Rating.API.Features.Rating.CreateAndUpdateRating
                     throw new UnauthorizedException("El usuario no puede ejecutar esta acción en este elemento en especifico"); 
 
 
-                if (!string.IsNullOrEmpty(command.Comment))
-                    rating.Comment = command.Comment; 
-                    
-
                 rating.Rating = command.Rating;
+                rating.Comment = command.Comment; 
                 rating.UpdatedAt = DateTime.UtcNow;
 
                 var updatedRating = await _ratingRepository.UpdateRating(rating);
 
-                return updatedRating.Adapt<CreateAndUpdateRatingResponse>(); 
+                return new CreateAndUpdateRatingResponse(rating.Id, rating.UserId, rating.RecipeId, rating.Rating, oldRating, 
+                    rating.Comment, rating.CreatedAt, rating.UpdatedAt);
             }
-            else
+            else 
             {
                 var newRating = new RatingE
                 {
@@ -63,9 +61,9 @@ namespace Rating.API.Features.Rating.CreateAndUpdateRating
                 if (rating is not null)
                     throw new InvalidOperationException("No puedes ejecutar esta acción de nuevo"); 
 
-                //var result = await _ratingRepository.AddRating(newRating);
+                var result = await _ratingRepository.AddRating(newRating);
 
-                return rating.Adapt<CreateAndUpdateRatingResponse>();
+                return new CreateAndUpdateRatingResponse(result.Id, result.UserId, result.RecipeId, result.Rating, 0, result.Comment, result.CreatedAt, result.UpdatedAt);
             }
         }
     }
