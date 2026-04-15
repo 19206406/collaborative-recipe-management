@@ -14,8 +14,9 @@ una caracteristica clave de la arquitectura de microservicios y los motores de b
 
 - C#
 - ASP.NET Core (.NET 10)
+- RabbitMQ
 - Entity Framework Core (ORM)
-- SQL Server - PostgreSQL
+- SQL Server - PostgreSQL - Redis
 - Docker - Docker Compose
 - JWT Authentication 
 
