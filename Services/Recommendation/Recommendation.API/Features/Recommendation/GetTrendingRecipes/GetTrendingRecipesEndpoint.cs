@@ -1,6 +1,7 @@
 ﻿using FastEndpoints;
 using MediatR;
 using Recommendation.API.Common.Dtos;
+using System.ComponentModel.DataAnnotations;
 
 namespace Recommendation.API.Features.Recommendation.GetTrendingRecipes
 {
@@ -21,7 +22,8 @@ namespace Recommendation.API.Features.Recommendation.GetTrendingRecipes
                 x.Summary = "obtener top recetas";
                 x.Description = "Obtener las 20 recetas con mayor trending";
             });
-            Description(x => x.WithTags("Recommendations")); 
+            Description(x => x.WithTags("Recommendations"));
+            AllowAnonymous(); 
         }
 
         public override async Task HandleAsync(CancellationToken ct)

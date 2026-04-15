@@ -22,9 +22,9 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddFastEndpoints();
 
 // rabbitmq 
-builder.Services.AddRabbitMQMessaging(builder.Configuration);
-builder.Services.AddRabbitMQConsumer<RatingCreateAndUpdateConsumer>(); 
-builder.Services.AddRabbitMQConsumer<RatingDeleteConsumer>(); 
+//builder.Services.AddRabbitMQMessaging(builder.Configuration);
+//builder.Services.AddRabbitMQConsumer<RatingCreateAndUpdateConsumer>(); 
+//builder.Services.AddRabbitMQConsumer<RatingDeleteConsumer>(); 
 
 // dbContest 
 builder.Services.AddDbContext<RecipeDbContext>(options =>

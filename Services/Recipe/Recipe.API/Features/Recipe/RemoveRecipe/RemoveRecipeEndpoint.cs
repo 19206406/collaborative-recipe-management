@@ -27,6 +27,7 @@ namespace Recipe.API.Features.Recipe.RemoveRecipe
 
         public override async Task HandleAsync(RemoveRecipeRequest req, CancellationToken ct)
         {
+
             var userId = HttpContext.User.GetUserId(); 
 
             var command = new RemoveRecipeCommand(req.Id, userId);

@@ -2,5 +2,5 @@
 
 namespace Recipe.API.Features.Recipe.GetTopRecipes
 {
-    public record GetTopRecipesQuery() : IQuery<GetTopRecipesResponse>; 
+    public record GetTopRecipesQuery() : IQuery<List<GetTopRecipesResponse>>; 
 }

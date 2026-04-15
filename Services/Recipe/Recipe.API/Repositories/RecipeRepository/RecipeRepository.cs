@@ -192,18 +192,27 @@ namespace Recipe.API.Repositories.RecipeRepository
 
         public async Task<List<Entities.Recipe>> GetTopRecipesAsync()
         {
-            var trending = await _context.Recipes
-                .Select(r => new {
+            var recipes = await _context.Recipes
+                .Include(r => r.Ingredients)
+                .Include(r => r.Steps)
+                .Include(r => r.RecipeTags)
+                //.Where(r => r.CreatedAt < DateTime.UtcNow && r.RatingCount != 0 && r.RatingCount != 0) 
+                .Where(r => r.CreatedAt < DateTime.UtcNow)
+                .ToListAsync();
+
+            var trending = recipes
+                .Select(r => new
+                {
                     Recipe = r,
                     Score = (r.AverageRating * r.RatingCount) /
-                            (((DateTime.UtcNow - r.CreatedAt).Days) + 2m)
+                            ((decimal)(DateTime.UtcNow - r.CreatedAt).Days + 2m)
                 })
                 .OrderByDescending(x => x.Score)
                 .Take(20)
                 .Select(x => x.Recipe)
-                .ToListAsync();
+                .ToList();
 
-            return trending; 
+            return trending;
         }
 
         public async Task<Entities.Recipe?> GetRecipeOnly(int id)

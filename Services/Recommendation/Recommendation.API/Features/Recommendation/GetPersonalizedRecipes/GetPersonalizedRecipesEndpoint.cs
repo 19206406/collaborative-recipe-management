@@ -4,9 +4,7 @@ using Recommendation.API.Common.Dtos;
 
 namespace Recommendation.API.Features.Recommendation.GetPersonalizedRecipes
 {
-    // TODO: Necesito investigar como paso el jwt a los endpoints que requieren de autenticación y del userId 
-
-    public record GetPersonalizedRecipesRequest(int userId); 
+    public record GetPersonalizedRecipesRequest(int UserId); 
     public class GetPersonalizedRecipesEndpoint : Endpoint<GetPersonalizedRecipesRequest, List<RecipeDto>>
     {
         private readonly IMediator _mediator;
@@ -24,12 +22,13 @@ namespace Recommendation.API.Features.Recommendation.GetPersonalizedRecipes
                 x.Summary = "Recetas personalizadas";
                 x.Description = "Obtiene recetas personalizadas para cada uno de los usuarios";
             });
-            Description(x => x.WithTags("Recommendations")); 
+            Description(x => x.WithTags("Recommendations"));
+            AllowAnonymous(); 
         }
 
         public override async Task HandleAsync(GetPersonalizedRecipesRequest req, CancellationToken ct)
         {
-            var query = new GetPersonalizedRecipesQuery(req.userId);
+            var query = new GetPersonalizedRecipesQuery(req.UserId);
             var result = await _mediator.Send(query);
 
             await Send.OkAsync(result); 

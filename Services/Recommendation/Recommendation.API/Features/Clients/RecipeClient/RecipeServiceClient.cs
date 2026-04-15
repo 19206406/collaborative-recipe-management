@@ -109,9 +109,9 @@ namespace Recommendation.API.Features.Clients.RecipeClient
             try
             {
                 var endpoint = $"api/recipes/trending";
-                var recipes = await _httpClient.GetAsync(endpoint, cancellation);
+                var recipes = await _httpClient.GetFromJsonAsync<List<RecipeDto>>(endpoint);
 
-                return recipes.Adapt<List<RecipeDto>>(); 
+                return recipes; 
             }
             catch (HttpRequestException ex)
             {

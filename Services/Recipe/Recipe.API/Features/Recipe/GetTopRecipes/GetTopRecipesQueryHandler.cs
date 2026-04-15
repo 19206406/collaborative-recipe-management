@@ -1,12 +1,10 @@
 ﻿using BuildingBlocks.CQRS;
 using Mapster;
-using MediatR;
-using Recipe.API.Features.Recipe.CreateRecipe;
 using Recipe.API.Repositories.RecipeRepository;
 
 namespace Recipe.API.Features.Recipe.GetTopRecipes
 {
-    public class GetTopRecipesQueryHandler : IQueryHandler<GetTopRecipesQuery, GetTopRecipesResponse>
+    public class GetTopRecipesQueryHandler : IQueryHandler<GetTopRecipesQuery, List<GetTopRecipesResponse>>
     {
         private readonly IRecipeRepository _recipeRepository;
 
@@ -15,12 +13,12 @@ namespace Recipe.API.Features.Recipe.GetTopRecipes
             _recipeRepository = recipeRepository;
         }
 
-        public async Task<GetTopRecipesResponse> Handle(GetTopRecipesQuery request, CancellationToken cancellationToken)
+        public async Task<List<GetTopRecipesResponse>> Handle(GetTopRecipesQuery request, CancellationToken cancellationToken)
         {
             var recipes = await _recipeRepository.GetTopRecipesAsync();
-            var mapRecipes = recipes.Adapt<List<ResponseRecipe>>(); 
+            var mapRecipes = recipes.Adapt<List<GetTopRecipesResponse>>();
 
-            return new GetTopRecipesResponse(mapRecipes); 
+            return mapRecipes; 
         }
     }
 }

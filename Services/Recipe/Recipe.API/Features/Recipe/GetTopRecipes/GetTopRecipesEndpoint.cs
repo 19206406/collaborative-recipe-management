@@ -3,7 +3,7 @@ using MediatR;
 
 namespace Recipe.API.Features.Recipe.GetTopRecipes
 {
-    public class GetTopRecipesEndpoint : EndpointWithoutRequest<GetTopRecipesResponse>
+    public class GetTopRecipesEndpoint : EndpointWithoutRequest<List<GetTopRecipesResponse>>
     {
         private readonly IMediator _mediator;
 
@@ -20,7 +20,8 @@ namespace Recipe.API.Features.Recipe.GetTopRecipes
                 x.Summary = "Recetas trending"; 
                 x.Description = "Recetas trending"; 
             });
-            Description(x => x.WithTags("Recipes")); 
+            Description(x => x.WithTags("Recipes"));
+            AllowAnonymous(); 
         }
 
         public override async Task HandleAsync(CancellationToken ct)

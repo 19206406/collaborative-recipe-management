@@ -2,7 +2,6 @@
 using Recommendation.API.Common.Cache;
 using Recommendation.API.Common.Dtos;
 using Recommendation.API.Features.Clients.RecipeClient;
-using System.Net.Mail;
 
 namespace Recommendation.API.Features.Recommendation.GetTrendingRecipes
 {
@@ -11,7 +10,7 @@ namespace Recommendation.API.Features.Recommendation.GetTrendingRecipes
         private readonly ICacheService _cache;
         private readonly IRecipeServiceClient _recipeService;
 
-        private static readonly TimeSpan CacheDuration = TimeSpan.FromMinutes(15);
+        private static readonly TimeSpan CacheDuration = TimeSpan.FromMinutes(1);
         private const string CacheKey = "trending:top20";
 
         public GetTrendingRecipesQueryHandler(ICacheService cache, IRecipeServiceClient recipeService)
@@ -34,7 +33,6 @@ namespace Recommendation.API.Features.Recommendation.GetTrendingRecipes
             await _cache.SetAsync(CacheKey, recipes, CacheDuration); 
 
             return recipes; 
-
         }
     }
 }
