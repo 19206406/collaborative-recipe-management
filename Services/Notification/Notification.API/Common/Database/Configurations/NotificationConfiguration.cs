@@ -14,6 +14,8 @@ namespace Notification.API.Common.Database.Configurations
             builder.Property(x => x.Id)
                 .HasColumnName("id");
 
+            builder.HasIndex(x => x.UserId);
+
             builder.Property(x => x.UserId)
                 .IsRequired()
                 .HasColumnName("user_id");
@@ -38,7 +40,8 @@ namespace Notification.API.Common.Database.Configurations
 
             builder.Property(x => x.IsRead)
                 .IsRequired()
-                .HasColumnName("is_read");
+                .HasColumnName("is_read")
+                .HasDefaultValue(0); 
 
             builder.Property(x => x.CreatedAt)
                 .IsRequired()

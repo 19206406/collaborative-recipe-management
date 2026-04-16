@@ -4,7 +4,7 @@ using MediatR;
 namespace Recipe.API.Features.Recipe.SearchAdvancedRecipe
 {
     public record SearchAdvancedRecipeRequest(string? Title, int? PrepTimeMinutes, int? CookTimeMinutes, int? Difficulty,
-        int? Servings, string? SortBy, bool SortDescending, List<string>? Tags); 
+        int? Servings, string? SortBy, List<string>? Tags, bool SortDescending = true); 
     public class SearchAdvancedRecipeEndpoint : Endpoint<SearchAdvancedRecipeRequest, SearchAdvancedRecipeResponse>
     {
         private readonly IMediator _mediator;

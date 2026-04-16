@@ -36,12 +36,25 @@ namespace Notification.API.Repositories.NotificationRepository
             return await _context.SaveChangesAsync() > 0; 
         }
 
+        public async Task UpdateNotificationsAsync()
+        {
+            await _context.SaveChangesAsync(); 
+        }
+
         public async Task<Entities.Notification> UpdateNotificationAsync(Entities.Notification notification)
         {
             _context.Notifications.Update(notification);
             await _context.SaveChangesAsync();
 
             await _context.Entry(notification).ReloadAsync();
+            return notification; 
+        }
+
+        public async Task<Entities.Notification> AddNotificationAsync(Entities.Notification notification)
+        {
+            _context.Add(notification);
+            await _context.SaveChangesAsync();
+
             return notification; 
         }
     }

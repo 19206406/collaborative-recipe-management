@@ -17,11 +17,11 @@ namespace Recommendation.API.Features.Clients.RatingClient
         {
             try
             {
-                var endpoint = $"GET /api/ratings/user/{userId}";
+                var endpoint = $"/api/ratings/user/{userId}";
 
-                var userRatings = await _httpClient.GetAsync(endpoint, cancellationToken);
+                var userRatings = await _httpClient.GetFromJsonAsync<List<UserRatingDto>>(endpoint, cancellationToken);
 
-                return userRatings.Adapt<List<UserRatingDto>>(); 
+                return userRatings; 
             }
             catch (HttpRequestException ex)
             {

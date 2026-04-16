@@ -49,9 +49,9 @@ namespace Recommendation.API.Features.Clients.RecipeClient
                 }
 
                 var endpoint = $"api/recipes/search?{query}";
-                var recipes = await _httpClient.GetAsync(endpoint, cancellationToken);
+                var recipes = await _httpClient.GetFromJsonAsync<List<RecipeDto>>(endpoint);
 
-                return recipes.Adapt<List<RecipeDto>>(); 
+                return recipes; 
             }
             catch (HttpRequestException ex)
             {

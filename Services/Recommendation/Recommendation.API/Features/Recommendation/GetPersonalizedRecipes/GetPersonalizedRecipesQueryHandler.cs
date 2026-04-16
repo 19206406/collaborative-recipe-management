@@ -42,19 +42,14 @@ namespace Recommendation.API.Features.Recommendation.GetPersonalizedRecipes
             var preferencesMap = preferences.Preferences.Select(p => p.PreferenceType).ToList(); 
             var userRatings = await _ratingService.GetRatingsByUserAsync(query.UserId);
 
-            // exluir recetas ya calificadas por el usuario 
-            // TODO: debo de excluir estas recetas 
             var alreadyRatedIds = userRatings.Select(r => r.RecipeId).ToHashSet();
 
-            // obtener recetas que coincidan con las preferencias del usuario 
-            // debo de hacer que el recipeService - search acepte preferencias o algo así 
-
-            // valido si no viene ninguna preferencia en el client aunque tambien deberia de haber un validator 
             var personalized = await _recipeService.GetPersonalizedRecipesAsync(preferencesMap);
+            var filteredPersonalizedRecipes = personalized.Select(p => !alreadyRatedIds.Contains(p.Id)); // recetas filtradas
 
             await _cache.SetAsync(cacheKey, personalized, CacheDuration);
 
-            return personalized.Adapt<List<RecipeDto>>(); 
+            return filteredPersonalizedRecipes.Adapt<List<RecipeDto>>(); 
         }
     }
 }

@@ -15,12 +15,12 @@ namespace Notification.API.Common.Database.Configurations
             builder.Property(x => x.Id)
                 .HasColumnName("id");
 
+            builder.HasIndex(x => x.UserId)
+                .IsUnique(); 
+
             builder.Property(x => x.UserId)
                 .IsRequired()
                 .HasColumnName("user_id");
-
-            builder.HasIndex(x => x.UserId)
-                .IsUnique(); 
 
             builder.Property(x => x.EmailNotifications)
                 .IsRequired()
