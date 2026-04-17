@@ -1,6 +1,5 @@
 ﻿using BuildingBlocks.CQRS;
 using Mapster;
-using Notification.API.Features.Notification.GetNotificationsByUser;
 using Notification.API.Repositories.NotificationRepository;
 
 namespace Notification.API.Features.Notification.MarkAllNotificationsAsRead
@@ -17,19 +16,17 @@ namespace Notification.API.Features.Notification.MarkAllNotificationsAsRead
 
         public async Task<MarkAllNotificationsAsReadResponse> Handle(MarkAllNotificationsAsReadCommand command, CancellationToken cancellationToken)
         {
-
-            // validar que exista usuario 
-
-            var notifications = await _notificationRepository.GetNotificationsByUserIdAsync(command.UserId); 
+            var notifications = await _notificationRepository.GetNumberOfNotificationsUnReadByUserIdAsync(command.UserId); 
 
             foreach (var notification in notifications)
             {
                 notification.IsRead = 1; 
             }
 
-            await _notificationRepository.UpdateAllNotificationsAsync(notifications); 
+            await _notificationRepository.UpdateNotificationsAsync();
+            var mapNotification = notifications.Adapt<List<NotificationResponse>>(); 
 
-            return new MarkAllNotificationsAsReadResponse(notifications.Adapt<List<NotificationResponse>>()); 
+            return new MarkAllNotificationsAsReadResponse(mapNotification); 
         }
     }
 }

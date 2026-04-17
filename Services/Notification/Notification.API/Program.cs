@@ -1,5 +1,6 @@
 using BuildingBlocks.Behaviors;
 using BuildingBlocks.Extensions;
+using BuildingBlocks.Jwt.Service;
 using FastEndpoints;
 using FastEndpoints.Swagger;
 using FluentValidation;
@@ -55,6 +56,8 @@ builder.Services.SwaggerDocument(options =>
 
 builder.Services.AddProblemDetails();
 
+builder.Services.AddJwtValidation(builder.Configuration); 
+
 // repositorios 
 builder.Services.AddScoped<INotificationRepository, NotificationRepository>();
 builder.Services.AddScoped<INotificationPreferenceRepository, NotificationPreferenceRepository>();
@@ -64,7 +67,11 @@ var app = builder.Build();
 // migraciones en automatico 
 //await app.ApplyMigrationsAsync<NotificationDbContext>(); 
 
-app.UseCors(); 
+app.UseCors();
+
+// jwt autenticación 
+app.UseAuthentication();
+app.UseAuthorization();
 
 // validaciones 
 app.UseExceptionHandler();

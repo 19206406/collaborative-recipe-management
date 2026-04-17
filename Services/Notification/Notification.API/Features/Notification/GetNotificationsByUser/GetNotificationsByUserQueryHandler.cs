@@ -15,11 +15,11 @@ namespace Notification.API.Features.Notification.GetNotificationsByUser
 
         public async Task<GetNotificationsByUserResponse> Handle(GetNotificationsByUserQuery query, CancellationToken cancellationToken)
         {
-            var notifications = await _notificationRepository.GetNotificationsByUserIdAsync(query.UserId);
+            var notifications = await _notificationRepository.GetNumberOfNotificationsUnReadByUserIdAsync(query.UserId);
 
             // hacer que todas las notificaciones del usuario se muestren como leidas 
-            foreach (var notification in notifications)
-                notification.IsRead = 1;
+            foreach (var notification in notifications) 
+                notification.IsRead = 1; 
 
             await _notificationRepository.UpdateNotificationsAsync(); 
 

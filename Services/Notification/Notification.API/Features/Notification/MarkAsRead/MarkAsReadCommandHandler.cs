@@ -1,6 +1,7 @@
 ﻿using BuildingBlocks.CQRS;
 using BuildingBlocks.Exceptions;
 using Notification.API.Repositories.NotificationRepository;
+using InvalidOperationException = BuildingBlocks.Exceptions.InvalidOperationException;
 
 namespace Notification.API.Features.Notification.MarkAsRead
 {
@@ -15,19 +16,20 @@ namespace Notification.API.Features.Notification.MarkAsRead
 
         public async Task<MarkAsReadResponse> Handle(MarkAsReadCommand command, CancellationToken cancellationToken)
         {
-            var notif = await _notificationRepository.GetNotificationByIdAsync(command.Id);
+            var notification = await _notificationRepository.GetNotificationByIdAsync(command.Id);
 
-            if (notif is null)
+            if (notification is null)
                 throw new NotFoundException("notificación", command.Id);
 
-            notif.IsRead = Convert.ToByte(command.Read);
+            if (notification.UserId != command.UserId)
+                throw new InvalidOperationException("No tienen permiso de ejecutar la acción para este recurso."); 
 
-            var updatedNotification = await _notificationRepository.UpdateNotificationAsync(notif); 
+            notification.IsRead = Convert.ToByte(command.IsRead);
 
-            return new MarkAsReadResponse(
-                updatedNotification.Id, updatedNotification.UserId, updatedNotification.Type, 
-                updatedNotification.Title, updatedNotification.Message, updatedNotification.IsRead, 
-                updatedNotification.CreatedAt); 
+            await _notificationRepository.UpdateNotificationsAsync(); 
+
+            return new MarkAsReadResponse(notification.Id, notification.UserId, notification.Type, notification.Title, 
+                notification.Message, notification.IsRead, notification.CreatedAt); 
         }
     }
 }

@@ -2,5 +2,5 @@
 
 namespace Notification.API.Features.Notification.MarkAsRead
 {
-    public record MarkAsReadCommand(int Id, bool Read) : ICommand<MarkAsReadResponse>; 
+    public record MarkAsReadCommand(int Id, int UserId, bool IsRead) : ICommand<MarkAsReadResponse>; 
 }

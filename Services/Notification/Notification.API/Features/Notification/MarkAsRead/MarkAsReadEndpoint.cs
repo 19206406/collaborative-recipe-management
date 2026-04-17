@@ -1,4 +1,5 @@
-﻿using FastEndpoints;
+﻿using BuildingBlocks.Jwt.Claims;
+using FastEndpoints;
 using MediatR;
 
 namespace Notification.API.Features.Notification.MarkAsRead
@@ -27,7 +28,9 @@ namespace Notification.API.Features.Notification.MarkAsRead
 
         public override async Task HandleAsync(MarkAsReadRequest req, CancellationToken ct)
         {
-            var command = new MarkAsReadCommand(req.Id, req.Read);
+            var userId = HttpContext.User.GetUserId(); 
+
+            var command = new MarkAsReadCommand(req.Id, userId, req.Read);
             var result = await _mediator.Send(command);
 
             await Send.OkAsync(result); 

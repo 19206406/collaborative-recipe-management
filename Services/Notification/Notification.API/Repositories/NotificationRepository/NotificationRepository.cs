@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Notification.API.Common.Database;
+using System.ComponentModel;
 
 namespace Notification.API.Repositories.NotificationRepository
 {
@@ -25,6 +26,7 @@ namespace Notification.API.Repositories.NotificationRepository
         {
             var notifications = await _context.Notifications
                 .Where(x => x.UserId == userId)
+                .OrderByDescending(x => x.CreatedAt)
                 .ToListAsync();
 
             return notifications; 
@@ -56,6 +58,16 @@ namespace Notification.API.Repositories.NotificationRepository
             await _context.SaveChangesAsync();
 
             return notification; 
+        }
+
+        public async Task<IEnumerable<Entities.Notification>> GetNumberOfNotificationsUnReadByUserIdAsync(int userId)
+        {
+            var notifications = await _context.Notifications
+                .Where(x => x.UserId == userId && x.IsRead == 0)
+                .OrderByDescending(x => x.CreatedAt)
+                .ToListAsync();
+
+            return notifications;
         }
     }
 }
