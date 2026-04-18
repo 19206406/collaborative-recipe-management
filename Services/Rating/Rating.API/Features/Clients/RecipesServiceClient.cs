@@ -32,7 +32,7 @@ namespace Rating.API.Features.Clients
                 }
 
                 throw new 
-                    InvalidOperationException("Response inesperado de recipeService"); 
+                    InvalidOperationException("Respuesta inesperada de recipeService"); 
             }
             catch (HttpRequestException ex)
             {

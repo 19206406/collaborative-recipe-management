@@ -25,9 +25,12 @@ namespace Notification.API.Features.Notification.AddReceivedRatingNotification
             Description(x => x.WithTags("Notifications"));
         }
 
-        public override Task HandleAsync(AddReceivedRatingNotificationRequest req, CancellationToken ct)
+        public override async Task HandleAsync(AddReceivedRatingNotificationRequest req, CancellationToken ct)
         {
-            var command = new AddReceivedRatingNotificationCommand(req); 
+            var command = new AddReceivedRatingNotificationCommand(req.RecipeId, req.RatingValue, req.UserId);
+            var result = await _mediator.Send(command);
+
+            await Send.OkAsync(result); 
         }
     }
 }

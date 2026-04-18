@@ -7,6 +7,8 @@ using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 using Notification.API;
 using Notification.API.Common.Database;
+using Notification.API.Features.Clients.RecipeClient;
+using Notification.API.Features.Clients.UserClient;
 using Notification.API.Repositories.NotificationPreferenceRepository;
 using Notification.API.Repositories.NotificationRepository;
 using System.Reflection;
@@ -39,6 +41,36 @@ builder.Services.AddMediatR(cfg =>
     cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly());
     cfg.AddOpenBehavior(typeof(ValidationBehavior<,>));
 });
+
+// HTTP Clients 
+var servicesUrls = builder.Configuration.GetSection("ServicesUrls");
+var httpSettings = builder.Configuration.GetSection("HttpClientSettings");
+
+// user client 
+builder.Services.AddHttpClient<IUserServiceClient, UserServiceClient>(client =>
+{
+    var baseUrl = servicesUrls["UserServiceUrl"];
+    client.BaseAddress = new Uri(baseUrl!);
+
+    var timeoutSeconds = httpSettings.GetValue<int>("TimeoutSeconds", 30);
+    client.Timeout = TimeSpan.FromSeconds(timeoutSeconds);
+
+    client.DefaultRequestHeaders.Add("Accep", "application/json");
+    client.DefaultRequestHeaders.Add("User-Agent", "NotificationService/1.0");
+});
+
+// recipe cliente 
+builder.Services.AddHttpClient<IRecipeServiceClient, RecipeServiceClient>(client =>
+{
+    var baseUrl = servicesUrls["RecipeServiceUrl"];
+    client.BaseAddress = new Uri(baseUrl!);
+
+    var timeoutSeconds = httpSettings.GetValue<int>("TimeoutSeconds", 30);
+    client.Timeout = TimeSpan.FromSeconds(timeoutSeconds);
+
+    client.DefaultRequestHeaders.Add("Accep", "application/json");
+    client.DefaultRequestHeaders.Add("Recipe-Agent", "NotificationService/1.0");
+}); 
 
 // validators 
 builder.Services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());

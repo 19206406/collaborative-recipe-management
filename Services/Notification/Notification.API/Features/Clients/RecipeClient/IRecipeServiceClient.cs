@@ -1,7 +1,9 @@
-﻿namespace Notification.API.Features.Clients.RecipeClient
+﻿using Notification.API.Common.Dtos;
+
+namespace Notification.API.Features.Clients.RecipeClient
 {
     public interface IRecipeServiceClient
     {
-        Task RecipeById(int recipeId); 
+        Task<RecipeDto> RecipeByIdAsync(int recipeId); 
     }
 }
