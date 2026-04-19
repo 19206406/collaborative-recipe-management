@@ -23,6 +23,7 @@ namespace Notification.API.Features.Notification.AddReceivedRatingNotification
                 x.Description = "Crea una nueva notificación con información del servicio de rating";
             });
             Description(x => x.WithTags("Notifications"));
+            AllowAnonymous(); 
         }
 
         public override async Task HandleAsync(AddReceivedRatingNotificationRequest req, CancellationToken ct)

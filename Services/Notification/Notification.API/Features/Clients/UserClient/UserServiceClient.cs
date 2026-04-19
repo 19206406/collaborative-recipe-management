@@ -23,17 +23,15 @@ namespace Notification.API.Features.Clients.UserClient
             {
                 var endpoint = $"api/users/{userId}/basic";
 
-                var response = await _httpClient.GetAsync(endpoint);
+                var response = await _httpClient.GetFromJsonAsync<UserDto>(endpoint);
 
-                var user = response.Adapt<UserDto>();
-
-                if (user is null)
+                if (response is null)
                     _logger.LogWarning("UserService ha devuelto un resultado satisfactorio pero el cuerpo del mensaje está" +
                         "vacío para el UserId {userId}", userId);
 
                 _logger.LogInformation("Usuario {userId} recuperada correctamente", userId);
 
-                return user; 
+                return response; 
             }
             catch (HttpRequestException ex)
             {

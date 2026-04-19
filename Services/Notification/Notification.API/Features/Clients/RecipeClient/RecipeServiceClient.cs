@@ -24,17 +24,15 @@ namespace Notification.API.Features.Clients.RecipeClient
             {
                 var endpoint = $"api/recipes/{recipeId}";
 
-                var response = await _httpClient.GetAsync(endpoint);
+                var response = await _httpClient.GetFromJsonAsync<RecipeDto>(endpoint);
 
-                var recipe = response.Adapt<RecipeDto>();
-
-                if (recipe is null)
+                if (response is null)
                     _logger.LogWarning("RecipeService ha devuelto un resultado satisfactorio, pero el cuerpo del mensaje está " +
                         "vacío para el RecipeId {recipeId}", recipeId);
 
-                _logger.LogInformation("Receta {recipeId} recuperada correctamente", recipeId); 
+                _logger.LogInformation("Receta {recipeId} recuperada correctamente", recipeId);
 
-                return response.Adapt<RecipeDto>(); 
+                return response; 
             } 
             catch (HttpRequestException ex)
             {
