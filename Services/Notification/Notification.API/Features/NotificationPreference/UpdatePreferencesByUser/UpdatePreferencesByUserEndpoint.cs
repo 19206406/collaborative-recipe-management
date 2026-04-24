@@ -5,7 +5,7 @@ using MediatR;
 namespace Notification.API.Features.NotificationPreference.UpdatePreferencesByUser
 {
     public record NotificationPreference(int Id, byte EmailNotifications, byte PushNotifications); 
-    public record UpdatePreferencesByUserRequest(List<NotificationPreference> NotificationPreferences); 
+    public record UpdatePreferencesByUserRequest(int Id, byte EmailNotifications, byte PushNotifications); 
 
     public class UpdatePreferencesByUserEndpoint : Endpoint<UpdatePreferencesByUserRequest, UpdatePreferencesByUserResponse>
     {
@@ -31,7 +31,7 @@ namespace Notification.API.Features.NotificationPreference.UpdatePreferencesByUs
         public override async Task HandleAsync(UpdatePreferencesByUserRequest req, CancellationToken ct)
         {
             var userId = HttpContext.User.GetUserId();
-            var command = new UpdatePreferencesByUserCommand(userId, req.NotificationPreferences);
+            var command = new UpdatePreferencesByUserCommand(userId, req.Id, req.EmailNotifications, req.PushNotifications);
             var result = await _mediator.Send(command);
 
             await Send.OkAsync(result); 

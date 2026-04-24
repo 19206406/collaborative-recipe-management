@@ -6,9 +6,9 @@ namespace Notification.API.Features.NotificationPreference.UpdatePreferencesByUs
     {
         public UpdatePreferencesByUserCommandValidator()
         {
-            RuleFor(x => x.NotificationPreferences)
-                .NotEmpty()
-                .WithMessage(""); 
+            //RuleFor(x => x.NotificationPreferences)
+            //    .NotEmpty()
+            //    .WithMessage(""); 
         }
     }
 }

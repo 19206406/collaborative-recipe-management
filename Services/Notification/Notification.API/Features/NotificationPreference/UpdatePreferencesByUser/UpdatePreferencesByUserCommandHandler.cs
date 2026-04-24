@@ -1,6 +1,6 @@
 ﻿using BuildingBlocks.CQRS;
+using BuildingBlocks.Exceptions;
 using Mapster;
-using Notification.API.Features.NotificationPreference.GetPreferencesByUser;
 using Notification.API.Repositories.NotificationPreferenceRepository;
 
 namespace Notification.API.Features.NotificationPreference.UpdatePreferencesByUser
@@ -16,19 +16,17 @@ namespace Notification.API.Features.NotificationPreference.UpdatePreferencesByUs
 
         public async Task<UpdatePreferencesByUserResponse> Handle(UpdatePreferencesByUserCommand command, CancellationToken cancellationToken)
         {
-            var userPreferences = await _notificationPreferenceRepository.GetPreferencesByUserIdAsync(command.UserId); 
+            var notificationPreferences = await _notificationPreferenceRepository.GetPreferencesByUserIdAsync(command.UserId);
 
-            foreach (var preferenceNot in command.NotificationPreferences)
-            {
-                var preference = userPreferences.First(x => x.Id == preferenceNot.Id); 
+            if (notificationPreferences is null)
+                throw new NotFoundException("preferencias de notificacación de usuario", command.Id); 
 
-                preference.PushNotifications = preferenceNot.PushNotifications;
-                preference.EmailNotifications = preferenceNot.EmailNotifications; 
-            }
+            notificationPreferences.PushNotifications = command.PushNotifications;
+            notificationPreferences.EmailNotifications = command.EmailNotifications; 
+            
+            await _notificationPreferenceRepository.UpdatePreferencesByUserIdAsync();
 
-            await _notificationPreferenceRepository.UpdatePreferencesByUserIdAsync(userPreferences.ToList());
-
-            return new UpdatePreferencesByUserResponse(userPreferences.Adapt<List<PreferencesResponse>>()); 
+            return notificationPreferences.Adapt<UpdatePreferencesByUserResponse>(); 
         }
     }
 }

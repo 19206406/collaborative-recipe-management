@@ -1,6 +1,4 @@
 ﻿namespace Notification.API.Features.NotificationPreference.GetPreferencesByUser
 {
-
-    public record PreferencesResponse(int Id, byte EmailNotifications, byte PushNotifications);
-    public record GetPreferencesByUserResponse(List<PreferencesResponse> notificationPreferences); 
+    public record GetPreferencesByUserResponse(int Id, int UserId, byte EmailNotifications, byte PushNotifications); 
 }

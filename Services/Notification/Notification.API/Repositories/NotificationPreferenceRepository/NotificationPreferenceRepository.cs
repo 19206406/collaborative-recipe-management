@@ -13,19 +13,23 @@ namespace Notification.API.Repositories.NotificationPreferenceRepository
             _context = context;
         }
 
-        public async Task<IEnumerable<NotificationPreference>> GetPreferencesByUserIdAsync(int userId)
+        public async Task CreatePreferencesByUserAsync(NotificationPreference userPreferences)
+        {
+            _context.Add(userPreferences);
+            await _context.SaveChangesAsync(); 
+        }
+
+        public async Task<NotificationPreference?> GetPreferencesByUserIdAsync(int userId)
         {
             var preferences = await _context.NotificationPreferences
-                .Where(x => x.UserId == userId)
-                .ToListAsync();
+                .FirstOrDefaultAsync(x => x.UserId == userId); 
 
             return preferences; 
         }
 
-        public async Task<bool> UpdatePreferencesByUserIdAsync(List<NotificationPreference> notificationPreferences)
+        public async Task UpdatePreferencesByUserIdAsync()
         {
-            _context.NotificationPreferences.UpdateRange(notificationPreferences);
-            return await _context.SaveChangesAsync() > 0; 
+            await _context.SaveChangesAsync(); 
         }
     }
 }

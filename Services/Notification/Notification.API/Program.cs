@@ -55,7 +55,7 @@ builder.Services.AddHttpClient<IUserServiceClient, UserServiceClient>(client =>
     var timeoutSeconds = httpSettings.GetValue<int>("TimeoutSeconds", 30);
     client.Timeout = TimeSpan.FromSeconds(timeoutSeconds);
 
-    client.DefaultRequestHeaders.Add("Accep", "application/json");
+    client.DefaultRequestHeaders.Add("Accept", "application/json");
     client.DefaultRequestHeaders.Add("User-Agent", "NotificationService/1.0");
 });
 
@@ -68,7 +68,7 @@ builder.Services.AddHttpClient<IRecipeServiceClient, RecipeServiceClient>(client
     var timeoutSeconds = httpSettings.GetValue<int>("TimeoutSeconds", 30);
     client.Timeout = TimeSpan.FromSeconds(timeoutSeconds);
 
-    client.DefaultRequestHeaders.Add("Accep", "application/json");
+    client.DefaultRequestHeaders.Add("Accept", "application/json");
     client.DefaultRequestHeaders.Add("Recipe-Agent", "NotificationService/1.0");
 }); 
 

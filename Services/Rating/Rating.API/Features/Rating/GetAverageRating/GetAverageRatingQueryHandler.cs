@@ -1,6 +1,6 @@
 ﻿using BuildingBlocks.CQRS;
 using BuildingBlocks.Exceptions;
-using Rating.API.Features.Clients;
+using Rating.API.Features.Clients.RecipeClient;
 using Rating.API.Repositories;
 
 namespace Rating.API.Features.Rating.GetAverageRating

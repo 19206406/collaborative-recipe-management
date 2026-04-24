@@ -1,6 +1,6 @@
 ﻿using InvalidOperationException = BuildingBlocks.Exceptions.InvalidOperationException;
 
-namespace Rating.API.Features.Clients
+namespace Rating.API.Features.Clients.RecipeClient
 {
     public class RecipesServiceClient : IRecipesServiceClient
     {

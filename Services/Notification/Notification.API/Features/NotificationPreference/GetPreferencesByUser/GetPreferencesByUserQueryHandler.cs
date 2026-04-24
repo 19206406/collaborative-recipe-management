@@ -15,10 +15,23 @@ namespace Notification.API.Features.NotificationPreference.GetPreferencesByUser
 
         public async Task<GetPreferencesByUserResponse> Handle(GetPreferencesByUserQuery query, CancellationToken cancellationToken)
         {
-            // 
-            var notifications = await _notificationPreferenceRepository.GetPreferencesByUserIdAsync(query.UserId);
+            var notificationPreferences = await _notificationPreferenceRepository.GetPreferencesByUserIdAsync(query.UserId);
 
-            return new GetPreferencesByUserResponse(notifications.Adapt<List<PreferencesResponse>>()); 
+            if (notificationPreferences is null)
+            {
+                var userPreferences = new Entities.NotificationPreference
+                {
+                    UserId = query.UserId,
+                    EmailNotifications = 1,
+                    PushNotifications = 1,
+                };
+
+                await _notificationPreferenceRepository.CreatePreferencesByUserAsync(userPreferences);
+
+                return userPreferences.Adapt<GetPreferencesByUserResponse>(); 
+            }
+
+            return notificationPreferences.Adapt<GetPreferencesByUserResponse>(); 
         }
     }
 }

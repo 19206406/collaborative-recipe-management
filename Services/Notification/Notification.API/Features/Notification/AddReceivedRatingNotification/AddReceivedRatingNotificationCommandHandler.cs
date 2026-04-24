@@ -2,6 +2,7 @@
 using Mapster;
 using Notification.API.Features.Clients.RecipeClient;
 using Notification.API.Features.Clients.UserClient;
+using Notification.API.Repositories.NotificationPreferenceRepository;
 using Notification.API.Repositories.NotificationRepository;
 using System.Runtime.ConstrainedExecution;
 
@@ -11,31 +12,22 @@ namespace Notification.API.Features.Notification.AddReceivedRatingNotification
         : ICommandHandler<AddReceivedRatingNotificationCommand, AddReceivedRatingNotificationResponse>
     {
         private readonly INotificationRepository _notificationRepository;
+        private readonly INotificationPreferenceRepository _notificationPreferenceRepository;
         private readonly IRecipeServiceClient _recipeServiceClient;
         private readonly IUserServiceClient _userServiceClient;
         private readonly ILogger<AddReceivedRatingNotificationCommandHandler> _logger;
 
         public AddReceivedRatingNotificationCommandHandler(
-            INotificationRepository notificationRepository, IRecipeServiceClient recipeServiceClient, 
+            INotificationRepository notificationRepository, INotificationPreferenceRepository notificationPreferenceRepository, 
+            IRecipeServiceClient recipeServiceClient, 
             IUserServiceClient userServiceClient, ILogger<AddReceivedRatingNotificationCommandHandler> logger)
         {
             _notificationRepository = notificationRepository;
+            _notificationPreferenceRepository = notificationPreferenceRepository;
             _recipeServiceClient = recipeServiceClient;
             _userServiceClient = userServiceClient;
             _logger = logger;
         }
-
-        //1. **Rating Recibido** (llamado por Rating Service):
-        //    - Recibir: { recipeId, ratingValue, userId(quien calificó) } -- listo 
-        //    - ** LLAMAR a Recipe Service** → obtener recipe.user_id y recipe.title
-        //    - **LLAMAR a User Service** → obtener nombre de quien calificó -- listo 
-        //    - Crear notificación para el dueño de la receta: 
-
-        //    ```
-        //     "{userName} calificó tu receta '{recipeTitle}' con {ratingValue} estrellas" -- listo 
-        //    ```
-
-        //    - Si usuario tiene emailNotifications = true → enviar email (simulado con log)
 
         public async Task<AddReceivedRatingNotificationResponse> Handle(AddReceivedRatingNotificationCommand command, CancellationToken cancellationToken)
         {
@@ -54,8 +46,13 @@ namespace Notification.API.Features.Notification.AddReceivedRatingNotification
                 CreatedAt = DateTime.UtcNow
             };
 
-            // TODO: Si usuario tiene emailNotifications = true → enviar email (simulado con log) 
-            // se podria implementar el cervicio de mensajeria por email
+            var notificationPreferences = await _notificationPreferenceRepository.GetPreferencesByUserIdAsync(command.UserId); 
+
+            if (notificationPreferences is not null && notificationPreferences.EmailNotifications == 1)
+            {
+                _logger.LogInformation($"Email de calificacion de receta: " +
+                    $"{user.Name} calificó tu receta '{recipe.Recipe.Title}' con {command.RatingValue} estrellas"); 
+            } 
 
             await _notificationRepository.AddNotificationAsync(newNotification);
 

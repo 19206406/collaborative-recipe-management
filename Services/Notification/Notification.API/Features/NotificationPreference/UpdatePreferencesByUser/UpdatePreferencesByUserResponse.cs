@@ -2,5 +2,5 @@
 
 namespace Notification.API.Features.NotificationPreference.UpdatePreferencesByUser
 {
-    public record UpdatePreferencesByUserResponse(List<PreferencesResponse> notificationPreferences); 
+    public record UpdatePreferencesByUserResponse(int Id, int UserId, byte EmailNotifications, byte PushNotifications); 
 }

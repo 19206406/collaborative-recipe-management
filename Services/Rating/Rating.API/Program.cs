@@ -8,7 +8,8 @@ using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 using Rating.API;
 using Rating.API.Common.Database;
-using Rating.API.Features.Clients;
+using Rating.API.Features.Clients.NotificationClient;
+using Rating.API.Features.Clients.RecipeClient;
 using Rating.API.Repositories;
 using System.Reflection;
 
@@ -39,12 +40,13 @@ builder.Services.AddCors(options =>
 });
 
 // http client 
-var serviceUrls = builder.Configuration.GetSection("ServiceUrls");
+var servicesUrls = builder.Configuration.GetSection("ServicesUrls");
 var httpSettings = builder.Configuration.GetSection("HttpClientSettings");
 
+// recipe client
 builder.Services.AddHttpClient<IRecipesServiceClient, RecipesServiceClient>(client =>
 {
-    var baseUrl = serviceUrls["RecipesService"];
+    var baseUrl = servicesUrls["RecipesService"];
     client.BaseAddress = new Uri(baseUrl!);
 
     var timeoutSeconds = httpSettings.GetValue<int>("TimeoutSeconds", 30);
@@ -53,6 +55,19 @@ builder.Services.AddHttpClient<IRecipesServiceClient, RecipesServiceClient>(clie
     client.DefaultRequestHeaders.Add("Accept", "application/json");
     client.DefaultRequestHeaders.Add("User-Agent", "RatingsService/1.0");
 });
+
+// notification  
+builder.Services.AddHttpClient<INotificationServiceClient, NotificationServiceClient>(client =>
+{
+    var baseUrl = servicesUrls["NotificationService"];
+    client.BaseAddress = new Uri(baseUrl!);
+
+    var timeoutSeconds = httpSettings.GetValue<int>("TimeoutSeconds", 30);
+    client.Timeout = TimeSpan.FromSeconds(timeoutSeconds);
+
+    client.DefaultRequestHeaders.Add("Accept", "application/json");
+    client.DefaultRequestHeaders.Add("Notification-Agent", "RatingService/1.0");
+}); 
 
 // RabbitMQ --- publicador 
 builder.Services.AddRabbitMQMessaging(builder.Configuration); 
@@ -95,7 +110,7 @@ builder.Services.AddJwtValidation(builder.Configuration);
 var app = builder.Build();
 
 // migración en automatico 
-await app.ApplyMigrationsAsync<RatingDbContext>(); 
+//await app.ApplyMigrationsAsync<RatingDbContext>(); 
 
 app.UseCors(); // cors 
 

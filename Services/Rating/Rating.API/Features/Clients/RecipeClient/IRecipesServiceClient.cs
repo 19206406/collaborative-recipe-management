@@ -1,4 +1,4 @@
-﻿namespace Rating.API.Features.Clients
+﻿namespace Rating.API.Features.Clients.RecipeClient
 {
     public interface IRecipesServiceClient
     {

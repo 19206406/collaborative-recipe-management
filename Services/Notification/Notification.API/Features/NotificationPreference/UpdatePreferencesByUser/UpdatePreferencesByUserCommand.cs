@@ -3,7 +3,6 @@
 namespace Notification.API.Features.NotificationPreference.UpdatePreferencesByUser
 {
     public record UpdatePreferencesByUserCommand(
-        int UserId, 
-        List<NotificationPreference> NotificationPreferences) 
+        int UserId, int Id, byte EmailNotifications, byte PushNotifications) 
         : ICommand<UpdatePreferencesByUserResponse>; 
 }

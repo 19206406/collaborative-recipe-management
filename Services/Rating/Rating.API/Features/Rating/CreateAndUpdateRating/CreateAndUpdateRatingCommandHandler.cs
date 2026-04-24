@@ -1,7 +1,9 @@
 ﻿using BuildingBlocks.CQRS;
 using BuildingBlocks.Exceptions;
+using Rating.API.Common.Dtos;
 using Rating.API.Entities;
-using Rating.API.Features.Clients;
+using Rating.API.Features.Clients.NotificationClient;
+using Rating.API.Features.Clients.RecipeClient;
 using Rating.API.Repositories;
 using InvalidOperationException = BuildingBlocks.Exceptions.InvalidOperationException;
 
@@ -11,11 +13,14 @@ namespace Rating.API.Features.Rating.CreateAndUpdateRating
     {
         private readonly IRatingRepository _ratingRepository;
         private readonly IRecipesServiceClient _recipesClient;
+        private readonly INotificationServiceClient _notificationClient;
 
-        public CreateAndUpdateRatingCommandHandler(IRatingRepository ratingRepository, IRecipesServiceClient recipesClient)
+        public CreateAndUpdateRatingCommandHandler
+            (IRatingRepository ratingRepository, IRecipesServiceClient recipesClient, INotificationServiceClient notificationClient)
         {
             _ratingRepository = ratingRepository;
             _recipesClient = recipesClient;
+            _notificationClient = notificationClient;
         }
 
         public async Task<CreateAndUpdateRatingResponse> Handle(CreateAndUpdateRatingCommand command, CancellationToken cancellationToken)
@@ -41,6 +46,9 @@ namespace Rating.API.Features.Rating.CreateAndUpdateRating
 
                 var updatedRating = await _ratingRepository.UpdateRating(rating);
 
+                var notification = await _notificationClient.CreateNewNotificationAsync
+                    (new CreateNotificationRequest(command.RecipeId, command.Rating, command.UserId)); 
+
                 return new CreateAndUpdateRatingResponse(rating.Id, rating.UserId, rating.RecipeId, rating.Rating, oldRating, 
                     rating.Comment, rating.CreatedAt, rating.UpdatedAt);
             }
@@ -62,6 +70,9 @@ namespace Rating.API.Features.Rating.CreateAndUpdateRating
                     throw new InvalidOperationException("No puedes ejecutar esta acción de nuevo"); 
 
                 var result = await _ratingRepository.AddRating(newRating);
+
+                var notification = await _notificationClient.CreateNewNotificationAsync
+                    (new CreateNotificationRequest(command.RecipeId, command.Rating, command.UserId));
 
                 return new CreateAndUpdateRatingResponse(result.Id, result.UserId, result.RecipeId, result.Rating, 0, result.Comment, result.CreatedAt, result.UpdatedAt);
             }

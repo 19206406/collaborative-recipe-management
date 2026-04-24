@@ -1,7 +1,7 @@
 ﻿using BuildingBlocks.CQRS;
 using BuildingBlocks.Exceptions;
 using MediatR;
-using Rating.API.Features.Clients;
+using Rating.API.Features.Clients.RecipeClient;
 using Rating.API.Repositories;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
