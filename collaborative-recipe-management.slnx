@@ -1,5 +1,7 @@
 <Solution>
-  <Folder Name="/ApiGateways/" />
+  <Folder Name="/ApiGateways/">
+    <Project Path="ApiGateways/ApiGateway/ApiGateway.csproj" Id="070bd1e1-7348-4b37-93df-ec4aabf3e4c0" />
+  </Folder>
   <Folder Name="/BuildingBlocks/">
     <Project Path="BuildingBlocks/BuildingBlocks.Messaging/BuildingBlocks.Messaging.csproj" />
     <Project Path="BuildingBlocks/BuildingBlocks/BuildingBlocks.csproj" Id="ceb5f3ed-e543-4bf6-92a1-55a542d461e9" />
