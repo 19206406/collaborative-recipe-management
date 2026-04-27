@@ -41,7 +41,7 @@ builder.Services.AddScoped<IUserPreferenceRespository, UserPreferenceRepository>
 builder.Services.Configure<JwtSettings>(builder.Configuration.GetSection("JwtSettings"));
 builder.Services.AddJwtValidation(builder.Configuration); // ← Esto agrega Authentication
 
-// ← AGREGAR ESTO: Authorization se necesita cuando usas UseAuthorization() antes de FastEndpoints
+// Authorization se necesita cuando usas UseAuthorization() antes de FastEndpoints
 builder.Services.AddAuthorization();
 
 builder.Services.AddScoped<IJwtService, JwtService>();

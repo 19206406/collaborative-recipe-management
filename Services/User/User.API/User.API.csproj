@@ -8,6 +8,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="util.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="FastEndpoints" Version="7.2.0" />
     <PackageReference Include="FastEndpoints.Swagger" Version="7.2.0" />
     <PackageReference Include="FluentValidation" Version="12.1.1" />
@@ -31,6 +35,10 @@
 
   <ItemGroup>
     <Folder Include="Common\Database\Migrations\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="util.cs" />
   </ItemGroup>
 
 </Project>

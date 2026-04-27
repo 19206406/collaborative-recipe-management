@@ -1,8 +1,8 @@
-﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+﻿using BuildingBlocks.Jwt.Models;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
-using System.Text;
 
 namespace BuildingBlocks.Jwt.Service
 {
@@ -12,8 +12,11 @@ namespace BuildingBlocks.Jwt.Service
             this IServiceCollection services,
             IConfiguration configuration)
         {
-            var jwtSettings = new BuildingBlocks.Jwt.Models.JwtSettings();
+            var jwtSettings = new JwtSettings(); 
             configuration.GetSection("JwtSettings").Bind(jwtSettings);
+
+            var rsa = RsaKeyHelper.LoadPublicKey(jwtSettings.RsaPublicKey);
+            var rsaSecurityKey = new RsaSecurityKey(rsa); 
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
@@ -28,8 +31,7 @@ namespace BuildingBlocks.Jwt.Service
                         ValidateIssuerSigningKey = true,
                         ValidIssuer = jwtSettings.Issuer,
                         ValidAudiences = jwtSettings.Audiences,
-                        IssuerSigningKey = new SymmetricSecurityKey(
-                            Encoding.UTF8.GetBytes(jwtSettings.SecretKey)),
+                        IssuerSigningKey = rsaSecurityKey, 
                         ClockSkew = TimeSpan.Zero
                     };
                     options.Events = JwtEvents.CustomJwtEvents();

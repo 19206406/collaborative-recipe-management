@@ -3,8 +3,8 @@ using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security.Cryptography;
-using System.Text;
 using BuildingBlocks.Jwt.Models;
+using BuildingBlocks.Jwt.Service;
 
 namespace User.API.Services.Jwt
 {
@@ -19,7 +19,6 @@ namespace User.API.Services.Jwt
 
         public string GenerateAccessToken(Entities.User user)
         {
-            // lista de los elementos a guardar 
             var claims = new List<Claim>
             {
                 new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString()),
@@ -29,24 +28,19 @@ namespace User.API.Services.Jwt
                 new Claim("name", user.Name),  
             };
 
-            // agregar cada audiencia como un claim individual 
             foreach (var audience in _jwtSettings.Audiences)
-            {
-                claims.Add(new Claim(JwtRegisteredClaimNames.Aud, audience)); 
-            }
+                claims.Add(new Claim(JwtRegisteredClaimNames.Aud, audience));
 
-            // llave y la credencial del token 
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtSettings.SecretKey));
-            var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+            //var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtSettings.SecretKey));
+            var rsa = RsaKeyHelper.LoadPrivateKey(_jwtSettings.RsaPrivateKey); 
+            var credentials = new SigningCredentials(new RsaSecurityKey(rsa), SecurityAlgorithms.RsaSha256);
 
-            // armado del token 
             var token = new JwtSecurityToken(
                 issuer: _jwtSettings.Issuer,
                 claims: claims,
                 expires: DateTime.UtcNow.AddMinutes(_jwtSettings.AccessTokenExpirationMinutes),
                 signingCredentials: credentials);
 
-            // escritura y retorno del token 
             return new JwtSecurityTokenHandler().WriteToken(token); 
         }
 
@@ -58,38 +52,35 @@ namespace User.API.Services.Jwt
             return Convert.ToBase64String(randomNumber); 
         }
 
-        public int GetUserIdFromToken(string token)
+        public ClaimsPrincipal? ValidateToken(string token, bool validateLifeTime = true)
         {
-            var handler = new JwtSecurityTokenHandler();
-            var jwtToken = handler.ReadJwtToken(token);
-            var userIdClaim = jwtToken.Claims.FirstOrDefault(c => c.Type == "userId")?.Value;
-            return int.TryParse(userIdClaim, out var userId) ? userId : 0;
-        }
-
-        public ClaimsPrincipal ValidateToken(string token, bool validateLifeTime = true)
-        {
-            var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.UTF8.GetBytes(_jwtSettings.SecretKey); 
-
             try
             {
-                var principal = tokenHandler.ValidateToken(token, new TokenValidationParameters
+                var rsa = RsaKeyHelper.LoadPublicKey(_jwtSettings.RsaPublicKey);
+
+                return new JwtSecurityTokenHandler().ValidateToken(token, new TokenValidationParameters
                 {
                     ValidateIssuerSigningKey = true,
-                    IssuerSigningKey = new SymmetricSecurityKey(key),
+                    IssuerSigningKey = new RsaSecurityKey(rsa),
                     ValidateIssuer = true,
                     ValidIssuer = _jwtSettings.Issuer,
                     ValidateAudience = true,
                     ValidAudiences = _jwtSettings.Audiences,
                     ValidateLifetime = validateLifeTime,
                     ClockSkew = TimeSpan.Zero
-                }, out SecurityToken validatedToken);
-                return principal; 
+                }, out _); 
             }
             catch
             {
-                return null; 
+                return null;
             }
+        }
+
+        public int GetUserIdFromToken(string token)
+        {
+            var jwtToken = new JwtSecurityTokenHandler().ReadJwtToken(token); 
+            var userIdClaim = jwtToken.Claims.FirstOrDefault(c => c.Type == "userId")?.Value;
+            return int.TryParse(userIdClaim, out var userId) ? userId : 0;
         }
     }
 }
