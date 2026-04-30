@@ -11,7 +11,9 @@ namespace ApiGateway.Middleware
         private readonly RsaSecurityKey _rsaPublicKey; 
         private readonly string _issuer;
         private readonly List<string> _audiences;
-        private readonly List<string> _publicRoutes; 
+
+        private record PublicRoute(string Method, string Pattern); 
+        private readonly List<PublicRoute> _publicRoutes; 
 
         public GatewayJwtMiddleware(RequestDelegate next, IConfiguration configuration)
         {
@@ -20,7 +22,17 @@ namespace ApiGateway.Middleware
             var jwtSection = configuration.GetSection("JwtSettings");
             _issuer = jwtSection["Issuer"]!;
             _audiences = jwtSection.GetSection("Audiences").Get<List<string>>()!;
-            _publicRoutes = configuration.GetSection("PublicRoutes").Get<List<string>>() ?? new();
+            _publicRoutes = configuration.
+                GetSection("PublicRoutes")
+                .Get<List<string>>()!
+                .Select(entry =>
+                {
+                    var parts = entry.Trim().Split(' ', 2);
+                    return new PublicRoute(
+                        Method: parts[0].ToUpper(),
+                        Pattern: parts[1]
+                    );
+                }).ToList(); 
 
             var publicKeyPem = jwtSection["RsaPublicKey"]!.Replace("\\n", "\n");
             var rsa = RSA.Create();
@@ -30,31 +42,32 @@ namespace ApiGateway.Middleware
 
         public async Task InvokeAsync(HttpContext context)
         {
-            var path = context.Request.Path.Value ?? ""; 
+            var path = context.Request.Path.Value ?? "";
+            var method = context.Request.Method; 
 
-            if (_publicRoutes.Any(r => path.StartsWith(r, StringComparison.OrdinalIgnoreCase)))
+            if (IsPublicRoute(method,path))
             {
                 await _next(context);
-                return; 
+                return;
             }
 
-            var token = ExtractBearerToken(context); 
+            var token = ExtractBearerToken(context);
 
             if (string.IsNullOrEmpty(token))
             {
                 await WriteResponse(context, 401, "Token no proporcionado");
-                return; 
+                return;
             }
 
             if (!TryValidateToken(token, out var principal))
             {
                 await WriteResponse(context, 401, "Token inválido o expirado");
-                return; 
+                return;
             }
 
             var userId = principal?.FindFirst("userId")?.Value;
             var email = principal?.FindFirst("email")?.Value
-                ?? principal?.FindFirst(System.Security.Claims.ClaimTypes.Email)?.Value;
+                      ?? principal?.FindFirst(System.Security.Claims.ClaimTypes.Email)?.Value;
 
             if (!string.IsNullOrEmpty(userId))
                 context.Request.Headers["X-User-Id"] = userId;
@@ -62,7 +75,39 @@ namespace ApiGateway.Middleware
             if (!string.IsNullOrEmpty(email))
                 context.Request.Headers["X-User-Email"] = email;
 
-            await _next(context); 
+            await _next(context);
+        }
+
+        private bool IsPublicRoute(string method, string rawPath)
+        {
+            var path = rawPath.Split('?')[0]; // ignora query params
+
+            return _publicRoutes.Any(route => 
+                route.Method.Equals(method, StringComparison.OrdinalIgnoreCase) && 
+                MatchesPattern(path, route.Pattern));
+        }
+
+        private static bool MatchesPattern(string path, string pattern)
+        {
+            var pathSegments = path.Trim('/').Split('/');
+            var patternSegments = pattern.Trim('/').Split('/');
+
+            if (pathSegments.Length != patternSegments.Length)
+                return false;
+
+            for (int i = 0; i < patternSegments.Length; i++)
+            {
+                var patternSegment = patternSegments[i];
+                var pathSegment = pathSegments[i];
+
+                if (patternSegment.StartsWith("{") && patternSegment.EndsWith("}"))
+                    continue;
+
+                if (!patternSegment.Equals(pathSegment, StringComparison.OrdinalIgnoreCase))
+                    return false;
+            }
+
+            return true;
         }
 
         private static string? ExtractBearerToken(HttpContext context)

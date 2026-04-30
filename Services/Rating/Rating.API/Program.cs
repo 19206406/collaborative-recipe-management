@@ -15,6 +15,8 @@ using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// problemas con user y rating misma dirección 
+
 // Add services to the container.
 builder.Services.AddFastEndpoints();
 

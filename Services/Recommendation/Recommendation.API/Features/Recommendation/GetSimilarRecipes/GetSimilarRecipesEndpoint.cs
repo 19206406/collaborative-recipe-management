@@ -23,7 +23,8 @@ namespace Recommendation.API.Features.Recommendation.GetSimilarRecipes
                 x.Summary = "Recetas similares";
                 x.Description = "Obtiene recetas similares dado una receta que le guste al usuario";
             });
-            Description(x => x.WithTags("Recommendations")); 
+            Description(x => x.WithTags("Recommendations"));
+            AllowAnonymous(); 
         }
 
         public override async Task HandleAsync(GetSimilarRecipesRequest req, CancellationToken ct)
