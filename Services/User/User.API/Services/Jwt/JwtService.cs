@@ -23,10 +23,11 @@ namespace User.API.Services.Jwt
             {
                 new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString()),
                 new Claim(JwtRegisteredClaimNames.Email, user.Email),
-                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()), 
-                new Claim("userId", user.Id.ToString()), 
-                new Claim("name", user.Name),  
-            };
+                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+                new Claim("userId", user.Id.ToString()),
+                new Claim("email", user.Email),
+                new Claim("name", user.Name),
+            }; 
 
             foreach (var audience in _jwtSettings.Audiences)
                 claims.Add(new Claim(JwtRegisteredClaimNames.Aud, audience));
