@@ -5,6 +5,8 @@ services:
   sqlserver: 
     container_name: userdb
     environment: 
+      - ACCEPT_EULA=Y
+      - MSSQL_PID=Developer
       - MSSQL_SA_PASSWORD=Sebastian@User123
     ports:
       - "1433:1433"
@@ -20,7 +22,9 @@ services:
 
   sqlserver2:
     container_name: ratingdb
-    environment: 
+    environment:
+      - ACCEPT_EULA=Y
+      - MSSQL_PID=Developer
       - MSSQL_SA_PASSWORD=Sebastian@Rating123
     ports:
       - "1444:1433"
@@ -36,7 +40,9 @@ services:
 
   sqlserver3:
     container_name: notificationdb
-    environment: 
+    environment:
+      - ACCEPT_EULA=Y
+      - MSSQL_PID=Developer
       - MSSQL_SA_PASSWORD=Sebastian@Notification123
     ports:
       - "1435:1433"
@@ -70,7 +76,6 @@ services:
     command: >
       postgres 
       -c password_encryption=md5
-
 
   redis:
     container_name: redis-cache

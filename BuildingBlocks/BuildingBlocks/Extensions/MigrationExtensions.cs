@@ -36,9 +36,9 @@ namespace BuildingBlocks.Extensions
                     typeof(TContext).Name);
 
                 // verificar si la DB puede conectarse antes de migrar 
-                var canConnect = await context.Database.CanConnectAsync();
-                if (!canConnect)
-                    throw new Exception($"No se puede conectar a la base de datos para {typeof(TContext).Name}");
+                //var canConnect = await context.Database.CanConnectAsync();
+                //if (!canConnect)
+                //    throw new Exception($"No se puede conectar a la base de datos para {typeof(TContext).Name}");
 
                 await context.Database.MigrateAsync();
 

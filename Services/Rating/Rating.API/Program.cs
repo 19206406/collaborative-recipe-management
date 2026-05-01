@@ -112,7 +112,7 @@ builder.Services.AddJwtValidation(builder.Configuration);
 var app = builder.Build();
 
 // migración en automatico 
-//await app.ApplyMigrationsAsync<RatingDbContext>(); 
+await app.ApplyMigrationsAsync<RatingDbContext>(); 
 
 app.UseCors(); // cors 
 
