@@ -53,7 +53,7 @@ namespace User.API.Features.UserPreference.UpdatePreferencesToUser
 
 
             var uwp = await _userPreferenceRespository.GetUserPreferences(command.UserId);
-            var resultPreferences = user.UserPreferences.Select(x => new PreferencesResponse(x.Id, x.PreferenceType)).ToList();
+            var resultPreferences = uwp.UserPreferences.Select(x => new PreferencesResponse(x.Id, x.PreferenceType)).ToList();
             return new UpdatePreferencesToUserResponse(uwp.Id, uwp.Name, uwp.Email, uwp.CreatedAt, resultPreferences); 
         }
     }
