@@ -42,7 +42,7 @@ builder.Services.AddCors(options =>
 });
 
 // http client 
-var servicesUrls = builder.Configuration.GetSection("ServicesUrls");
+var servicesUrls = builder.Configuration.GetSection("ServiceUrls");
 var httpSettings = builder.Configuration.GetSection("HttpClientSettings");
 
 // recipe client
@@ -112,7 +112,7 @@ builder.Services.AddJwtValidation(builder.Configuration);
 var app = builder.Build();
 
 // migración en automatico 
-await app.ApplyMigrationsAsync<RatingDbContext>(); 
+//await app.ApplyMigrationsAsync<RatingDbContext>(); 
 
 app.UseCors(); // cors 
 
