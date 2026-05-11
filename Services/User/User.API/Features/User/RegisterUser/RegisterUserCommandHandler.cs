@@ -19,7 +19,12 @@ namespace User.API.Features.User.RegisterUser
 
         public async Task<RegisterUserResponse> Handle(RegisterUserCommand command, CancellationToken cancellationToken)
         {
-
+            
+            var user = await _userRepository.GetUserByEmail(command.Email);
+            
+            if (user.Email == command.Email)
+                throw new BadRequestException("Debes de utilizar otra direccion de correo electronico");
+            
             var passwordHashed = _passwordHash.HashPassword(command.Password); 
 
             var newUser = new Entities.User
