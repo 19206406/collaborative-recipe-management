@@ -31,9 +31,9 @@ namespace Rating.API.Repositories
         {
             var averageRating = await _context.Ratings
                 .Where(x => x.RecipeId == recipeId)
-                .AverageAsync(x => x.Rating);
+                .AverageAsync(x => (double?)x.Rating);
 
-            return averageRating;
+            return averageRating ?? 0;
         }
 
         public async Task<RatingE?> GetRating(int id)

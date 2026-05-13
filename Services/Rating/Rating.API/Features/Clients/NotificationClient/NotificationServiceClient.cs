@@ -1,5 +1,4 @@
-﻿using Mapster;
-using Rating.API.Common.Dtos;
+﻿using Rating.API.Common.Dtos;
 using InvalidOperationException = BuildingBlocks.Exceptions.InvalidOperationException;
 
 namespace Rating.API.Features.Clients.NotificationClient
