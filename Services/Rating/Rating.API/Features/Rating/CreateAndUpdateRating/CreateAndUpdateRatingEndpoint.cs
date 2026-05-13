@@ -39,27 +39,27 @@ namespace Rating.API.Features.Rating.CreateAndUpdateRating
             var command = new CreateAndUpdateRatingCommand(req.Id, userId, req.RecipeId, req.Rating, req.Comment, req.IsToUpdate);
             var result = await _mediator.Send(command);
 
-            //try
-            //{
-            //    //publicar evento de creación de evento o de actualizaciòn 
-            //    await _messagePublisher.PublishAsync("rating.created", new RatingCreateAndUpdateEvent
-            //    {
-            //        RatingId = req.Id,
-            //        RecipeId = req.RecipeId,
-            //        UserId = userId,
-            //        Rating = req.Rating,
-            //        OldRating = req.IsToUpdate ? result.OldRating : 0,
-            //        Comment = req.Comment,
-            //        IsToUpdate = req.IsToUpdate,
-            //        PublishedAt = DateTime.UtcNow
-            //    });
+            try
+            {
+                //publicar evento de creación de evento o de actualizaciòn 
+                await _messagePublisher.PublishAsync("rating.created", new RatingCreateAndUpdateEvent
+                {
+                    RatingId = req.Id,
+                    RecipeId = req.RecipeId,
+                    UserId = userId,
+                    Rating = req.Rating,
+                    OldRating = req.IsToUpdate ? result.OldRating : 0,
+                    Comment = req.Comment,
+                    IsToUpdate = req.IsToUpdate,
+                    PublishedAt = DateTime.UtcNow
+                });
 
-            //    _logger.LogInformation("Evento CreateAndUpdateRating publicado exitosamente"); 
-            //}
-            //catch (Exception eventEx)
-            //{
-            //    _logger.LogError(eventEx, "Rating guardado con cambios exitosamente en base de datos, pero evento CreateAndUpdateRating No publicado"); 
-            //}
+                _logger.LogInformation("Evento CreateAndUpdateRating publicado exitosamente");
+            }
+            catch (Exception eventEx)
+            {
+                _logger.LogError(eventEx, "Rating guardado con cambios exitosamente en base de datos, pero evento CreateAndUpdateRating No publicado");
+            }
 
             await Send.OkAsync(result);
         }

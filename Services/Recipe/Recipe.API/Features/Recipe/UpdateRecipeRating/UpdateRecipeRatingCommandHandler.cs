@@ -24,16 +24,16 @@ namespace Recipe.API.Features.Recipe.UpdateRecipeRating
                 throw new NotFoundException("receta", command.Id);
 
             // actualizar
-            // TODO: verificar con el otro servicio si esta es la actualización correcta 
             recipe.AverageRating = command.NewAverage;
-            recipe.RatingCount = command.NewRatingCount; 
+            recipe.RatingCount = command.NewRatingCount;
+            recipe.UpdatedAt = DateTime.UtcNow; 
 
             await _recipeRepository.UpdateRecipeOnly(recipe);
             await _unitOfWork.CommitAsync(cancellationToken); 
 
             return new UpdateRecipeRatingResponse(recipe.Id, recipe.UserId, recipe.Title, recipe.Description,
                 recipe.PrepTimeMinutes, recipe.CookTimeMinutes, recipe.Difficulty, recipe.Servings, recipe.ImageUrl,
-                recipe.AverageRating, recipe.RatingCount, recipe.UpdatedAt); 
+                recipe.AverageRating, recipe.RatingCount, recipe.CreatedAt, recipe.UpdatedAt); 
         }
     }
 }

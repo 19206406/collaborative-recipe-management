@@ -26,6 +26,7 @@ namespace Rating.API.Features.Rating.CreateAndUpdateRating
         public async Task<CreateAndUpdateRatingResponse> Handle(CreateAndUpdateRatingCommand command, CancellationToken cancellationToken)
         {
             bool recipeExist = await _recipesClient.RecipeExistAsync(command.RecipeId, cancellationToken);
+
             if (!recipeExist)
                 throw new NotFoundException("receta", command.RecipeId);
 
@@ -44,10 +45,12 @@ namespace Rating.API.Features.Rating.CreateAndUpdateRating
                 rating.Comment = command.Comment; 
                 rating.UpdatedAt = DateTime.UtcNow;
 
-                var updatedRating = await _ratingRepository.UpdateRating(rating);
-
+                // creo que es mejor crear la notificación antes de hacer la notificación por que sino paso nada 
+                // antes hay una menor probabilidad de que haya errores 
                 var notification = await _notificationClient.CreateNewNotificationAsync
-                    (new CreateNotificationRequest(command.RecipeId, command.Rating, command.UserId)); 
+                    (new CreateNotificationRequest(command.RecipeId, command.Rating, command.UserId));
+
+                var updatedRating = await _ratingRepository.UpdateRating(rating);
 
                 return new CreateAndUpdateRatingResponse(rating.Id, rating.UserId, rating.RecipeId, rating.Rating, oldRating, 
                     rating.Comment, rating.CreatedAt, rating.UpdatedAt);
@@ -67,14 +70,18 @@ namespace Rating.API.Features.Rating.CreateAndUpdateRating
                 var rating = await _ratingRepository.GetSpecificRatingAsync(command.UserId, command.RecipeId);
 
                 if (rating is not null)
-                    throw new InvalidOperationException("No puedes ejecutar esta acción de nuevo"); 
+                    throw new InvalidOperationException("No puedes ejecutar esta acción de nuevo");
 
-                var result = await _ratingRepository.AddRating(newRating);
-
+                // TODO: Implementar cambios de clients entre otros cuando se guarde en db 
+                // Lo mismo que lo anterior necesitamos que los cambios esten sincronizados con los cambios 
+                // en db pero buscare hacer esto luego despues de que todo este bien y funcionando
                 var notification = await _notificationClient.CreateNewNotificationAsync
                     (new CreateNotificationRequest(command.RecipeId, command.Rating, command.UserId));
 
-                return new CreateAndUpdateRatingResponse(result.Id, result.UserId, result.RecipeId, result.Rating, 0, result.Comment, result.CreatedAt, result.UpdatedAt);
+                var result = await _ratingRepository.AddRating(newRating);
+
+                return new CreateAndUpdateRatingResponse(result.Id, result.UserId, result.RecipeId, result.Rating, 
+                    0, result.Comment, result.CreatedAt, result.UpdatedAt);
             }
         }
     }

@@ -19,7 +19,7 @@ namespace Recipe.API.Features.Recipe.UpdateRecipeRating
             Summary(x =>
             {
                 x.Summary = "Actualizar el rating de una receta";
-                x.Description = "Permite actualizar el rating de una receta de una persona sin importar si es nuestra";
+                x.Description = "Permite actualizar rating para la calificación interna de las recetas";
             }); 
             Description(x => x.WithTags("Recipes"));
             AllowAnonymous(); 

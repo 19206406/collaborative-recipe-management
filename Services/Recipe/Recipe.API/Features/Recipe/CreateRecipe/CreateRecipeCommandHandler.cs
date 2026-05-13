@@ -33,7 +33,7 @@ namespace Recipe.API.Features.Recipe.CreateRecipe
                 UpdatedAt = DateTime.UtcNow,
                 Ingredients = ingredients.Select(i => new Entities.Ingredient
                 {
-                    Name = i.Name.ToLower(),
+                    Name = i.Name.Trim().ToLower(),
                     Quantity = i.Quantity,
                     Unit = i.Unit,
                     DisplayOrder = i.DisplayOrder
@@ -45,7 +45,7 @@ namespace Recipe.API.Features.Recipe.CreateRecipe
                 }).ToList(),
                 RecipeTags = tags.Select(t => new Entities.RecipeTag
                 {
-                    Tag = t.Name.ToLower()
+                    Tag = t.Name.Trim().ToLower()
                 }).ToList()
             };
 

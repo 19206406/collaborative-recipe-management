@@ -33,16 +33,12 @@ namespace Recipe.API.Repositories.RecipeRepository
             return recipe;  
         }
 
-        public async Task<List<Entities.Recipe>> GetRecipePagination(int pageNumber, int pageSize, RecipeSearchCriteria criteria)
+        private IQueryable<Entities.Recipe> BuildRecipeQuery(RecipeSearchCriteria criteria)
         {
-            IQueryable<Entities.Recipe> query = _context.Recipes;
-                //.Include(r => r.Ingredients)
-                //.Include(r => r.Steps)
-                //.Include(r => r.RecipeTags); 
+            IQueryable<Entities.Recipe> query = _context.Recipes
+                .Include(r => r.RecipeTags);
 
-            // aplicar filtros 
-
-            if (!string.IsNullOrEmpty(criteria.Title))
+            if (!string.IsNullOrWhiteSpace(criteria.Title))
                 query = query.Where(r => r.Title.Contains(criteria.Title));
 
             if (criteria.PrepTimeMinutes.HasValue)
@@ -51,95 +47,57 @@ namespace Recipe.API.Repositories.RecipeRepository
             if (criteria.CookTimeMinutes.HasValue)
                 query = query.Where(r => r.CookTimeMinutes >= criteria.CookTimeMinutes.Value);
 
-            if (!string.IsNullOrEmpty(criteria.Difficulty))
-                query = query.Where(r => r.Difficulty == criteria.Difficulty);
+            if (criteria.Servings.HasValue)
+                query = query.Where(r => r.Servings >= criteria.Servings.Value);
 
-            // filtrar por tags 
+            if (!string.IsNullOrWhiteSpace(criteria.Difficulty))
+                query = query.Where(r => r.Difficulty.ToLower() == criteria.Difficulty);
+
             if (criteria.Tags is not null && criteria.Tags.Any())
-                query = query.Where(r => r.RecipeTags.Any(rt => criteria.Tags.Contains(rt.Tag))); 
+                query = query.Where(r =>
+                    r.RecipeTags.Any(rt => criteria.Tags.Contains(rt.Tag)));
 
-            // "Title", "Difficulty", "PrepTimeMinutes"
-            if (!string.IsNullOrEmpty(criteria.SortBy))
+            query = criteria.SortBy?.ToLower() switch
             {
-                query = criteria.SortBy.ToLower() switch
-                {
-                    "title" => criteria.SortDescending
-                        ? query.OrderByDescending(r => r.Title)
-                        : query.OrderBy(r => r.Title),
+                "title" => criteria.SortDescending
+                    ? query.OrderByDescending(r => r.Title)
+                    : query.OrderBy(r => r.Title),
 
-                    "preptime" => criteria.SortDescending
-                        ? query.OrderByDescending(r => r.PrepTimeMinutes)
-                        : query.OrderBy(r => r.PrepTimeMinutes),
+                "preptime" => criteria.SortDescending
+                    ? query.OrderByDescending(r => r.PrepTimeMinutes)
+                    : query.OrderBy(r => r.PrepTimeMinutes),
 
-                    "difficulty" => criteria.SortDescending
-                        ? query.OrderByDescending(r => r.Difficulty)
-                        : query.OrderBy(r => r.Difficulty),
+                "difficulty" => criteria.SortDescending
+                    ? query.OrderByDescending(r => r.Difficulty)
+                    : query.OrderBy(r => r.Difficulty),
 
-                    "CreatedAt" => criteria.SortDescending
-                        ? query.OrderByDescending(r => r.CreatedAt)
-                        : query.OrderBy(r => r.CreatedAt),
+                "createdat" => criteria.SortDescending
+                    ? query.OrderByDescending(r => r.CreatedAt)
+                    : query.OrderBy(r => r.CreatedAt),
 
-                    _ => query.OrderBy(r => r.Id)
-                };
-            }
+                _ => query.OrderBy(r => r.Id)
+            };
 
-            var recipes = await query
-                .Skip(pageSize * (pageNumber - 1))
+            return query; 
+        }
+
+        public async Task<List<Entities.Recipe>> GetRecipePagination(int pageNumber, int pageSize, RecipeSearchCriteria criteria)
+        {
+            var query = BuildRecipeQuery(criteria);
+
+            return await query
+                .Skip((pageNumber - 1) * pageSize)
                 .Take(pageSize)
-                .ToListAsync();
-
-            return recipes; 
+                .ToListAsync(); 
         }
 
         public async Task<List<Entities.Recipe>> SearchAdvanced(RecipeSearchCriteria criteria)
         {
-            IQueryable<Entities.Recipe> query = _context.Recipes.Include(r => r.RecipeTags);
+            var query = BuildRecipeQuery(criteria);
 
-            // luego de esto aplicamos los filtros si se pasaron 
-            // cada if agrega una condición al query 
-
-            if (!string.IsNullOrEmpty(criteria.Title))
-                query = query.Where(r => r.Title.Contains(criteria.Title));
-
-            if (criteria.PrepTimeMinutes.HasValue)
-                query = query.Where(r => r.PrepTimeMinutes >= criteria.PrepTimeMinutes.Value);
-
-            if (criteria.CookTimeMinutes.HasValue)
-                query = query.Where(r => r.CookTimeMinutes >= criteria.CookTimeMinutes.Value);
-
-            if (criteria.Difficulty != "")
-                query = query.Where(r => r.Difficulty == criteria.Difficulty);
-
-            // TODO: debo de agregar ordenamiento por rating y novedad 
-
-            // "Title", "Difficulty", "PrepTimeMinutes"
-            if (!string.IsNullOrEmpty(criteria.SortBy))
-            {
-                query = criteria.SortBy.ToLower() switch
-                {
-                    "title" => criteria.SortDescending
-                        ? query.OrderByDescending(r => r.Title)
-                        : query.OrderBy(r => r.Title),
-
-                    "preptime" => criteria.SortDescending
-                        ? query.OrderByDescending(r => r.PrepTimeMinutes)
-                        : query.OrderBy(r => r.PrepTimeMinutes),
-
-                    "difficulty" => criteria.SortDescending
-                        ? query.OrderByDescending(r => r.Difficulty)
-                        : query.OrderBy(r => r.Difficulty),
-
-                    _ => query.OrderBy(r => r.Id)
-                };
-            }
-
-            // solo los primeros 20 ya que luego toca que implementar esto en el paginado
-            var recipes = await query
+            return await query
                 .Take(20)
-                .ToListAsync();
-
-            // ejecutar la consulta 
-            return recipes;
+                .ToListAsync(); 
         }
 
         public async Task<List<Entities.Recipe>> GetRecipesByUser(int userId)

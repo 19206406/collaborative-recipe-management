@@ -3,10 +3,10 @@ using MediatR;
 
 namespace Recipe.API.Features.Recipe.GetListOfRecipes
 {
-    public record SearchAdvancedRecipe(string? Title, int? PrepTimeMinutes, int? CookTimeMinutes, int? Difficulty,
+    public record SearchAdvancedRecipe(string? Title, int? PrepTimeMinutes, int? CookTimeMinutes, string? Difficulty,
         int? Servings, string? SortBy, bool SortDescending);
 
-    public record GetListOfRecipesRequest(string? Title, int? PrepTimeMinutes, int? CookTimeMinutes, int? Difficulty,
+    public record GetListOfRecipesRequest(string? Title, int? PrepTimeMinutes, int? CookTimeMinutes, string? Difficulty,
         int? Servings, string? SortBy, bool SortDescending, int PageNumber = 1, int PageSize = 10); 
 
     public class GetListOfRecipesEndpoint : Endpoint<GetListOfRecipesRequest, GetListOfRecipesResponse>
