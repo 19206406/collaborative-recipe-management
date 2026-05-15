@@ -2,5 +2,5 @@
 
 namespace Rating.API.Features.Rating.GetUserRatings
 {
-    public record GetUserRatingsQuery(int UserId) : IQuery<GetUserRatingsResponse>; 
+    public record GetUserRatingsQuery(int UserId) : IQuery<List<GetUserRatingsResponse>>; 
 }

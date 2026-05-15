@@ -5,7 +5,7 @@ namespace Rating.API.Features.Rating.GetUserRatings
 {
     public record GetUserRatingsRequest(int UserId); 
 
-    public class GetUserRatingsEndpoint : Endpoint<GetUserRatingsRequest, GetUserRatingsResponse>
+    public class GetUserRatingsEndpoint : Endpoint<GetUserRatingsRequest, List<GetUserRatingsResponse>>
     {
         private readonly IMediator _mediator;
 

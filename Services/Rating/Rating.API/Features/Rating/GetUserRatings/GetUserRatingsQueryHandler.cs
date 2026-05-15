@@ -1,11 +1,10 @@
 ﻿using BuildingBlocks.CQRS;
 using Mapster;
-using Rating.API.Features.Rating.GetRecipeRatings;
 using Rating.API.Repositories;
 
 namespace Rating.API.Features.Rating.GetUserRatings
 {
-    public class GetUserRatingsQueryHandler : IQueryHandler<GetUserRatingsQuery, GetUserRatingsResponse>
+    public class GetUserRatingsQueryHandler : IQueryHandler<GetUserRatingsQuery, List<GetUserRatingsResponse>>
     {
         private readonly IRatingRepository _ratingRepository;
 
@@ -14,13 +13,13 @@ namespace Rating.API.Features.Rating.GetUserRatings
             _ratingRepository = ratingRepository;
         }
 
-        public async Task<GetUserRatingsResponse> Handle(GetUserRatingsQuery query, CancellationToken cancellationToken)
+        public async Task<List<GetUserRatingsResponse>> Handle(GetUserRatingsQuery query, CancellationToken cancellationToken)
         {
             var ratings = await _ratingRepository.GetRatingsByUserIdAsync(query.UserId);
 
-            var mapRatings = ratings.Adapt<List<RatingResponse>>();
+            var mapRatings = ratings.Adapt<List<GetUserRatingsResponse>>();
 
-            return new GetUserRatingsResponse(mapRatings); 
+            return mapRatings; 
         }
     }
 }

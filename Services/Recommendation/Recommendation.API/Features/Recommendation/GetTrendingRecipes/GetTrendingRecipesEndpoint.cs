@@ -1,7 +1,6 @@
 ﻿using FastEndpoints;
 using MediatR;
 using Recommendation.API.Common.Dtos;
-using System.ComponentModel.DataAnnotations;
 
 namespace Recommendation.API.Features.Recommendation.GetTrendingRecipes
 {

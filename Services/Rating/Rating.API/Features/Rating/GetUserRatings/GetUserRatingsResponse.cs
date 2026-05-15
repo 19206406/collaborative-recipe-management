@@ -1,6 +1,5 @@
-﻿using Rating.API.Features.Rating.GetRecipeRatings;
-
-namespace Rating.API.Features.Rating.GetUserRatings
+﻿namespace Rating.API.Features.Rating.GetUserRatings
 {
-    public record GetUserRatingsResponse(List<RatingResponse> Ratings); 
+    public record GetUserRatingsResponse(int Id, int UserId, int RecipeId, int Rating, string? Comment, DateTime CreatedAt, DateTime UpdatedAt); 
 }
+

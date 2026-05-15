@@ -19,9 +19,10 @@ namespace Recommendation.API.Features.Clients.UserClient
             {
                 var endpoint = $"api/users/{userId}/preferences";
 
-                var preferences = await _httpClient.GetAsync(endpoint);
+                var preferences = await _httpClient
+                    .GetFromJsonAsync<UserPreferencesDto>(endpoint, cancellationToken);
 
-                return preferences.Adapt<UserPreferencesDto>(); 
+                return preferences.Adapt<UserPreferencesDto>();
             }
             catch (HttpRequestException ex)
             {

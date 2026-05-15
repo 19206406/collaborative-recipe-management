@@ -21,7 +21,7 @@ namespace Recommendation.API.Features.Clients.RatingClient
 
                 var userRatings = await _httpClient.GetFromJsonAsync<List<UserRatingDto>>(endpoint, cancellationToken);
 
-                return userRatings; 
+                return userRatings.Adapt<List<UserRatingDto>>(); 
             }
             catch (HttpRequestException ex)
             {
