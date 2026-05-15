@@ -6,7 +6,7 @@ using Recipe.API.Repositories.RecipeRepository;
 
 namespace Recipe.API.Features.Recipe.SearchAdvancedRecipe
 {
-    public class SearchAdvancedRecipeQueryHandler : IQueryHandler<SearchAdvancedRecipeQuery, SearchAdvancedRecipeResponse>
+    public class SearchAdvancedRecipeQueryHandler : IQueryHandler<SearchAdvancedRecipeQuery, List<SearchAdvancedRecipeResponse>>
     {
         private readonly IRecipeRepository _recipeRepository;
 
@@ -14,16 +14,14 @@ namespace Recipe.API.Features.Recipe.SearchAdvancedRecipe
         {
             _recipeRepository = recipeRepository;
         }
-        public async Task<SearchAdvancedRecipeResponse> Handle(SearchAdvancedRecipeQuery query, CancellationToken cancellationToken)
+        public async Task<List<SearchAdvancedRecipeResponse>> Handle(SearchAdvancedRecipeQuery query, CancellationToken cancellationToken)
         {
             var criteria = query.Adapt<RecipeSearchCriteria>(); 
             var recipes = await _recipeRepository.SearchAdvanced(criteria);
 
-            var mapRecipes = recipes.Adapt<List<ResponseRecipe>>().ToList();
+            var mapRecipes = recipes.Adapt<List<SearchAdvancedRecipeResponse>>().ToList();
 
-            var result = new SearchAdvancedRecipeResponse(mapRecipes);
-
-            return result; 
+            return mapRecipes; 
         }
     }
 }

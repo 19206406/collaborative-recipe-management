@@ -81,6 +81,12 @@ services:
   #   networks: 
   #     - microservices-network 
 
+  # notification.api:
+  #   image: ${DOCKER_REGISTRY-}notificationapi
+  #   build:
+  #     context: .
+  #     dockerfile: Services/Notification/Notification.API/Dockerfile
+
 networks:
   microservices-network: 
     driver: bridge

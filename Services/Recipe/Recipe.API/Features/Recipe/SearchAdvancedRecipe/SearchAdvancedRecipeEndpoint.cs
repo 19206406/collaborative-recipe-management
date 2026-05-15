@@ -5,7 +5,7 @@ namespace Recipe.API.Features.Recipe.SearchAdvancedRecipe
 {
     public record SearchAdvancedRecipeRequest(string? Title, int? PrepTimeMinutes, int? CookTimeMinutes, string? Difficulty,
         int? Servings, string? SortBy, List<string>? Tags, bool SortDescending = true); 
-    public class SearchAdvancedRecipeEndpoint : Endpoint<SearchAdvancedRecipeRequest, SearchAdvancedRecipeResponse>
+    public class SearchAdvancedRecipeEndpoint : Endpoint<SearchAdvancedRecipeRequest, List<SearchAdvancedRecipeResponse>>
     {
         private readonly IMediator _mediator;
 

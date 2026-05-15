@@ -1,4 +1,5 @@
 ﻿using BuildingBlocks.CQRS;
+using Mapster;
 using Recipe.API.Repositories.RecipeRepository;
 
 namespace Recipe.API.Features.Recipe.CreateRecipe
@@ -49,19 +50,12 @@ namespace Recipe.API.Features.Recipe.CreateRecipe
                 }).ToList()
             };
 
+            // TODO: NO SE ESTAN CREANDO LOS TAGS 
             var r = await _recipeRepository.AddRecipe(newRecipe);
 
-            var recipeCreated = new ResponseRecipe(r.Id, r.UserId, r.Title, r.Description, r.PrepTimeMinutes, 
-                r.CookTimeMinutes, r.Difficulty, r.Servings, r.ImageUrl, r.AverageRating, r.RatingCount, r.CreatedAt, r.UpdatedAt);
+            var recipeMap = r.Adapt<CreateRecipeResponse>();
 
-            var ingredientsCreated = r.Ingredients.Select(ing => new ResponseIngredient(ing.Id, ing.Name, ing.Quantity,
-                ing.Unit, ing.DisplayOrder)).ToList(); 
-
-            var stepsCreated = r.Steps.Select(ste => new ResponseStep(ste.Id, ste.StepNumber, ste.Instruction)).ToList();
-
-            var tagsCreated = r.RecipeTags.Select(rt => new ResponseTag(rt.Id, rt.Tag)).ToList();
-
-            return new CreateRecipeResponse(recipeCreated, ingredientsCreated, stepsCreated, tagsCreated);  
+            return recipeMap; 
         }
     }
 }

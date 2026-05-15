@@ -5,7 +5,7 @@ using Recipe.API.Repositories.RecipeRepository;
 
 namespace Recipe.API.Features.Recipe.GetRecipesByUser
 {
-    public class GetRecipesByUserQueryHandler : IQueryHandler<GetRecipesByUserQuery, GetRecipesByUserResponse>
+    public class GetRecipesByUserQueryHandler : IQueryHandler<GetRecipesByUserQuery, List<GetRecipesByUserResponse>>
     {
         private readonly IRecipeRepository _recipeRepository;
 
@@ -14,13 +14,13 @@ namespace Recipe.API.Features.Recipe.GetRecipesByUser
             _recipeRepository = recipeRepository;
         }
 
-        public async Task<GetRecipesByUserResponse> Handle(GetRecipesByUserQuery query, CancellationToken cancellationToken)
+        public async Task<List<GetRecipesByUserResponse>> Handle(GetRecipesByUserQuery query, CancellationToken cancellationToken)
         {
             var recipes = await _recipeRepository.GetRecipesByUser(query.UserId);
 
-            var mapRecipes = recipes.Adapt<List<ResponseRecipe>>().ToList();
+            var mapRecipes = recipes.Adapt<List<GetRecipesByUserResponse>>().ToList();
 
-            return new GetRecipesByUserResponse(mapRecipes); 
+            return mapRecipes; 
         }
     }
 }

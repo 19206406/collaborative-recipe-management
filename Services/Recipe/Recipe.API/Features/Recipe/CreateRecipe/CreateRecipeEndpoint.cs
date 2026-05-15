@@ -37,7 +37,7 @@ namespace Recipe.API.Features.Recipe.CreateRecipe
             var command = new CreateRecipeCommand(userId, req.Recipe, req.Ingredients, req.Steps);
             var result = await _mediator.Send(command);
 
-            await Send.CreatedAtAsync(GetRecipeEndpoint.Route, new { id = result.Recipe.Id }, result); 
+            await Send.CreatedAtAsync(GetRecipeEndpoint.Route, new { id = result.Id }, result); 
         }
     }
 }

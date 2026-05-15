@@ -1,6 +1,5 @@
-﻿using Recipe.API.Features.Recipe.CreateRecipe;
-
-namespace Recipe.API.Features.Recipe.GetRecipesByUser
+﻿namespace Recipe.API.Features.Recipe.GetRecipesByUser
 {
-    public record GetRecipesByUserResponse(List<ResponseRecipe> Recipes); 
+    public record GetRecipesByUserResponse(int Id, int UserId, string Title, string Description, int PrepTimeMinutes,
+        int CookTimeMinutes, string Difficulty, int Servings, string ImageUrl, decimal AverageRating, int RatingCount, DateTime CreatedAt, DateTime UpdatedAt); 
 }

@@ -4,7 +4,7 @@ using MediatR;
 namespace Recipe.API.Features.Recipe.GetRecipesByUser
 {
     public record GetRecipeByUserRequest(int UserId); 
-    public class GetRecipesByUserEndpoint : Endpoint<GetRecipeByUserRequest, GetRecipesByUserResponse>
+    public class GetRecipesByUserEndpoint : Endpoint<GetRecipeByUserRequest, List<GetRecipesByUserResponse>>
     {
         private readonly IMediator _mediator;
 
