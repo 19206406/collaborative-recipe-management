@@ -34,14 +34,14 @@ namespace Notification.API.Features.Notification.AddReceivedRatingNotification
 
             var recipe = await _recipeServiceClient.RecipeByIdAsync(command.RecipeId);
 
-            var user = await _userServiceClient.UserRecipeRatingAsync(recipe.Recipe.UserId);
+            var user = await _userServiceClient.UserRecipeRatingAsync(recipe.UserId);
 
             var newNotification = new Entities.Notification
             {
                 UserId = user.Id, 
                 Type = "rating_received", 
                 Title = "Nueva calificación", 
-                Message = $"{user.Name} calificó tu receta '{recipe.Recipe.Title}' con {command.RatingValue} estrellas", 
+                Message = $"{user.Name} calificó tu receta '{recipe.Title}' con {command.RatingValue} estrellas", 
                 IsRead = 0, 
                 CreatedAt = DateTime.UtcNow
             };
@@ -51,7 +51,7 @@ namespace Notification.API.Features.Notification.AddReceivedRatingNotification
             if (notificationPreferences is not null && notificationPreferences.EmailNotifications == 1)
             {
                 _logger.LogInformation($"Email de calificacion de receta: " +
-                    $"{user.Name} calificó tu receta '{recipe.Recipe.Title}' con {command.RatingValue} estrellas"); 
+                    $"{user.Name} calificó tu receta '{recipe.Title}' con {command.RatingValue} estrellas"); 
             } 
 
             await _notificationRepository.AddNotificationAsync(newNotification);

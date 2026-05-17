@@ -19,15 +19,15 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddFastEndpoints();
 
 // cors 
-builder.Services.AddCors(options =>
-{
-    options.AddDefaultPolicy(policy =>
-    {
-        policy.AllowAnyOrigin()
-              .AllowAnyMethod()
-              .AllowAnyHeader();
-    });
-});
+//builder.Services.AddCors(options =>
+//{
+//    options.AddDefaultPolicy(policy =>
+//    {
+//        policy.AllowAnyOrigin()
+//              .AllowAnyMethod()
+//              .AllowAnyHeader();
+//    });
+//});
 
 // db context 
 builder.Services.AddDbContext<NotificationDbContext>(options =>
@@ -99,7 +99,7 @@ var app = builder.Build();
 // migraciones en automatico 
 //await app.ApplyMigrationsAsync<NotificationDbContext>(); 
 
-app.UseCors();
+//app.UseCors();
 
 // jwt autenticación 
 app.UseAuthentication();
