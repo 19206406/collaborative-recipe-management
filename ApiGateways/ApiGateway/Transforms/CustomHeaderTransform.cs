@@ -5,6 +5,14 @@ namespace ApiGateway.Transforms
 {
     public class CustomHeaderTransform : ITransformProvider
     {
+        public void ValidateCluster(TransformClusterValidationContext context)
+        {
+        }
+
+        public void ValidateRoute(TransformRouteValidationContext context)
+        {
+        }
+
         public void Apply(TransformBuilderContext context)
         {
             context.AddRequestTransform(async transformContext =>
@@ -36,14 +44,6 @@ namespace ApiGateway.Transforms
                 transformContext.ProxyResponse?.Headers.Remove("Server");
                 return ValueTask.CompletedTask;
             }); 
-        }
-
-        public void ValidateCluster(TransformClusterValidationContext context)
-        {
-        }
-
-        public void ValidateRoute(TransformRouteValidationContext context)
-        {
         }
     }
 }

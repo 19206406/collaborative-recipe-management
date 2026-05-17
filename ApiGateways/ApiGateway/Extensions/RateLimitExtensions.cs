@@ -9,6 +9,7 @@ namespace ApiGateway.Extensions
         {
             services.AddRateLimiter(options =>
             {
+                // configuración global de 100 peticiones por minuto 
                 options.GlobalLimiter = PartitionedRateLimiter.Create<HttpContext, string>(ctx =>
                 RateLimitPartition.GetFixedWindowLimiter(
                     partitionKey: ctx.Connection.RemoteIpAddress?.ToString() ?? "unknown",

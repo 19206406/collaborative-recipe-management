@@ -43,7 +43,13 @@ namespace ApiGateway.Middleware
         public async Task InvokeAsync(HttpContext context)
         {
             var path = context.Request.Path.Value ?? "";
-            var method = context.Request.Method; 
+            var method = context.Request.Method;
+
+            if (path.StartsWith("/swagger", StringComparison.OrdinalIgnoreCase))
+            {
+                await _next(context);
+                return;
+            }
 
             if (IsPublicRoute(method,path))
             {
