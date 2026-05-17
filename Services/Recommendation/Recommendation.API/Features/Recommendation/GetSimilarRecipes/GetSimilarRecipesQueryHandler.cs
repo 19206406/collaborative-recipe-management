@@ -31,12 +31,13 @@ namespace Recommendation.API.Features.Recommendation.GetSimilarRecipes
             if (recipe is null)
                 return [];
 
-            var tags = recipe.RecipeTags.Select(r => r.Tag).ToList();
+            var tags = recipe.Tags.Select(r => r.Tag).ToList() ?? [];
             var similar = await _recipeService.GetPersonalizedRecipesAsync(tags);
+            var response = similar.Where(x => x.Id != recipe.Id);
 
-            await _cache.SetAsync(cacheKey, similar, CacheDuration);
+            await _cache.SetAsync(cacheKey, response, CacheDuration);
 
-            return similar.Adapt<List<RecipeDto>>(); 
+            return response.Adapt<List<RecipeDto>>(); 
         }
     }
 }

@@ -68,8 +68,8 @@ namespace Recommendation.API.Features.Clients.RecipeClient
         {
             try
             {
-                var endpoint = $"api/recipes/get-only-recipe/{recipeId}";
-                var recipe = await _httpClient.GetAsync(endpoint, cancellationToken);
+                var endpoint = $"api/recipes/{recipeId}";
+                var recipe = await _httpClient.GetFromJsonAsync<RecipeDto>(endpoint, cancellationToken);
 
                 return recipe.Adapt<RecipeDto>(); 
             }

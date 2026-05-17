@@ -30,7 +30,7 @@ namespace Recipe.API.Features.Recipe.GetOnlyRecipe
             var query = new GetOnlyRecipeQuery(req.Id);
             var result = await _mediator.Send(query);
 
-            await Send.OkAsync(); 
+            await Send.OkAsync(result); 
         }
     }
 }

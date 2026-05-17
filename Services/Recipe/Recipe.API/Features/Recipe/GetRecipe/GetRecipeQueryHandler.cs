@@ -21,12 +21,13 @@ namespace Recipe.API.Features.Recipe.GetRecipe
             if (recipe is null)
                 throw new NotFoundException("receta", query.Id);
 
-            //var recipe = r.Adapt<ResponseRecipe>();
-            //var ingredients = r.Ingredients.Adapt<List<ResponseIngredient>>().ToList();
-            //var steps = r.Steps.Adapt<List<ResponseStep>>().ToList();
-            //var tags = r.RecipeTags.Adapt<List<ResponseTag>>().ToList(); 
+            var ingredients = recipe.Ingredients.Adapt<List<ResponseIngredient>>().ToList();
+            var steps = recipe.Steps.Adapt<List<ResponseStep>>().ToList();
+            var tags = recipe.RecipeTags.Adapt<List<ResponseTag>>().ToList();
 
-            var mapRecipe = recipe.Adapt<GetRecipeResponse>();
+            var mapRecipe = new GetRecipeResponse(recipe.Id, recipe.UserId, recipe.Title, recipe.Description, recipe.PrepTimeMinutes, 
+                recipe.CookTimeMinutes, recipe.Difficulty, recipe.Servings, recipe.ImageUrl, recipe.AverageRating, recipe.RatingCount, 
+                recipe.CreatedAt, recipe.UpdatedAt, ingredients, steps, tags); 
 
             return mapRecipe;
         }

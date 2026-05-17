@@ -33,10 +33,15 @@ namespace Recipe.API.Repositories.RecipeRepository
             return recipe;  
         }
 
-        private IQueryable<Entities.Recipe> BuildRecipeQuery(RecipeSearchCriteria criteria)
+        private IQueryable<Entities.Recipe> BuildRecipeQuery(RecipeSearchCriteria criteria, bool search = false)
         {
-            IQueryable<Entities.Recipe> query = _context.Recipes
-                .Include(r => r.RecipeTags);
+            IQueryable<Entities.Recipe> query; 
+
+            if (search)
+                query = _context.Recipes
+                .AsSplitQuery().Include(r => r.Ingredients).Include(r => r.Steps).Include(r => r.RecipeTags);
+            else
+                query = _context.Recipes.Include(r => r.RecipeTags);
 
             if (!string.IsNullOrWhiteSpace(criteria.Title))
                 query = query.Where(r => r.Title.Contains(criteria.Title));
@@ -93,7 +98,7 @@ namespace Recipe.API.Repositories.RecipeRepository
 
         public async Task<List<Entities.Recipe>> SearchAdvanced(RecipeSearchCriteria criteria)
         {
-            var query = BuildRecipeQuery(criteria);
+            var query = BuildRecipeQuery(criteria, false);
 
             return await query
                 .Take(20)
