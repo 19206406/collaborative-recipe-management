@@ -7,6 +7,7 @@ using FastEndpoints.Swagger;
 using FluentValidation;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi;
 using System.Reflection;
 using User.API;
 using User.API.Common.Database;
@@ -80,7 +81,7 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 // FastEndpoints
-app.UseFastEndpoints()
-   .UseSwaggerGen();
+app.UseFastEndpoints(); 
+app.UseSwaggerGen();
 
 app.Run();

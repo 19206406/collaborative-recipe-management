@@ -26,6 +26,14 @@ builder.Services.AddHttpClient("swagger-proxy")
     .ConfigureHttpClient(client =>
     {
         client.Timeout = TimeSpan.FromSeconds(10);
+    })
+    .ConfigurePrimaryHttpMessageHandler(() =>
+    {
+        return new HttpClientHandler
+        {
+            ServerCertificateCustomValidationCallback =
+                HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
+        };
     });
 
 //builder.Services.AddEndpointsApiExplorer();
@@ -102,6 +110,7 @@ var app = builder.Build();
 
 // validación jwt en api-gateway 
 app.UseMiddleware<GatewayJwtMiddleware>();
+app.UseMiddleware<SwaggerProxyMiddleware>(); 
 
 // reenviar jwt a los servicios para su autorización 
 app.UseCorrelationId();
