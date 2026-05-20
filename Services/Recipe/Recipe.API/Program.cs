@@ -5,6 +5,8 @@ using BuildingBlocks.Messaging.Extensions;
 using FastEndpoints;
 using FastEndpoints.Swagger;
 using FluentValidation;
+using HealthChecks.UI.Client;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.EntityFrameworkCore;
 using Recipe.API;
 using Recipe.API.Common.Database;
@@ -53,6 +55,14 @@ builder.Services.SwaggerDocument(options =>
     options.AutoTagPathSegmentIndex = 0;
 });
 
+// health checks
+// TODO: quedo deviendo la configuración para RabbitMQ 
+builder.Services.AddHealthChecks()
+    .AddNpgSql(
+        connectionString: builder.Configuration.GetConnectionString("RecipeDb"),
+        name: "recipe_db",
+        tags: ["database", "infrastructure"]); 
+
 // validaciones 
 builder.Services.AddProblemDetails(); 
 
@@ -73,7 +83,14 @@ var app = builder.Build();
 
 // jwt autenticación 
 app.UseAuthentication();
-app.UseAuthorization(); 
+app.UseAuthorization();
+
+// health checks 
+app.MapHealthChecks("/health", new HealthCheckOptions
+{
+    Predicate = _=> true, 
+    ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+}); 
 
 // validaciones middleware
 app.UseExceptionHandler();

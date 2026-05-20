@@ -87,6 +87,13 @@ builder.Services.SwaggerDocument(options =>
     options.AutoTagPathSegmentIndex = 0;
 });
 
+// health checks 
+//builder.Services.AddHealthChecks()
+//    .AddRedis(
+//        connectionMultiplexer: builder.Configuration.GetConnectionString(["Redis:ConnectionString"]),
+//        name: "redis:cache",
+//        tags: ["cache", "infrastructure"]); 
+
 builder.Services.AddProblemDetails(); 
 
 var app = builder.Build();

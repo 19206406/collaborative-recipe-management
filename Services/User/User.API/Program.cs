@@ -5,6 +5,8 @@ using BuildingBlocks.Jwt.Service;
 using FastEndpoints;
 using FastEndpoints.Swagger;
 using FluentValidation;
+using HealthChecks.UI.Client;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi;
@@ -45,6 +47,7 @@ builder.Services.AddJwtValidation(builder.Configuration); // ← Esto agrega Aut
 // Authorization se necesita cuando usas UseAuthorization() antes de FastEndpoints
 builder.Services.AddAuthorization();
 
+// Inscribir el servicio de jwt 
 builder.Services.AddScoped<IJwtService, JwtService>();
 
 // password Hash 
@@ -63,9 +66,16 @@ builder.Services.SwaggerDocument(options =>
     {
         s.Title = "user-service-api";
         s.Version = "v1";
-    };
+    };   
     options.AutoTagPathSegmentIndex = 0;
 });
+
+// endpoint de health 
+builder.Services.AddHealthChecks()
+    .AddSqlServer(
+    connectionString: builder.Configuration.GetConnectionString("RecipeUserDb")!,
+    name: "RecipeUserDb", 
+    tags: ["database", "infrastructure"]); 
 
 var app = builder.Build();
 
@@ -75,6 +85,13 @@ var app = builder.Build();
 // middlewares de excepciones 
 app.UseExceptionHandler();
 app.UseCustomExceptionHandler();
+
+// Endpoint de health 
+app.MapHealthChecks("/health", new HealthCheckOptions
+{
+    Predicate = _=> true, 
+    ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+}); 
 
 // ORDEN CORRECTO: Authentication → Authorization → FastEndpoints
 app.UseAuthentication();

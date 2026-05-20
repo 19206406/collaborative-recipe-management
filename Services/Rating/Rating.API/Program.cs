@@ -5,6 +5,8 @@ using BuildingBlocks.Messaging.Extensions;
 using FastEndpoints;
 using FastEndpoints.Swagger;
 using FluentValidation;
+using HealthChecks.UI.Client;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.EntityFrameworkCore;
 using Rating.API;
 using Rating.API.Common.Database;
@@ -107,7 +109,14 @@ builder.Services.AddProblemDetails();
 builder.Services.AddScoped<IRatingRepository, RatingRepository>();
 
 // jwt 
-builder.Services.AddJwtValidation(builder.Configuration); 
+builder.Services.AddJwtValidation(builder.Configuration);
+
+// health checks 
+builder.Services.AddHealthChecks()
+    .AddSqlServer(
+        connectionString: builder.Configuration.GetConnectionString("RatingDb"),
+        name: "RatingDb",
+        tags: ["database", "infrastructure"]);
 
 var app = builder.Build();
 
@@ -118,7 +127,14 @@ app.UseCors(); // cors
 
 // validaciones 
 app.UseExceptionHandler();
-app.UseCustomExceptionHandler(); 
+app.UseCustomExceptionHandler();
+
+// map health checks 
+app.MapHealthChecks("/health", new HealthCheckOptions
+{
+    Predicate = _=> true, 
+    ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+}); 
 
 // FastEndpoints 
 app.UseFastEndpoints();

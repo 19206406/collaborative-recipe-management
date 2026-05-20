@@ -94,6 +94,9 @@ builder.Services.AddJwtValidation(builder.Configuration);
 builder.Services.AddScoped<INotificationRepository, NotificationRepository>();
 builder.Services.AddScoped<INotificationPreferenceRepository, NotificationPreferenceRepository>();
 
+// health checks 
+builder.Services.AddHealthChecks(); 
+
 var app = builder.Build();
 
 // migraciones en automatico 
@@ -108,6 +111,9 @@ app.UseAuthorization();
 // validaciones 
 app.UseExceptionHandler();
 app.UseCustomExceptionHandler();
+
+// health checks 
+app.MapHealthChecks("/health"); 
 
 // Fastendpoints 
 app.UseFastEndpoints();
