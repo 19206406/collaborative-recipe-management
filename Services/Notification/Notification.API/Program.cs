@@ -4,6 +4,8 @@ using BuildingBlocks.Jwt.Service;
 using FastEndpoints;
 using FastEndpoints.Swagger;
 using FluentValidation;
+using HealthChecks.UI.Client;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.EntityFrameworkCore;
 using Notification.API;
 using Notification.API.Common.Database;
@@ -95,7 +97,11 @@ builder.Services.AddScoped<INotificationRepository, NotificationRepository>();
 builder.Services.AddScoped<INotificationPreferenceRepository, NotificationPreferenceRepository>();
 
 // health checks 
-builder.Services.AddHealthChecks(); 
+builder.Services.AddHealthChecks()
+    .AddSqlServer(
+        connectionString: builder.Configuration.GetConnectionString("NotificationDb")!,
+        name: "RecipeNotificationDb",
+        tags: ["database", "infrastructure"]);  
 
 var app = builder.Build();
 
@@ -113,7 +119,11 @@ app.UseExceptionHandler();
 app.UseCustomExceptionHandler();
 
 // health checks 
-app.MapHealthChecks("/health"); 
+app.MapHealthChecks("/health", new HealthCheckOptions 
+{ 
+    Predicate = _=> true, 
+    ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+}); 
 
 // Fastendpoints 
 app.UseFastEndpoints();

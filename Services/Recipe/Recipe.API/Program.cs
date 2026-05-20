@@ -59,7 +59,7 @@ builder.Services.SwaggerDocument(options =>
 // TODO: quedo deviendo la configuración para RabbitMQ 
 builder.Services.AddHealthChecks()
     .AddNpgSql(
-        connectionString: builder.Configuration.GetConnectionString("RecipeDb"),
+        connectionString: builder.Configuration.GetConnectionString("RecipeDb")!,
         name: "recipe_db",
         tags: ["database", "infrastructure"]); 
 

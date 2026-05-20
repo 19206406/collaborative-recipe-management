@@ -2,6 +2,8 @@ using BuildingBlocks.Behaviors;
 using FastEndpoints;
 using FastEndpoints.Swagger;
 using FluentValidation;
+using HealthChecks.UI.Client;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Recommendation.API;
 using Recommendation.API.Common.Cache;
 using Recommendation.API.Common.Database;
@@ -88,11 +90,12 @@ builder.Services.SwaggerDocument(options =>
 });
 
 // health checks 
-//builder.Services.AddHealthChecks()
-//    .AddRedis(
-//        connectionMultiplexer: builder.Configuration.GetConnectionString(["Redis:ConnectionString"]),
-//        name: "redis:cache",
-//        tags: ["cache", "infrastructure"]); 
+// TODO: Implementar el healthcheck de RabbitMQ 
+builder.Services.AddHealthChecks()
+    .AddRedis(
+        redisConnectionString: builder.Configuration["Redis:ConnectionString"], 
+        name: "redis:cache",
+        tags: ["cache", "infrastructure"]);
 
 builder.Services.AddProblemDetails(); 
 
@@ -101,6 +104,13 @@ var app = builder.Build();
 // validationes 
 app.UseExceptionHandler();
 app.UseCustomExceptionHandler();
+
+// health check 
+app.MapHealthChecks("/health", new HealthCheckOptions
+{
+    Predicate = _=> true, 
+    ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+});
 
 // FastEndpoints 
 app.UseFastEndpoints();

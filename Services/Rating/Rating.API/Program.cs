@@ -114,9 +114,9 @@ builder.Services.AddJwtValidation(builder.Configuration);
 // health checks 
 builder.Services.AddHealthChecks()
     .AddSqlServer(
-        connectionString: builder.Configuration.GetConnectionString("RatingDb"),
+        connectionString: builder.Configuration.GetConnectionString("RatingDb")!,
         name: "RatingDb",
-        tags: ["database", "infrastructure"]);
+        tags: ["database", "infrastructure"]); 
 
 var app = builder.Build();
 
