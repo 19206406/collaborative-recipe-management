@@ -6,7 +6,6 @@ using CorrelationId;
 using CorrelationId.DependencyInjection;
 using HealthChecks.UI.Client;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
-using Microsoft.OpenApi;
 using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
 using Serilog;
@@ -36,17 +35,6 @@ builder.Services.AddHttpClient("swagger-proxy")
         };
     });
 
-//builder.Services.AddEndpointsApiExplorer();
-//builder.Services.AddSwaggerGen(c =>
-//{
-//    c.SwaggerDoc("gateway", new OpenApiInfo
-//    {
-//        Title = "API Gateway",
-//        Version = "v1",
-//        Description = "Gateway central de microservicios"
-//    });
-//});
-
 // Logging con Serialog 
 builder.Host.UseSerilog((ctx, config) =>
     config.ReadFrom.Configuration(ctx.Configuration)
@@ -57,7 +45,14 @@ builder.Host.UseSerilog((ctx, config) =>
 // YARP Reverse Proxy +
 builder.Services.AddReverseProxy()
     .LoadFromConfig(builder.Configuration.GetSection("ReverseProxy"))
-    .AddTransforms<CustomHeaderTransform>(); 
+    .AddTransforms<CustomHeaderTransform>();
+
+// UI Health Checks 
+builder.Services
+    .AddHealthChecksUI()
+    .AddInMemoryStorage(); 
+
+builder.Services.AddHealthChecks(); 
 
 // builder JWT 
 builder.Services.AddGatewayAuthentication(builder.Configuration);
@@ -86,17 +81,6 @@ builder.Services.AddCorrelationId(options =>
     options.UpdateTraceIdentifier = true;
 });
 
-//// health checks 
-//builder.Services.AddHealthChecks()
-//    .AddUrlGroup(
-//        new Uri("https://localhost:7296/health"), 
-//        name: "UserService", 
-//        tags: new[] { "service" })
-//    .AddUrlGroup(
-//        new Uri("https://localhost:7010/health"), 
-//        name: "RecipeService", 
-//        tags: new[] { "service" });
-
 //Open Telemetry
 builder.Services.AddOpenTelemetry()
     .ConfigureResource(resource =>
@@ -119,10 +103,17 @@ app.UseRateLimiter();
 app.UseAuthentication();
 app.UseAuthorization();
 
-//app.MapHealthChecks("/health", new HealthCheckOptions
-//{
-//    ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
-//});
+app.MapHealthChecks("/health", new HealthCheckOptions
+{
+    Predicate = _=> true, 
+    ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+});
+
+app.MapHealthChecksUI(config =>
+{
+    config.UIPath = "/health-ui";
+    config.ApiPath = "/health-ui-api"; 
+});
 
 app.UseSwaggerUI(c =>
 {
