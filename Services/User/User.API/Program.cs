@@ -23,7 +23,7 @@ var builder = WebApplication.CreateBuilder(args);
 // db Context 
 builder.Services.AddDbContext<UserDbContext>(options =>
 {
-    options.UseSqlServer(builder.Configuration.GetConnectionString("RecipeUserDb"));
+    options.UseNpgsql(builder.Configuration.GetConnectionString("RecipeUserDb"));
 });
 
 // MediatR 
@@ -72,9 +72,9 @@ builder.Services.SwaggerDocument(options =>
 
 // endpoint de health 
 builder.Services.AddHealthChecks()
-    .AddSqlServer(
+    .AddNpgSql(
     connectionString: builder.Configuration.GetConnectionString("RecipeUserDb")!,
-    name: "RecipeUserDb", 
+    name: "userdb", 
     tags: ["database", "infrastructure"]); 
 
 var app = builder.Build();

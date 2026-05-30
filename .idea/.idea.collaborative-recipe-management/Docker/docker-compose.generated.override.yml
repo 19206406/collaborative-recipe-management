@@ -1,0 +1,115 @@
+# This is a generated file. Not intended for manual editing.
+services:
+  apigateway:
+    build:
+      context: "/Users/risk/RiderProjects/collaborative-recipe-management"
+      dockerfile: "ApiGateways/ApiGateway/Dockerfile"
+      target: "base"
+    command: []
+    entrypoint:
+    - "dotnet"
+    - "/app/bin/Debug/net10.0/ApiGateway.dll"
+    environment:
+      DOTNET_USE_POLLING_FILE_WATCHER: "true"
+    image: "api-gateway:dev"
+    ports: []
+    volumes:
+    - "/Users/risk/RiderProjects/collaborative-recipe-management/ApiGateways/ApiGateway:/app:rw"
+    - "/Users/risk/RiderProjects/collaborative-recipe-management:/src:rw"
+    - "/Users/risk/.nuget/packages:/home/app/.nuget/packages"
+    working_dir: "/app"
+  notification-api:
+    build:
+      context: "/Users/risk/RiderProjects/collaborative-recipe-management"
+      dockerfile: "Services/Notification/Notification.API/Dockerfile"
+      target: "base"
+    command: []
+    entrypoint:
+    - "dotnet"
+    - "/app/bin/Debug/net10.0/Notification.API.dll"
+    environment:
+      ASPNETCORE_ENVIRONMENT: "Development"
+      DOTNET_USE_POLLING_FILE_WATCHER: "true"
+    image: "notification-api:dev"
+    ports: []
+    volumes:
+    - "/Users/risk/RiderProjects/collaborative-recipe-management/Services/Notification/Notification.API:/app:rw"
+    - "/Users/risk/RiderProjects/collaborative-recipe-management:/src:rw"
+    - "/Users/risk/.nuget/packages:/home/app/.nuget/packages"
+    working_dir: "/app"
+  rating-api:
+    build:
+      context: "/Users/risk/RiderProjects/collaborative-recipe-management"
+      dockerfile: "Services/Rating/Rating.API/Dockerfile"
+      target: "base"
+    command: []
+    entrypoint:
+    - "dotnet"
+    - "/app/bin/Debug/net10.0/Rating.API.dll"
+    environment:
+      ASPNETCORE_ENVIRONMENT: "Development"
+      DOTNET_USE_POLLING_FILE_WATCHER: "true"
+    image: "rating-api:dev"
+    ports: []
+    volumes:
+    - "/Users/risk/RiderProjects/collaborative-recipe-management/Services/Rating/Rating.API:/app:rw"
+    - "/Users/risk/RiderProjects/collaborative-recipe-management:/src:rw"
+    - "/Users/risk/.nuget/packages:/home/app/.nuget/packages"
+    working_dir: "/app"
+  recipe-api:
+    build:
+      context: "/Users/risk/RiderProjects/collaborative-recipe-management"
+      dockerfile: "Services/Recipe/Recipe.API/Dockerfile"
+      target: "base"
+    command: []
+    entrypoint:
+    - "dotnet"
+    - "/app/bin/Debug/net10.0/Recipe.API.dll"
+    environment:
+      ASPNETCORE_ENVIRONMENT: "Development"
+      DOTNET_USE_POLLING_FILE_WATCHER: "true"
+    image: "recipe-api:dev"
+    ports: []
+    volumes:
+    - "/Users/risk/RiderProjects/collaborative-recipe-management/Services/Recipe/Recipe.API:/app:rw"
+    - "/Users/risk/RiderProjects/collaborative-recipe-management:/src:rw"
+    - "/Users/risk/.nuget/packages:/home/app/.nuget/packages"
+    working_dir: "/app"
+  recommendation-api:
+    build:
+      context: "/Users/risk/RiderProjects/collaborative-recipe-management"
+      dockerfile: "Services/Recommendation/Recommendation.API/Dockerfile"
+      target: "base"
+    command: []
+    entrypoint:
+    - "dotnet"
+    - "/app/bin/Debug/net10.0/Recommendation.API.dll"
+    environment:
+      ASPNETCORE_ENVIRONMENT: "Development"
+      DOTNET_USE_POLLING_FILE_WATCHER: "true"
+    image: "recommendation-api:dev"
+    ports: []
+    volumes:
+    - "/Users/risk/RiderProjects/collaborative-recipe-management/Services/Recommendation/Recommendation.API:/app:rw"
+    - "/Users/risk/RiderProjects/collaborative-recipe-management:/src:rw"
+    - "/Users/risk/.nuget/packages:/home/app/.nuget/packages"
+    working_dir: "/app"
+  user-api:
+    build:
+      context: "/Users/risk/RiderProjects/collaborative-recipe-management"
+      dockerfile: "Services/User/User.API/Dockerfile"
+      target: "base"
+    command: []
+    entrypoint:
+    - "dotnet"
+    - "/app/bin/Debug/net10.0/User.API.dll"
+    environment:
+      ASPNETCORE_ENVIRONMENT: "Development"
+      DOTNET_USE_POLLING_FILE_WATCHER: "true"
+    image: "user-api:dev"
+    ports: []
+    volumes:
+    - "/Users/risk/RiderProjects/collaborative-recipe-management/Services/User/User.API:/app:rw"
+    - "/Users/risk/RiderProjects/collaborative-recipe-management:/src:rw"
+    - "/Users/risk/.nuget/packages:/home/app/.nuget/packages"
+    working_dir: "/app"

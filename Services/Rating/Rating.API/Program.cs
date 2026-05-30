@@ -79,7 +79,7 @@ builder.Services.AddRabbitMQMessaging(builder.Configuration);
 // db context
 builder.Services.AddDbContext<RatingDbContext>(options =>
 {
-    options.UseSqlServer(builder.Configuration.GetConnectionString("RatingDb"));
+    options.UseNpgsql(builder.Configuration.GetConnectionString("RatingDb"));
 }); 
 
 // mediatR 
@@ -113,9 +113,9 @@ builder.Services.AddJwtValidation(builder.Configuration);
 
 // health checks 
 builder.Services.AddHealthChecks()
-    .AddSqlServer(
+    .AddNpgSql(
         connectionString: builder.Configuration.GetConnectionString("RatingDb")!,
-        name: "RatingDb",
+        name: "ratingdb",
         tags: ["database", "infrastructure"]); 
 
 var app = builder.Build();

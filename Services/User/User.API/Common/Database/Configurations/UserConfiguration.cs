@@ -29,7 +29,7 @@ namespace User.API.Common.Database.Configurations
 
             builder.Property(u => u.PasswordHash)
                 .IsRequired() // por el momento todavía no 
-                .HasColumnType("nvarchar(max)")
+                .HasColumnType("TEXT")
                 .HasColumnName("password_hash");
 
             builder.Property(u => u.CreatedAt) // en el handler 

@@ -34,7 +34,7 @@ builder.Services.AddFastEndpoints();
 // db context 
 builder.Services.AddDbContext<NotificationDbContext>(options =>
 {
-    options.UseSqlServer(builder.Configuration.GetConnectionString("NotificationDb"));
+    options.UseNpgsql(builder.Configuration.GetConnectionString("NotificationDb"));
 });
 
 // mediatR 
@@ -98,7 +98,7 @@ builder.Services.AddScoped<INotificationPreferenceRepository, NotificationPrefer
 
 // health checks 
 builder.Services.AddHealthChecks()
-    .AddSqlServer(
+    .AddNpgSql(
         connectionString: builder.Configuration.GetConnectionString("NotificationDb")!,
         name: "RecipeNotificationDb",
         tags: ["database", "infrastructure"]);  
