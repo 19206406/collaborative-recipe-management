@@ -79,6 +79,8 @@ services:
     build:
       context: .
       dockerfile: ApiGateways/ApiGateway/Dockerfile
+    networks:
+      - microservices-network
 
 networks:
   microservices-network: 

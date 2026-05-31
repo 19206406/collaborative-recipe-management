@@ -23,26 +23,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c4d3ed5b-4e91-4a2a-ae33-1b40525f0bea" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/Services/Notification/Notification.API/Common/Database/Migrations/20260416023755_InitialMigration.Designer.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Services/Notification/Notification.API/Common/Database/Migrations/20260416023755_InitialMigration.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Services/Notification/Notification.API/Common/Database/Migrations/NotificationDbContextModelSnapshot.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Services/Notification/Notification.API/Notification.API.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/Services/Notification/Notification.API/Notification.API.csproj" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ApiGateways/ApiGateway/Dockerfile1" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.collaborative-recipe-management/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.collaborative-recipe-management/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.collaborative-recipe-management/Docker/docker-compose.generated.override.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.collaborative-recipe-management/Docker/docker-compose.generated.override.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ApiGateways/ApiGateway/ApiGateway.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/ApiGateways/ApiGateway/ApiGateway.csproj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Services/Notification/Notification.API/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Services/Notification/Notification.API/Program.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Services/Notification/Notification.API/appsettings.Development.json" beforeDir="false" afterPath="$PROJECT_DIR$/Services/Notification/Notification.API/appsettings.Development.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Services/Rating/Rating.API/Common/Database/Migrations/20260313193750_InitialMigration.Designer.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Services/Rating/Rating.API/Common/Database/Migrations/20260313193750_InitialMigration.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Services/Rating/Rating.API/Common/Database/Migrations/RatingDbContextModelSnapshot.cs" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Services/Rating/Rating.API/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Services/Rating/Rating.API/Program.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Services/Rating/Rating.API/Rating.API.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/Services/Rating/Rating.API/Rating.API.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Services/Rating/Rating.API/appsettings.Development.json" beforeDir="false" afterPath="$PROJECT_DIR$/Services/Rating/Rating.API/appsettings.Development.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Services/Recipe/Recipe.API/appsettings.Development.json" beforeDir="false" afterPath="$PROJECT_DIR$/Services/Recipe/Recipe.API/appsettings.Development.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Services/User/User.API/Common/Database/Configurations/UserConfiguration.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Services/User/User.API/Common/Database/Configurations/UserConfiguration.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Services/User/User.API/Common/Database/Migrations/20260225193314_InitialMigration.Designer.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Services/User/User.API/Common/Database/Migrations/20260225193314_InitialMigration.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Services/User/User.API/Common/Database/Migrations/UserDbContextModelSnapshot.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Services/Recipe/Recipe.API/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Services/Recipe/Recipe.API/Program.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Services/User/User.API/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Services/User/User.API/Program.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Services/User/User.API/User.API.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/Services/User/User.API/User.API.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Services/User/User.API/appsettings.Development.json" beforeDir="false" afterPath="$PROJECT_DIR$/Services/User/User.API/appsettings.Development.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/docker-compose.override.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.override.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
     </list>
@@ -71,7 +59,7 @@
   <component name="GithubPullRequestsUISettings">{
   &quot;selectedUrlAndAccountId&quot;: {
     &quot;url&quot;: &quot;https://github.com/19206406/collaborative-recipe-management.git&quot;,
-    &quot;accountId&quot;: &quot;345560c1-d641-46ee-bc97-6774a82c0628&quot;
+    &quot;accountId&quot;: &quot;b0e63e67-3327-4da7-bb92-356c618b3b42&quot;
   }
 }</component>
   <component name="HighlightingSettingsPerFile">
@@ -93,25 +81,25 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    ".NET Launch Settings Profile.Notification.API: https.executor": "Run",
-    ".NET Launch Settings Profile.Rating.API: https.executor": "Run",
-    ".NET Launch Settings Profile.Recipe.API: https.executor": "Run",
-    ".NET Launch Settings Profile.Recommendation.API: https.executor": "Run",
-    ".NET Launch Settings Profile.User.API: http.executor": "Run",
-    ".NET Launch Settings Profile.User.API: https.executor": "Run",
-    "Docker.docker-compose.yml: Compose Deployment.executor": "Run",
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
-    "git-widget-placeholder": "DEV/0.0.1/ChangeDB",
-    "settings.editor.selected.configurable": "preferences.keymap",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;.NET Launch Settings Profile.Notification.API: https.executor&quot;: &quot;Run&quot;,
+    &quot;.NET Launch Settings Profile.Rating.API: https.executor&quot;: &quot;Run&quot;,
+    &quot;.NET Launch Settings Profile.Recipe.API: https.executor&quot;: &quot;Run&quot;,
+    &quot;.NET Launch Settings Profile.Recommendation.API: https.executor&quot;: &quot;Run&quot;,
+    &quot;.NET Launch Settings Profile.User.API: http.executor&quot;: &quot;Run&quot;,
+    &quot;.NET Launch Settings Profile.User.API: https.executor&quot;: &quot;Run&quot;,
+    &quot;Docker.docker-compose.yml: Compose Deployment.executor&quot;: &quot;Run&quot;,
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;DEV/0.0.1/ChangeDB&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;org.jetbrains.plugins.github.ui.GithubSettingsConfigurable&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager" selected="Docker.docker-compose.yml: Compose Deployment">
     <configuration name="ApiGateway: http" type="LaunchSettings" factoryName=".NET Launch Settings Profile">
       <option name="LAUNCH_PROFILE_PROJECT_FILE_PATH" value="$PROJECT_DIR$/ApiGateways/ApiGateway/ApiGateway.csproj" />
@@ -329,6 +317,27 @@
       <EXTENSION ID="com.jetbrains.rider.docker.debug" isFastModeEnabled="true" isSslEnabled="true" />
       <method v="2" />
     </configuration>
+    <configuration name="ApiGateway/Dockerfile1" type="docker-deploy" factoryName="dockerfile" server-name="Docker">
+      <deployment type="dockerfile">
+        <settings>
+          <option name="imageTag" value="apigateway" />
+          <option name="containerName" value="apigateway" />
+          <option name="contextFolderPath" value="$PROJECT_DIR$" />
+          <option name="portBindings">
+            <list>
+              <DockerPortBindingImpl>
+                <option name="containerPort" value="8080" />
+                <option name="hostIp" value="127.0.0.1" />
+                <option name="hostPort" value="8080" />
+              </DockerPortBindingImpl>
+            </list>
+          </option>
+          <option name="sourceFilePath" value="ApiGateways/ApiGateway/Dockerfile1" />
+        </settings>
+      </deployment>
+      <EXTENSION ID="com.jetbrains.rider.docker.debug" isFastModeEnabled="true" isSslEnabled="false" />
+      <method v="2" />
+    </configuration>
     <configuration name="Notification.API/Dockerfile" type="docker-deploy" factoryName="dockerfile" server-name="Docker">
       <deployment type="dockerfile">
         <settings>
@@ -495,6 +504,10 @@
       <workItem from="1778448385548" duration="73000" />
       <workItem from="1779935996717" duration="4960000" />
       <workItem from="1780107740048" duration="9642000" />
+      <workItem from="1780117870826" duration="90000" />
+      <workItem from="1780199576972" duration="1267000" />
+      <workItem from="1780238563835" duration="2854000" />
+      <workItem from="1780251343231" duration="1100000" />
     </task>
     <task id="LOCAL-00001" summary="changes-for-validation">
       <option name="closed" value="true" />

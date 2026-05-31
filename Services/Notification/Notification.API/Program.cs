@@ -106,7 +106,7 @@ builder.Services.AddHealthChecks()
 var app = builder.Build();
 
 // migraciones en automatico 
-//await app.ApplyMigrationsAsync<NotificationDbContext>(); 
+await app.ApplyMigrationsAsync<NotificationDbContext>(); 
 
 //app.UseCors();
 

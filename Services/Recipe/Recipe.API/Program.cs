@@ -79,7 +79,7 @@ builder.Services.AddJwtValidation(builder.Configuration);
 var app = builder.Build();
 
 // migración en automatico 
-//await app.ApplyMigrationsAsync<RecipeDbContext>(); 
+await app.ApplyMigrationsAsync<RecipeDbContext>(); 
 
 // jwt autenticación 
 app.UseAuthentication();

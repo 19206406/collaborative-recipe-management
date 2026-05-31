@@ -80,7 +80,7 @@ builder.Services.AddHealthChecks()
 var app = builder.Build();
 
 // migracion de la base de datos en automatico 
-//await app.ApplyMigrationsAsync<UserDbContext>();
+await app.ApplyMigrationsAsync<UserDbContext>();
 
 // middlewares de excepciones 
 app.UseExceptionHandler();

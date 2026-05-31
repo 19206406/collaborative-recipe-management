@@ -122,7 +122,7 @@ services:
   user-api: 
     container_name: user-api
     environment: 
-      - ASPNETCORE_ENVIROMENT=Development
+      - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=http://+:8080
       - ConnectionStrings__RecipeUserDb=Host=userdb;Port=5432;Database=user_db;Username=admin;Password=Sebastian@User123;Include Error Detail=true
       - JwtSettings__Issuer=UserApi
@@ -142,7 +142,7 @@ services:
   recipe-api: 
     container_name: recipe-api
     environment: 
-      - ASPNETCORE_ENVIROMENT=Development
+      - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=http://+:8080
       - ConnectionStrings__RecipeDb=Host=recipedb;Port=5432;Database=recipe_db;Username=admin;Password=Sebastian@Recipe123;Include Error Detail=true
       - JwtSettings__Issuer=UserApi
@@ -171,9 +171,9 @@ services:
   rating-api: 
     container_name: rating-api
     environment: 
-      - ASPNETCORE_ENVIROMENT=Development
+      - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=http://+:8080
-      - ConnectionStrings__RatingDb=Host=ratingdb;Port=5434;Database=rating_db;UserName=admin;Password=Sebastian@Rating123;Include Error Detail=true
+      - ConnectionStrings__RatingDb=Host=ratingdb;Port=5432;Database=rating_db;UserName=admin;Password=Sebastian@Rating123;Include Error Detail=true
       - JwtSettings__Issuer=UserApi
       - JwtSettings__Audiences__0=UserClient
       - JwtSettings__Audiences__1=RecipeClient
@@ -201,13 +201,13 @@ services:
         condition: service_healthy
       rabbitmq: 
         condition: service_healthy
-      recipe-api: 
-        condition: service_healthy
+#      recipe-api: 
+#        condition: service_healthy
 
   recommendation-api: 
     container_name: recommendation-api
     environment: 
-      - ASPNETCORE_ENVIROMENT=Development
+      - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=http://+:8080
       - Redis__ConnectionString=redis-cache:6379
       - ServicesUrls__UserServiceUrl=http://user-api:8080
@@ -232,7 +232,7 @@ services:
   notification-api: 
     container_name: notification-api
     environment: 
-      - ASPNETCORE_ENVIROMENT=Development
+      - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=http://+:8080
       - ConnectionStrings__NotificationDb=Host=notificationdb;Port=5432;Database=notification_db;UserName=admin;Password=Sebastian@Notification123;Include Error Detail=true
       - JwtSettings__Issuer=UserApi
@@ -316,7 +316,7 @@ services:
       - SwaggerAggregator__Services__4__DisplayName=Notification Service
       - SwaggerAggregator__Services__4__SwaggerUrl=http://notification-api:8080/swagger/v1/swagger.json
     ports:
-      - "5000:8080"
+      - "5050:8080"
     depends_on: 
       - user-api
       - recipe-api
