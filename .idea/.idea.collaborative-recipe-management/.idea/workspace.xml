@@ -22,18 +22,7 @@
     <projectFile kind="DockerCompose">docker-compose.dcproj</projectFile>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c4d3ed5b-4e91-4a2a-ae33-1b40525f0bea" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/ApiGateways/ApiGateway/Dockerfile1" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.collaborative-recipe-management/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.collaborative-recipe-management/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.collaborative-recipe-management/Docker/docker-compose.generated.override.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.collaborative-recipe-management/Docker/docker-compose.generated.override.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ApiGateways/ApiGateway/ApiGateway.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/ApiGateways/ApiGateway/ApiGateway.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Services/Notification/Notification.API/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Services/Notification/Notification.API/Program.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Services/Rating/Rating.API/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Services/Rating/Rating.API/Program.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Services/Recipe/Recipe.API/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Services/Recipe/Recipe.API/Program.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Services/User/User.API/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Services/User/User.API/Program.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docker-compose.override.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.override.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
-    </list>
+    <list default="true" id="c4d3ed5b-4e91-4a2a-ae33-1b40525f0bea" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -507,7 +496,7 @@
       <workItem from="1780117870826" duration="90000" />
       <workItem from="1780199576972" duration="1267000" />
       <workItem from="1780238563835" duration="2854000" />
-      <workItem from="1780251343231" duration="1100000" />
+      <workItem from="1780251343231" duration="1661000" />
     </task>
     <task id="LOCAL-00001" summary="changes-for-validation">
       <option name="closed" value="true" />

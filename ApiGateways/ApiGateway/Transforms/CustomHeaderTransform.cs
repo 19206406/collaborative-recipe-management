@@ -8,7 +8,6 @@ namespace ApiGateway.Transforms
         public void ValidateCluster(TransformClusterValidationContext context)
         {
         }
-
         public void ValidateRoute(TransformRouteValidationContext context)
         {
         }
@@ -26,7 +25,6 @@ namespace ApiGateway.Transforms
 
                     transformContext.ProxyRequest.Headers.TryAddWithoutValidation(
                         "X-User-Id", userId ?? string.Empty);
-
                     transformContext.ProxyRequest.Headers.TryAddWithoutValidation(
                         "X-User-Name", name ?? string.Empty);
                 }

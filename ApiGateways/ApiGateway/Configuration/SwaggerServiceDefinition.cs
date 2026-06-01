@@ -10,6 +10,11 @@
     public class SwaggerAggregatorOptions
     {
         public const string Section = "SwaggerAggregator";
+        
+        // este elemento nos ayuda que el swagger del microservicio 
+        // apunte a la direccion del api-gateway y no al servicio en concreto
+        public string? GatewayPublicUrl { get; set; }
+
         public List<SwaggerServiceDefinition> Services { get; init; } = []; 
     }
 }

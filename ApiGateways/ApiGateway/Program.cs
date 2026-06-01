@@ -39,8 +39,7 @@ builder.Services.AddHttpClient("swagger-proxy")
 builder.Host.UseSerilog((ctx, config) =>
     config.ReadFrom.Configuration(ctx.Configuration)
         .Enrich.FromLogContext()
-        .WriteTo.Console() // Consola obligatoria 
-        .WriteTo.Seq("http://localhost:5341")); // UI 
+        .WriteTo.Console());
 
 // YARP Reverse Proxy +
 builder.Services.AddReverseProxy()

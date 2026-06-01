@@ -1,4 +1,6 @@
-﻿using ApiGateway.Configuration;
+﻿using System.Text;
+using System.Text.Json;
+using ApiGateway.Configuration;
 using Microsoft.Extensions.Options;
 
 namespace ApiGateway.Middleware
@@ -9,6 +11,7 @@ namespace ApiGateway.Middleware
         IOptions<SwaggerAggregatorOptions> options,
         ILogger<SwaggerProxyMiddleware> logger)
     {
+        private readonly SwaggerAggregatorOptions _options = options.Value;
         private readonly List<SwaggerServiceDefinition> _services = options.Value.Services;
 
         public async Task InvokeAsync(HttpContext context)
@@ -42,14 +45,54 @@ namespace ApiGateway.Middleware
 
                 var json = await response.Content.ReadAsStringAsync();
 
+                var gatewayUrl = !string.IsNullOrWhiteSpace(_options.GatewayPublicUrl)
+                    ? _options.GatewayPublicUrl.TrimEnd('/')
+                    : $"{context.Request.Scheme}://{context.Request.Host}";
+
+                var rewritten = RewriteServers(json, gatewayUrl);
+
                 context.Response.ContentType = "application/json";
-                await context.Response.WriteAsync(json); 
+                await context.Response.WriteAsync(rewritten);
             }
             catch (Exception ex)
             {
                 logger.LogError(ex, "Error proxying Swagger JSON for service {ServiceName}", match.Name);
                 context.Response.StatusCode = StatusCodes.Status500InternalServerError;
             }
+        }
+
+        private static string RewriteServers(string swaggerJson, string gatewayUrl)
+        {
+            using var doc = JsonDocument.Parse(swaggerJson);
+            using var stream = new MemoryStream();
+            using var writer = new Utf8JsonWriter(stream);
+            
+            writer.WriteStartObject();
+
+            foreach (var property in doc.RootElement.EnumerateObject())
+            {
+                if (property.Name == "servers")
+                {
+                    // Reemplazar completamente el array servers[]
+                    writer.WritePropertyName("servers");
+                    writer.WriteStartArray();
+                    writer.WriteStartObject();
+                    writer.WriteString("url", gatewayUrl);
+                    writer.WriteString("description", "API Gateway");
+                    writer.WriteEndObject();
+                    writer.WriteEndArray();
+                }
+                else
+                {
+                    // Copiar el resto de propiedades sin modificar
+                    property.WriteTo(writer);
+                }
+            }
+
+            writer.WriteEndObject();
+            writer.Flush();
+
+            return Encoding.UTF8.GetString(stream.ToArray());
         }
     }
 }
