@@ -22,7 +22,15 @@
     <projectFile kind="DockerCompose">docker-compose.dcproj</projectFile>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c4d3ed5b-4e91-4a2a-ae33-1b40525f0bea" name="Changes" comment="" />
+    <list default="true" id="c4d3ed5b-4e91-4a2a-ae33-1b40525f0bea" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.collaborative-recipe-management/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.collaborative-recipe-management/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ApiGateways/ApiGateway/Middleware/GatewayJwtMiddleware.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ApiGateways/ApiGateway/Middleware/GatewayJwtMiddleware.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ApiGateways/ApiGateway/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ApiGateways/ApiGateway/Program.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ApiGateways/ApiGateway/appsettings.Development.json" beforeDir="false" afterPath="$PROJECT_DIR$/ApiGateways/ApiGateway/appsettings.Development.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Services/Recipe/Recipe.API/appsettings.Development.json" beforeDir="false" afterPath="$PROJECT_DIR$/Services/Recipe/Recipe.API/appsettings.Development.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docker-compose.override.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.override.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -52,7 +60,7 @@
   }
 }</component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="file://$PROJECT_DIR$/BuildingBlocks/BuildingBlocks/Extensions/MigrationsExtensions.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/f9d2f95d72fa884d8b6ddefc717c56da3657fbb2d5fb683656c3589eb6587/Debugger.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="KubernetesApiPersistence">{}</component>
   <component name="KubernetesApiProvider">{
@@ -70,26 +78,27 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;.NET Launch Settings Profile.Notification.API: https.executor&quot;: &quot;Run&quot;,
-    &quot;.NET Launch Settings Profile.Rating.API: https.executor&quot;: &quot;Run&quot;,
-    &quot;.NET Launch Settings Profile.Recipe.API: https.executor&quot;: &quot;Run&quot;,
-    &quot;.NET Launch Settings Profile.Recommendation.API: https.executor&quot;: &quot;Run&quot;,
-    &quot;.NET Launch Settings Profile.User.API: http.executor&quot;: &quot;Run&quot;,
-    &quot;.NET Launch Settings Profile.User.API: https.executor&quot;: &quot;Run&quot;,
-    &quot;Docker.docker-compose.yml: Compose Deployment.executor&quot;: &quot;Run&quot;,
-    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;DEV/0.0.1/ChangeDB&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;org.jetbrains.plugins.github.ui.GithubSettingsConfigurable&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    ".NET Launch Settings Profile.ApiGateway: https.executor": "Run",
+    ".NET Launch Settings Profile.Notification.API: https.executor": "Debug",
+    ".NET Launch Settings Profile.Rating.API: https.executor": "Debug",
+    ".NET Launch Settings Profile.Recipe.API: https.executor": "Debug",
+    ".NET Launch Settings Profile.Recommendation.API: https.executor": "Debug",
+    ".NET Launch Settings Profile.User.API: http.executor": "Run",
+    ".NET Launch Settings Profile.User.API: https.executor": "Run",
+    "Docker.docker-compose.yml: Compose Deployment.executor": "Run",
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
+    "git-widget-placeholder": "DEV/0.0.1/ChangeDB",
+    "settings.editor.selected.configurable": "org.jetbrains.plugins.github.ui.GithubSettingsConfigurable",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
-  <component name="RunManager" selected="Docker.docker-compose.yml: Compose Deployment">
+}]]></component>
+  <component name="RunManager" selected=".NET Launch Settings Profile.ApiGateway: https">
     <configuration name="ApiGateway: http" type="LaunchSettings" factoryName=".NET Launch Settings Profile">
       <option name="LAUNCH_PROFILE_PROJECT_FILE_PATH" value="$PROJECT_DIR$/ApiGateways/ApiGateway/ApiGateway.csproj" />
       <option name="LAUNCH_PROFILE_TFM" value="net10.0" />
@@ -497,6 +506,8 @@
       <workItem from="1780199576972" duration="1267000" />
       <workItem from="1780238563835" duration="2854000" />
       <workItem from="1780251343231" duration="1661000" />
+      <workItem from="1780282487670" duration="6356000" />
+      <workItem from="1780454461848" duration="7088000" />
     </task>
     <task id="LOCAL-00001" summary="changes-for-validation">
       <option name="closed" value="true" />
@@ -545,6 +556,32 @@
           <properties exception="System.Threading.ThreadAbortException" breakIfHandledByOtherCode="false" displayValue="System.Threading.ThreadAbortException" />
           <option name="timeStamp" value="3" />
         </breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/ApiGateways/ApiGateway/Transforms/CustomHeaderTransform.cs</url>
+          <line>33</line>
+          <properties documentPath="$PROJECT_DIR$/ApiGateways/ApiGateway/Transforms/CustomHeaderTransform.cs" containingFunctionPresentation="Lambda expression inside Method 'Apply'">
+            <startOffsets>
+              <option value="1264" />
+            </startOffsets>
+            <endOffsets>
+              <option value="1397" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="4" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/ApiGateways/ApiGateway/Transforms/CustomHeaderTransform.cs</url>
+          <line>32</line>
+          <properties documentPath="$PROJECT_DIR$/ApiGateways/ApiGateway/Transforms/CustomHeaderTransform.cs" containingFunctionPresentation="Lambda expression inside Method 'Apply'">
+            <startOffsets>
+              <option value="1242" />
+            </startOffsets>
+            <endOffsets>
+              <option value="1243" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="5" />
+        </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
   </component>

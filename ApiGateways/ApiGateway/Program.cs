@@ -42,16 +42,23 @@ builder.Host.UseSerilog((ctx, config) =>
         .WriteTo.Console());
 
 // YARP Reverse Proxy +
+// DESPUÉS
 builder.Services.AddReverseProxy()
     .LoadFromConfig(builder.Configuration.GetSection("ReverseProxy"))
-    .AddTransforms<CustomHeaderTransform>();
+    .AddTransforms<CustomHeaderTransform>()
+    .ConfigureHttpClient((context, handler) =>
+    {
+        // Solo en desarrollo — acepta certificados self-signed de los microservicios
+        handler.SslOptions.RemoteCertificateValidationCallback = 
+            (sender, cert, chain, errors) => true;
+    });
 
 // UI Health Checks 
-builder.Services
-    .AddHealthChecksUI()
-    .AddInMemoryStorage(); 
-
-builder.Services.AddHealthChecks(); 
+// builder.Services
+//     .AddHealthChecksUI()
+//     .AddInMemoryStorage(); 
+//
+// builder.Services.AddHealthChecks(); 
 
 // builder JWT 
 builder.Services.AddGatewayAuthentication(builder.Configuration);
@@ -73,11 +80,14 @@ builder.Services.AddGatewayRateLimiting();
 //});
 
 // correlation id 
-builder.Services.AddDefaultCorrelationId(); 
-builder.Services.AddCorrelationId(options =>
-{
+//builder.Services.AddDefaultCorrelationId(); 
+builder.Services.AddDefaultCorrelationId();
+builder.Services.Configure<CorrelationIdOptions>(options => {
     options.AddToLoggingScope = true;
     options.UpdateTraceIdentifier = true;
+    options.RequestHeader = "X-Correlation-ID";
+    options.ResponseHeader = "X-Correlation-ID";
+    options.IncludeInResponse = true;
 });
 
 //Open Telemetry
@@ -91,28 +101,29 @@ builder.Services.AddOpenTelemetry()
 
 var app = builder.Build();
 
+app.UseCorrelationId();
+
 // validación jwt en api-gateway 
 app.UseMiddleware<GatewayJwtMiddleware>();
 app.UseMiddleware<SwaggerProxyMiddleware>(); 
 
 // reenviar jwt a los servicios para su autorización 
-app.UseCorrelationId();
 app.UseSerilogRequestLogging();
 app.UseRateLimiter();
 app.UseAuthentication();
 app.UseAuthorization();
 
-app.MapHealthChecks("/health", new HealthCheckOptions
-{
-    Predicate = _=> true, 
-    ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
-});
+// app.MapHealthChecks("/health", new HealthCheckOptions
+// {
+//     Predicate = _=> true, 
+//     ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+// });
 
-app.MapHealthChecksUI(config =>
-{
-    config.UIPath = "/health-ui";
-    config.ApiPath = "/health-ui-api"; 
-});
+// app.MapHealthChecksUI(config =>
+// {
+//     config.UIPath = "/health-ui";
+//     config.ApiPath = "/health-ui-api"; 
+// });
 
 app.UseSwaggerUI(c =>
 {

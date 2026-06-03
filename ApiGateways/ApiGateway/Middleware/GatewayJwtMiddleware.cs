@@ -51,11 +51,11 @@ namespace ApiGateway.Middleware
                 return;
             }
 
-            if (path.StartsWith("", StringComparison.OrdinalIgnoreCase))
-            {
-                await _next(context);
-                return; 
-            }
+            // if (path.StartsWith("", StringComparison.OrdinalIgnoreCase))
+            // {
+            //     await _next(context);
+            //     return; 
+            // }
 
             if (IsPublicRoute(method,path))
             {
