@@ -60,16 +60,6 @@ builder.Services.AddReverseProxy()
 //
 // builder.Services.AddHealthChecks(); 
 
-// builder JWT 
-builder.Services.AddGatewayAuthentication(builder.Configuration);
-
-// Autorización  
-builder.Services.AddAuthorization(options =>
-{
-    options.AddPolicy("authenticated", policy =>
-        policy.RequireAuthenticatedUser()); 
-});
-
 // rate limiting 
 builder.Services.AddGatewayRateLimiting();
 
@@ -103,28 +93,6 @@ var app = builder.Build();
 
 app.UseCorrelationId();
 
-// validación jwt en api-gateway 
-app.UseMiddleware<GatewayJwtMiddleware>();
-app.UseMiddleware<SwaggerProxyMiddleware>(); 
-
-// reenviar jwt a los servicios para su autorización 
-app.UseSerilogRequestLogging();
-app.UseRateLimiter();
-app.UseAuthentication();
-app.UseAuthorization();
-
-// app.MapHealthChecks("/health", new HealthCheckOptions
-// {
-//     Predicate = _=> true, 
-//     ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
-// });
-
-// app.MapHealthChecksUI(config =>
-// {
-//     config.UIPath = "/health-ui";
-//     config.ApiPath = "/health-ui-api"; 
-// });
-
 app.UseSwaggerUI(c =>
 {
     // Un endpoint por cada microservicio
@@ -140,6 +108,29 @@ app.UseSwaggerUI(c =>
     c.DocumentTitle = "Microservicios - API Docs";
     c.DefaultModelsExpandDepth(-1); // Oculta los schemas por defecto (más limpio)
 });
+app.UseMiddleware<GatewayJwtMiddleware>();
+
+app.UseMiddleware<SwaggerProxyMiddleware>(); 
+
+// validación jwt en api-gateway 
+
+// reenviar jwt a los servicios para su autorización 
+app.UseSerilogRequestLogging();
+app.UseRateLimiter();
+// app.UseAuthentication();
+// app.UseAuthorization();
+
+// app.MapHealthChecks("/health", new HealthCheckOptions
+// {
+//     Predicate = _=> true, 
+//     ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+// });
+
+// app.MapHealthChecksUI(config =>
+// {
+//     config.UIPath = "/health-ui";
+//     config.ApiPath = "/health-ui-api"; 
+// });
 
 app.MapReverseProxy(); // Enrutamiento tambien envia el token a los servicios para que tambien lo validen 
 

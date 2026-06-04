@@ -1,7 +1,7 @@
 ﻿using Microsoft.IdentityModel.Tokens;
-using System.IdentityModel.Tokens.Jwt;
 using System.Security.Cryptography;
 using System.Text.Json;
+using Microsoft.IdentityModel.JsonWebTokens;
 
 namespace ApiGateway.Middleware
 {
@@ -125,8 +125,8 @@ namespace ApiGateway.Middleware
         private static string? ExtractBearerToken(HttpContext context)
         {
             var authHeader = context.Request.Headers.Authorization.FirstOrDefault();
-            return authHeader?.StartsWith("Bearer ") == true
-                ? authHeader["Bearer".Length..]
+            return authHeader?.StartsWith("Bearer") == true
+                ? authHeader["Bearer ".Length..].Trim()
                 : null; 
         }
 
@@ -135,20 +135,22 @@ namespace ApiGateway.Middleware
             principal = null;
             try
             {
-                principal = new JwtSecurityTokenHandler().ValidateToken(
-                    token,
-                    new TokenValidationParameters
-                    {
-                        ValidateIssuerSigningKey = true,
-                        IssuerSigningKey = _rsaPublicKey,
-                        ValidateIssuer = true,
-                        ValidIssuer = _issuer,
-                        ValidateAudience = true,
-                        ValidAudiences = _audiences,
-                        ValidateLifetime = true,
-                        ClockSkew = TimeSpan.Zero
-                    },
-                    out _);
+                var handler = new JsonWebTokenHandler();
+                var result = handler.ValidateTokenAsync(token, new TokenValidationParameters
+                {
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = _rsaPublicKey,
+                    ValidateIssuer = true,
+                    ValidIssuer = _issuer,
+                    ValidateAudience = true,
+                    ValidAudiences = _audiences,
+                    ValidateLifetime = true,
+                    ClockSkew = TimeSpan.Zero
+                }).GetAwaiter().GetResult(); // sync over async en constructor-adjacent code
+
+                if (!result.IsValid) return false;
+
+                principal = new System.Security.Claims.ClaimsPrincipal(result.ClaimsIdentity);
                 return true;
             }
             catch { return false; }
