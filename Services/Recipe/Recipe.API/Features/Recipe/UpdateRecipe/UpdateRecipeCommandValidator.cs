@@ -31,19 +31,19 @@ namespace Recipe.API.Features.Recipe.UpdateRecipe
                     ing.RuleFor(x => x.Name)
                         .NotEmpty().WithMessage("El nombre del ingrediente no puede ser vacio")
                         .MaximumLength(200).WithMessage("El nombre del ingrediente no puede superar los 200 caracteres");
-
+            
                     ing.RuleFor(x => x.Name)
                         .NotEmpty().WithMessage("La cantidad del requeriente es requeridad");
-
+            
                     ing.RuleFor(x => x.Unit)
                         .NotEmpty().WithMessage("La unidad de medida del ingrediente es requerida")
                         .MaximumLength(50).WithMessage("La especificación de unidad de medida no puede superar los 50 caracteres");
-
+            
                     ing.RuleFor(x => x.DisplayOrder)
                         .NotEmpty().WithMessage("La orden de visualización no puede ser vacio");
                 });
-
-
+            
+            
             RuleForEach(x => x.Steps)
                 .ChildRules(step =>
                 {

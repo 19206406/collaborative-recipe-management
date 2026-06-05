@@ -24,10 +24,12 @@
   <component name="ChangeListManager">
     <list default="true" id="c4d3ed5b-4e91-4a2a-ae33-1b40525f0bea" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.collaborative-recipe-management/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.collaborative-recipe-management/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ApiGateways/ApiGateway/ApiGateway.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/ApiGateways/ApiGateway/ApiGateway.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ApiGateways/ApiGateway/Middleware/GatewayJwtMiddleware.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ApiGateways/ApiGateway/Middleware/GatewayJwtMiddleware.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ApiGateways/ApiGateway/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ApiGateways/ApiGateway/Program.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Services/User/User.API/Features/User/RegisterUser/RegisterUserCommandHandler.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Services/User/User.API/Features/User/RegisterUser/RegisterUserCommandHandler.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Services/Recipe/Recipe.API/Features/Recipe/CreateRecipe/CreateRecipeCommandHandler.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Services/Recipe/Recipe.API/Features/Recipe/CreateRecipe/CreateRecipeCommandHandler.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Services/Recipe/Recipe.API/Features/Recipe/UpdateRecipe/UpdateRecipeCommand.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Services/Recipe/Recipe.API/Features/Recipe/UpdateRecipe/UpdateRecipeCommand.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Services/Recipe/Recipe.API/Features/Recipe/UpdateRecipe/UpdateRecipeCommandHandler.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Services/Recipe/Recipe.API/Features/Recipe/UpdateRecipe/UpdateRecipeCommandHandler.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Services/Recipe/Recipe.API/Features/Recipe/UpdateRecipe/UpdateRecipeCommandValidator.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Services/Recipe/Recipe.API/Features/Recipe/UpdateRecipe/UpdateRecipeCommandValidator.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Services/Recipe/Recipe.API/Features/Recipe/UpdateRecipe/UpdateRecipeEndpoint.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Services/Recipe/Recipe.API/Features/Recipe/UpdateRecipe/UpdateRecipeEndpoint.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Services/Recipe/Recipe.API/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Services/Recipe/Recipe.API/Program.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -61,11 +63,14 @@
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/75b62e7a431b473281c41fef65c7345ac2108/4f/04c0cebf/Enumerable.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/b80d273ee361410c8281944d08b624ed5c00/a1/a970f4ba/CorrelationIdMiddleware.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/bf3f51607a3e4e76b5b91640cd7409195c430/5c/73acd7b4/StructuredTransformer.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/10f0d16e38afcba7fb4155cb599e99394638fdd73766128edc7272fd8cd35e/KestrelServerImpl.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/24276f5a960c41c7b74713aa84cb1cae4672f89e225b6dcd2fe9b297a3a39/TaskAwaiter.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/2b5a64a615692cae2c8f378e99676581abe4bc355bb3844bfc6c6db3d576853/DeveloperExceptionPageMiddlewareImpl.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/94eeef40f1676b908590623e7e3f9615955afad2aa927a21c765d66013f0b8/SwaggerUIMiddleware.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/a3e09c23816443fffd8ed654fc1d976ec9e82804cdabdac79dad1aa40e21495/Select.SpeedOpt.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/bc69852c736be69a33ab75e0444246ffeb2f8cd671d12b36b764ba5fa18f61ba/Monitor.CoreCLR.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/e8a6f2bbd99f1ece1235415c5155b74faa6bac73813d8ca29fb3fae263d2/Endpoint.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/eea1c4d91adbab3e634719b857b394cfa957e81fdf987a8e727f7bd2bf0f07e/ExceptionHandlerExtensions.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/f9d2f95d72fa884d8b6ddefc717c56da3657fbb2d5fb683656c3589eb6587/Debugger.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="KubernetesApiPersistence">{}</component>
@@ -104,7 +109,7 @@
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
-  <component name="RunManager" selected=".NET Launch Settings Profile.User.API: https">
+  <component name="RunManager" selected=".NET Launch Settings Profile.Notification.API: https">
     <configuration name="ApiGateway: http" type="LaunchSettings" factoryName=".NET Launch Settings Profile">
       <option name="LAUNCH_PROFILE_PROJECT_FILE_PATH" value="$PROJECT_DIR$/ApiGateways/ApiGateway/ApiGateway.csproj" />
       <option name="LAUNCH_PROFILE_TFM" value="net10.0" />
@@ -514,7 +519,8 @@
       <workItem from="1780251343231" duration="1661000" />
       <workItem from="1780282487670" duration="6356000" />
       <workItem from="1780454461848" duration="7512000" />
-      <workItem from="1780537968499" duration="8211000" />
+      <workItem from="1780537968499" duration="8926000" />
+      <workItem from="1780624221962" duration="6933000" />
     </task>
     <task id="LOCAL-00001" summary="changes-for-validation">
       <option name="closed" value="true" />
@@ -564,188 +570,76 @@
           <option name="timeStamp" value="3" />
         </breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Services/User/User.API/Features/User/GetUser/GetUserQueryHandler.cs</url>
-          <line>19</line>
-          <properties documentPath="$PROJECT_DIR$/Services/User/User.API/Features/User/GetUser/GetUserQueryHandler.cs" containingFunctionPresentation="Method 'Handle'">
+          <url>file://$PROJECT_DIR$/Services/Recipe/Recipe.API/Features/Recipe/CreateRecipe/CreateRecipeCommandHandler.cs</url>
+          <line>20</line>
+          <properties documentPath="$PROJECT_DIR$/Services/Recipe/Recipe.API/Features/Recipe/CreateRecipe/CreateRecipeCommandHandler.cs" containingFunctionPresentation="Method 'Handle'">
             <startOffsets>
-              <option value="626" />
+              <option value="758" />
             </startOffsets>
             <endOffsets>
-              <option value="643" />
+              <option value="798" />
             </endOffsets>
           </properties>
-          <option name="timeStamp" value="18" />
+          <option name="timeStamp" value="4" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Services/User/User.API/Features/User/GetUser/GetUserQueryHandler.cs</url>
-          <line>22</line>
-          <properties documentPath="$PROJECT_DIR$/Services/User/User.API/Features/User/GetUser/GetUserQueryHandler.cs" containingFunctionPresentation="Method 'Handle'">
+          <url>file://$PROJECT_DIR$/Services/Recipe/Recipe.API/Features/Recipe/CreateRecipe/CreateRecipeCommandHandler.cs</url>
+          <line>18</line>
+          <properties documentPath="$PROJECT_DIR$/Services/Recipe/Recipe.API/Features/Recipe/CreateRecipe/CreateRecipeCommandHandler.cs" containingFunctionPresentation="Method 'Handle'">
             <startOffsets>
-              <option value="723" />
+              <option value="650" />
             </startOffsets>
             <endOffsets>
-              <option value="839" />
+              <option value="697" />
             </endOffsets>
           </properties>
-          <option name="timeStamp" value="19" />
+          <option name="timeStamp" value="5" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/ApiGateways/ApiGateway/Middleware/GatewayJwtMiddleware.cs</url>
-          <line>73</line>
-          <properties documentPath="$PROJECT_DIR$/ApiGateways/ApiGateway/Middleware/GatewayJwtMiddleware.cs" containingFunctionPresentation="Method 'InvokeAsync'">
+          <url>file://$PROJECT_DIR$/Services/Recipe/Recipe.API/Features/Recipe/CreateRecipe/CreateRecipeCommandHandler.cs</url>
+          <line>52</line>
+          <properties documentPath="$PROJECT_DIR$/Services/Recipe/Recipe.API/Features/Recipe/CreateRecipe/CreateRecipeCommandHandler.cs" containingFunctionPresentation="Method 'Handle'">
             <startOffsets>
-              <option value="2426" />
-            </startOffsets>
-            <endOffsets>
-              <option value="2474" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="49" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/ApiGateways/ApiGateway/Middleware/GatewayJwtMiddleware.cs</url>
-          <line>75</line>
-          <properties documentPath="$PROJECT_DIR$/ApiGateways/ApiGateway/Middleware/GatewayJwtMiddleware.cs" containingFunctionPresentation="Method 'InvokeAsync'">
-            <startOffsets>
-              <option value="2505" />
-            </startOffsets>
-            <endOffsets>
-              <option value="2568" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="50" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/ApiGateways/ApiGateway/Middleware/GatewayJwtMiddleware.cs</url>
-          <line>76</line>
-          <properties documentPath="$PROJECT_DIR$/ApiGateways/ApiGateway/Middleware/GatewayJwtMiddleware.cs" containingFunctionPresentation="Method 'InvokeAsync'">
-            <startOffsets>
-              <option value="2585" />
-            </startOffsets>
-            <endOffsets>
-              <option value="2592" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="51" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/ApiGateways/ApiGateway/Middleware/GatewayJwtMiddleware.cs</url>
-          <line>65</line>
-          <properties documentPath="$PROJECT_DIR$/ApiGateways/ApiGateway/Middleware/GatewayJwtMiddleware.cs" containingFunctionPresentation="Method 'InvokeAsync'">
-            <startOffsets>
-              <option value="2197" />
-            </startOffsets>
-            <endOffsets>
-              <option value="2237" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="54" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/ApiGateways/ApiGateway/Middleware/GatewayJwtMiddleware.cs</url>
-          <line>67</line>
-          <properties documentPath="$PROJECT_DIR$/ApiGateways/ApiGateway/Middleware/GatewayJwtMiddleware.cs" containingFunctionPresentation="Method 'InvokeAsync'">
-            <startOffsets>
-              <option value="2251" />
-            </startOffsets>
-            <endOffsets>
-              <option value="2283" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="55" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/ApiGateways/ApiGateway/Middleware/GatewayJwtMiddleware.cs</url>
-          <line>79</line>
-          <properties documentPath="$PROJECT_DIR$/ApiGateways/ApiGateway/Middleware/GatewayJwtMiddleware.cs" containingFunctionPresentation="Method 'InvokeAsync'">
-            <startOffsets>
-              <option value="2620" />
-            </startOffsets>
-            <endOffsets>
-              <option value="2671" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="56" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/ApiGateways/ApiGateway/Middleware/GatewayJwtMiddleware.cs</url>
-          <line>80</line>
-          <properties documentPath="$PROJECT_DIR$/ApiGateways/ApiGateway/Middleware/GatewayJwtMiddleware.cs" containingFunctionPresentation="Method 'InvokeAsync'">
-            <startOffsets>
-              <option value="2684" />
-            </startOffsets>
-            <endOffsets>
-              <option value="2827" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="57" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/ApiGateways/ApiGateway/Middleware/GatewayJwtMiddleware.cs</url>
-          <line>83</line>
-          <properties documentPath="$PROJECT_DIR$/ApiGateways/ApiGateway/Middleware/GatewayJwtMiddleware.cs" containingFunctionPresentation="Method 'InvokeAsync'">
-            <startOffsets>
-              <option value="2841" />
-            </startOffsets>
-            <endOffsets>
-              <option value="2875" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="58" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/ApiGateways/ApiGateway/Middleware/GatewayJwtMiddleware.cs</url>
-          <line>86</line>
-          <properties documentPath="$PROJECT_DIR$/ApiGateways/ApiGateway/Middleware/GatewayJwtMiddleware.cs" containingFunctionPresentation="Method 'InvokeAsync'">
-            <startOffsets>
-              <option value="2952" />
-            </startOffsets>
-            <endOffsets>
-              <option value="2985" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="60" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/ApiGateways/ApiGateway/Middleware/GatewayJwtMiddleware.cs</url>
-          <line>89</line>
-          <properties documentPath="$PROJECT_DIR$/ApiGateways/ApiGateway/Middleware/GatewayJwtMiddleware.cs" containingFunctionPresentation="Method 'InvokeAsync'">
-            <startOffsets>
-              <option value="3064" />
-            </startOffsets>
-            <endOffsets>
-              <option value="3085" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="62" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/ApiGateways/ApiGateway/Middleware/GatewayJwtMiddleware.cs</url>
-          <line>48</line>
-          <properties documentPath="$PROJECT_DIR$/ApiGateways/ApiGateway/Middleware/GatewayJwtMiddleware.cs" containingFunctionPresentation="Method 'InvokeAsync'">
-            <startOffsets>
-              <option value="1791" />
-            </startOffsets>
-            <endOffsets>
-              <option value="1792" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="63" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/ApiGateways/ApiGateway/Middleware/GatewayJwtMiddleware.cs</url>
-          <line>60</line>
-          <properties documentPath="$PROJECT_DIR$/ApiGateways/ApiGateway/Middleware/GatewayJwtMiddleware.cs" containingFunctionPresentation="Method 'InvokeAsync'">
-            <startOffsets>
-              <option value="2106" />
+              <option value="2054" />
             </startOffsets>
             <endOffsets>
               <option value="2107" />
             </endOffsets>
           </properties>
-          <option name="timeStamp" value="64" />
+          <option name="timeStamp" value="10" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Services/Recipe/Recipe.API/Features/Recipe/UpdateRecipe/UpdateRecipeEndpoint.cs</url>
+          <line>37</line>
+          <properties documentPath="$PROJECT_DIR$/Services/Recipe/Recipe.API/Features/Recipe/UpdateRecipe/UpdateRecipeEndpoint.cs" containingFunctionPresentation="Method 'HandleAsync'">
+            <startOffsets>
+              <option value="1481" />
+            </startOffsets>
+            <endOffsets>
+              <option value="1585" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="28" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Services/Recipe/Recipe.API/Features/Recipe/UpdateRecipe/UpdateRecipeEndpoint.cs</url>
+          <line>38</line>
+          <properties documentPath="$PROJECT_DIR$/Services/Recipe/Recipe.API/Features/Recipe/UpdateRecipe/UpdateRecipeEndpoint.cs" containingFunctionPresentation="Method 'HandleAsync'">
+            <startOffsets>
+              <option value="1598" />
+            </startOffsets>
+            <endOffsets>
+              <option value="1641" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="29" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
+    <pin-to-top-manager>
+      <pinned-members>
+        <PinnedItemInfo parentTag="Type#Recipe.API.Entities.Recipe" memberName="RecipeTags" />
+      </pinned-members>
+    </pin-to-top-manager>
   </component>
 </project>

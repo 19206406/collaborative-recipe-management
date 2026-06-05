@@ -59,7 +59,6 @@ namespace Recipe.API.Features.Recipe.UpdateRecipe
                 new RecipeUpdateSummary(ingredientsSummary.created, ingredientsSummary.updated, ingredientsSummary.deleted,
                 stepsSummary.created, stepsSummary.updated, stepsSummary.deleted,
                 tagsSummary.created, tagsSummary.updated, tagsSummary.deleted)); 
-
         }
 
         private async Task<CollectionSummary> ReplaceIngredientsAsync(UpdateRecipeCommand command)

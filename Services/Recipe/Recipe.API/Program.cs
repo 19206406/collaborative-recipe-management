@@ -81,6 +81,10 @@ var app = builder.Build();
 // migración en automatico 
 await app.ApplyMigrationsAsync<RecipeDbContext>(); 
 
+// validaciones middleware
+app.UseExceptionHandler();
+app.UseCustomExceptionHandler();
+
 // jwt autenticación 
 app.UseAuthentication();
 app.UseAuthorization();
@@ -91,10 +95,6 @@ app.MapHealthChecks("/health", new HealthCheckOptions
     Predicate = _=> true, 
     ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
 }); 
-
-// validaciones middleware
-app.UseExceptionHandler();
-app.UseCustomExceptionHandler();
 
 // middleware de fastendpoints
 app.UseFastEndpoints();

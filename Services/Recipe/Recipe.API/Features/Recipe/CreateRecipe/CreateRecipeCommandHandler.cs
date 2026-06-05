@@ -49,11 +49,10 @@ namespace Recipe.API.Features.Recipe.CreateRecipe
                     Tag = t.Name.Trim().ToLower()
                 }).ToList()
             };
-
-            // TODO: NO SE ESTAN CREANDO LOS TAGS 
+            
             var r = await _recipeRepository.AddRecipe(newRecipe);
 
-            var recipeMap = r.Adapt<CreateRecipeResponse>();
+            var recipeMap = newRecipe.Adapt<CreateRecipeResponse>();
 
             return recipeMap; 
         }

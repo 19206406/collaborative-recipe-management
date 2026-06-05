@@ -1,6 +1,7 @@
 ﻿using BuildingBlocks.Jwt.Claims;
 using FastEndpoints;
 using MediatR;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Recipe.API.Features.Recipe.UpdateRecipe
 {
@@ -8,7 +9,7 @@ namespace Recipe.API.Features.Recipe.UpdateRecipe
     public record UpdateIngredient(int? Id, string Name, decimal Quantity, string Unit, int DisplayOrder);
     public record UpdateStep(int? Id, int StepNumber, string Instruction);
     public record UpdateTag(int? Id, string Tag); 
-    public record UpdateRecipeRequest(int Id, UpdateRecipe Recipe, List<UpdateIngredient> Ingredients, List<UpdateStep> Steps, List<UpdateTag> Tags); 
+    public record UpdateRecipeRequest([FromRoute] int Id, UpdateRecipe Recipe, List<UpdateIngredient> Ingredients, List<UpdateStep> Steps, List<UpdateTag> Tags); 
 
     public class UpdateRecipeEndpoint : Endpoint<UpdateRecipeRequest, UpdateRecipeResponse>
     {
