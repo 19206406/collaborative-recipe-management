@@ -2,5 +2,5 @@
 
 namespace Notification.API.Features.Notification.GetNotificationsByUser
 {
-    public record GetNotificationsByUserQuery(int UserId) : IQuery<GetNotificationsByUserResponse>; 
+    public record GetNotificationsByUserQuery(int UserId) : IQuery<List<GetNotificationsByUserResponse>>; 
 }

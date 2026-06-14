@@ -2,5 +2,5 @@
 
 namespace Notification.API.Features.Notification.GetNumberOfNotificationsByUser
 {
-    public record GetNumberOfNotificationsByUserQuery(int UserId) : IQuery<GetNumberOfNotificationsByUserResponse>; 
+    public record GetNumberOfNotificationsByUserQuery(int UserId) : IQuery<List<GetNumberOfNotificationsByUserResponse>>; 
 }

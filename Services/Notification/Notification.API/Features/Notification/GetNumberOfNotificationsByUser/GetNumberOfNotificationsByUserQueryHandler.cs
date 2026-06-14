@@ -4,7 +4,8 @@ using Notification.API.Repositories.NotificationRepository;
 
 namespace Notification.API.Features.Notification.GetNumberOfNotificationsByUser
 {
-    public class GetNumberOfNotificationsByUserQueryHandler : IQueryHandler<GetNumberOfNotificationsByUserQuery, GetNumberOfNotificationsByUserResponse>
+    public class GetNumberOfNotificationsByUserQueryHandler 
+        : IQueryHandler<GetNumberOfNotificationsByUserQuery, List<GetNumberOfNotificationsByUserResponse>>
     {
         private readonly INotificationRepository _notificationRepository;
 
@@ -13,13 +14,13 @@ namespace Notification.API.Features.Notification.GetNumberOfNotificationsByUser
             _notificationRepository = notificationRepository;
         }
 
-        public async Task<GetNumberOfNotificationsByUserResponse> Handle(GetNumberOfNotificationsByUserQuery query, CancellationToken cancellationToken)
+        public async Task<List<GetNumberOfNotificationsByUserResponse>> Handle(GetNumberOfNotificationsByUserQuery query, CancellationToken cancellationToken)
         {
             var notifications = await _notificationRepository.GetNumberOfNotificationsUnReadByUserIdAsync(query.UserId);
 
-            var mapNotifications = notifications.Adapt<List<NotificationResponse>>();
+            var mapNotifications = notifications.Adapt<List<GetNumberOfNotificationsByUserResponse>>();
 
-            return new GetNumberOfNotificationsByUserResponse(mapNotifications); 
+            return mapNotifications; 
         }
     }
 }

@@ -20,7 +20,7 @@ namespace Recipe.API.Middleware
             try
             {
                 await _next(context); 
-            }
+           }
             catch (Exception ex)
             {
                 await HandleExceptionAsync(context, ex); 

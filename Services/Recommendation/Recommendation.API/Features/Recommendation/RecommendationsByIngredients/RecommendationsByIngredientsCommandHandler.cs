@@ -14,7 +14,7 @@ namespace Recommendation.API.Features.Recommendation.RecommendationsByIngredient
         private readonly ICacheService _cache;
 
         private static readonly TimeSpan CacheDuration = TimeSpan.FromMinutes(5);
-        private const decimal MinMatchPercentage = 60m;
+        private const decimal MinMatchPercentage = 40m;
 
         public RecommendationsByIngredientsCommandHandler(
             IRecipeServiceClient recipeService, ICacheService cache)
@@ -45,7 +45,8 @@ namespace Recommendation.API.Features.Recommendation.RecommendationsByIngredient
                 .Select(recipe => CalculateMatch(recipe, sortedIngredients))
                 .Where(match => match.MatchPercentage >= MinMatchPercentage)
                 .OrderByDescending(match => match.MatchPercentage)
-                .ToList(); 
+                .ToList();
+                
 
             await _cache.SetAsync(cacheKey, matches, CacheDuration);
             return matches;

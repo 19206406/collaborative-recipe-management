@@ -5,7 +5,7 @@ using MediatR;
 namespace Notification.API.Features.Notification.GetNotificationsByUser
 {
 
-    public class GetNotificationsByUserEndpoint : EndpointWithoutRequest<GetNotificationsByUserResponse>
+    public class GetNotificationsByUserEndpoint : EndpointWithoutRequest<List<GetNotificationsByUserResponse>>
     {
         private readonly IMediator _mediator;
 
