@@ -28,6 +28,13 @@ builder.Services.AddRabbitMQMessaging(builder.Configuration);
 builder.Services.AddRabbitMQConsumer<RatingCreateAndUpdateConsumer>();
 builder.Services.AddRabbitMQConsumer<RatingDeleteConsumer>();
 
+// resiliencia RabbitMQ
+builder.Services.Configure<HostOptions>(options =>
+{
+    options.BackgroundServiceExceptionBehavior =
+        BackgroundServiceExceptionBehavior.Ignore;
+}); 
+
 // dbContest 
 builder.Services.AddDbContext<RecipeDbContext>(options =>
 {

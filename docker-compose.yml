@@ -1,88 +1,84 @@
 services:
-  # ----- bases de datos 
+  # ----- bases de datos
   postgres-userdb:
     image: postgres:16-alpine
-    networks: 
-      - microservices-network 
-  
+    networks:
+      - microservices-network
+
   postgres-recipedb:
     image: postgres:16-alpine
     networks:
       - microservices-network
-        
+
   postgres-ratingdb:
     image: postgres:16-alpine
     networks:
       - microservices-network
-        
+
   postgres-notificationdb:
     image: postgres:16-alpine
     networks:
       - microservices-network
-  
+
   redis:
     image: redis:7-alpine
-    networks: 
+    networks:
       - microservices-network
 
-  rabbitmq: 
+  rabbitmq:
     image: rabbitmq:3.13-management-alpine
     networks:
-      - microservices-network 
+      - microservices-network
 
-
-  # -- Microservicios --------------------------- 
-#  user-api: 
-#    image: user-api
-#    build: 
-#      context: . 
-#      dockerfile: Services/User/User.API/Dockerfile 
-#    networks: 
-#      - microservices-network 
-#
-#  recipe-api: 
-#    image: recipe-api
-#    build: 
-#      context: . 
-#      dockerfile: Services/Recipe/Recipe.API/Dockerfile 
-#    networks: 
-#      - microservices-network 
-#
-#  rating-api: 
-#    image: rating-api
-#    build: 
-#      context: .
-#      dockerfile: Services/Rating/Rating.API/Dockerfile 
-#    networks: 
-#      - microservices-network 
-#    
-#  recommendation-api: 
-#    image: recommendation-api 
-#    build: 
-#      context: . 
-#      dockerfile: Services/Recommendation/Recommendation.API/Dockerfile 
-#    networks: 
-#      - microservices-network 
-#      
-#  notification-api: 
-#    image: notification-api 
-#    build: 
-#      context: . 
-#      dockerfile: Services/Notification/Notification.API/Dockerfile 
-#    networks: 
-#      - microservices-network 
-#
-#   # api-gateway
-#
-#  apigateway:
-#    image: api-gateway
-#    build:
-#      context: .
-#      dockerfile: ApiGateways/ApiGateway/Dockerfile
-#    networks:
-#      - microservices-network
+  # -- Microservicios ---------------------------
+  user-api:
+    image: user-api
+    build:
+      context: .
+      dockerfile: Services/User/User.API/Dockerfile
+    networks:
+      - microservices-network
+  
+  recipe-api:
+    image: recipe-api
+    build:
+      context: .
+      dockerfile: Services/Recipe/Recipe.API/Dockerfile
+    networks:
+      - microservices-network
+  
+  rating-api:
+    image: rating-api
+    build:
+      context: .
+      dockerfile: Services/Rating/Rating.API/Dockerfile
+    networks:
+      - microservices-network
+  
+  recommendation-api:
+    image: recommendation-api
+    build:
+      context: .
+      dockerfile: Services/Recommendation/Recommendation.API/Dockerfile
+    networks:
+      - microservices-network
+  
+  notification-api:
+    image: notification-api
+    build:
+      context: .
+      dockerfile: Services/Notification/Notification.API/Dockerfile
+    networks:
+      - microservices-network
+  
+  apigateway:
+    image: api-gateway
+    build:
+      context: .
+      dockerfile: ApiGateways/ApiGateway/Dockerfile
+    networks:
+      - microservices-network
 
 networks:
-  microservices-network: 
+  microservices-network:
     driver: bridge
-

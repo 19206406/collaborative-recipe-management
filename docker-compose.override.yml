@@ -115,215 +115,215 @@ services:
       interval: 30s
       timeout: 10s
       retries: 5
-      start_period: 40s
+      start_period: 60s
 
   # ----------- microservicios 
 
-#  user-api: 
-#    container_name: user-api
-#    environment: 
-#      - ASPNETCORE_ENVIRONMENT=Development
-#      - ASPNETCORE_URLS=http://+:8080
-#      - ConnectionStrings__RecipeUserDb=Host=userdb;Port=5432;Database=user_db;Username=admin;Password=Sebastian@User123;Include Error Detail=true
-#      - JwtSettings__Issuer=UserApi
-#      - JwtSettings__Audiences__0=UserClient
-#      - JwtSettings__Audiences__1=RecipeClient
-#      - JwtSettings__Audiences__2=RatingClient
-#      - JwtSettings__AccessTokenExpirationMinutes=300 
-#      - JwtSettings__RefreshTokenExpirationDays=7
-#      - JwtSettings__RsaPrivateKey=-----BEGIN PRIVATE KEY-----MIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQCwTiDd4TaCRd2Vx8Oeotn6ftfBsZlMwx8To0j2ihLlzHVd52Bcik1PxwqWpkGkIcz/phCwvNrjI59/Tp8bM5Hvd5NcZcpKItaYov6c8bRLOLbYLutSLZrWCYyi9Y6v+7Y5Wugi98Y2Ge55MBPgfe8WjfMDyNsAvab89jyTlIeXr7pGU48N0lWoF0TcuonFJEq0FAPbkMFuBk0Elw59xaw/rLUkTJiO718OjB1lNUW2WMKTucjnJZVEWL/4XCKPFka0ofmv6DsGZD+71O9oSAk74vNdUDo5fEr9JNj+tQoU8uwq1l84eTxlNnu/tCJ95MPgPTcy+UpxHHbiArWO2W03AgMBAAECggEAEjSnKTJZ7h7n0FE2DpoTd04E2qALzAT0HxOD881zQR6ZWg6MAVJYxG2x1repXJkO8bFE1PNTiRQDIuLMBEORhNBsu6RZPMmXLmDaePtumjvriaxiqXRDImoPBz7jMqIEAa00/nNmmOyZlxMTYmGuwD39Q71IfC2ZYlLNE5JJZCzZ5V4UkZkLd2bqQt2Qg5ruLrwT6xNJYgZ8fONBBhv+MXYs9eJvID9Uva/mOBOL1pZUzcgKMgpN9DglfEf2F43oD9yrbUr+yVjmZ/BKjDQ8wImUavoILrLNL1PXtUqAIKW5c3ut6tanccAFwImH4WONG0spUUWZjXJvbVBKxrDNfQKBgQDYsdY7AphduPu6GxoH9kgUnat6y7ALigrB4g7UbKbUuYCEFyHh3ZQ1jXCKsSOHU7fcWXEOr/m7awA8EJMw5y/3ZQoxoeCFhaZXKePElctw58Kys0L0hESrVvEoS+rL6jkLWqymJ1l7sxLL9N8A6j6FDduaOlLjcY4StHojGDe4GwKBgQDQSNDax6lefMIq49R32lfSYs+NxAtJjwazxEs2vkIHfdYntKdWTPGVxFdmv5PudZyXUIOM85Kq0/1ESB2WreU6MVwUA7mXarM2aDEKRYKrBitMzgwEmPEKkJUOykXxaJlhXP27np3Np9BLi9aluz0kEIDfqhDWb/ZPJ7MgBBEpFQKBgA5R+lFeA4m2DtSms9qw2OSb4tgzm8e3cKyNbuN05rWKKMcR7EhL515+oWBZAnsP+keSlZkd4ggTsylFAyUpMg9MWxcalobcZTi/aPD14ULt3f0HQbZ9Azi7fyZllfex2+E3Nc+pLA2zsNtPrGkYEdejKc8QaafkOjpcOPIWyJ/fAoGAJkB5OvTYQiYfcskMyEYtQtIq1BphCE1gKbuvJIqkjcOqhPhEkzDmXV8FvjUI8g5fh9qdjlFdakoshVHJPVcKdjmCc5qLhydtalyQRRam/MnRQfXFd0KvYgVTmrfDSKaxJJRzdPWYfaCIPJeeACn2/JybTnhpRzigv8DGwOZ+UFECgYAUG58u1ejI0xRCJCM3CnIucAlcSD3fie8I1EVKuUgxwDePwYVoP3ZkAibF9vKMaT6YCm2NautvPQU7/OrISTmR55KrBMTtOhHolsGVZhomhM3ZP0UF3G+AUjZpqPeOK7q2zSDDtrHeRplXGKa9MCooCr1Hh6gSdJ14A9lUilMKPw==-----END PRIVATE KEY-----
-#      - JwtSettings__RsaPublicKey=-----BEGIN PUBLIC KEY-----MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAsE4g3eE2gkXdlcfDnqLZ+n7XwbGZTMMfE6NI9ooS5cx1XedgXIpNT8cKlqZBpCHM/6YQsLza4yOff06fGzOR73eTXGXKSiLWmKL+nPG0Szi22C7rUi2a1gmMovWOr/u2OVroIvfGNhnueTAT4H3vFo3zA8jbAL2m/PY8k5SHl6+6RlOPDdJVqBdE3LqJxSRKtBQD25DBbgZNBJcOfcWsP6y1JEyYju9fDowdZTVFtljCk7nI5yWVRFi/+FwijxZGtKH5r+g7BmQ/u9TvaEgJO+LzXVA6OXxK/STY/rUKFPLsKtZfOHk8ZTZ7v7QifeTD4D03MvlKcRx24gK1jtltNwIDAQAB-----END PUBLIC KEY-----
-#    ports:
-#      - "5001:8080"
-#    depends_on:
-#      postgres-userdb: 
-#        condition: service_healthy
-#
-#  recipe-api: 
-#    container_name: recipe-api
-#    environment: 
-#      - ASPNETCORE_ENVIRONMENT=Development
-#      - ASPNETCORE_URLS=http://+:8080
-#      - ConnectionStrings__RecipeDb=Host=recipedb;Port=5432;Database=recipe_db;Username=admin;Password=Sebastian@Recipe123;Include Error Detail=true
-#      - JwtSettings__Issuer=UserApi
-#      - JwtSettings__Audiences__0=UserClient
-#      - JwtSettings__Audiences__1=RecipeClient
-#      - JwtSettings__Audiences__2=RatingClient
-#      - JwtSettings__AccessTokenExpirationMinutes=300 
-#      - JwtSettings__RefreshTokenExpirationDays=7
-#      - JwtSettings__RsaPublicKey=-----BEGIN PUBLIC KEY-----MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAsE4g3eE2gkXdlcfDnqLZ+n7XwbGZTMMfE6NI9ooS5cx1XedgXIpNT8cKlqZBpCHM/6YQsLza4yOff06fGzOR73eTXGXKSiLWmKL+nPG0Szi22C7rUi2a1gmMovWOr/u2OVroIvfGNhnueTAT4H3vFo3zA8jbAL2m/PY8k5SHl6+6RlOPDdJVqBdE3LqJxSRKtBQD25DBbgZNBJcOfcWsP6y1JEyYju9fDowdZTVFtljCk7nI5yWVRFi/+FwijxZGtKH5r+g7BmQ/u9TvaEgJO+LzXVA6OXxK/STY/rUKFPLsKtZfOHk8ZTZ7v7QifeTD4D03MvlKcRx24gK1jtltNwIDAQAB-----END PUBLIC KEY-----
-#      - RabbitMQ__HostName=rabbitmq-broker
-#      - RabbitMQ__Port=5672
-#      - RabbitMQ__UserName=admin
-#      - RabbitMQ__Password=Sebastian@Rabbit123
-#      - RabbitMQ__VirtualHost=/
-#      - RabbitMQ__RetryCount=5
-#    ports:
-#      - "5002:8080"
-#    depends_on:
-#      postgres-recipedb: 
-#        condition: service_healthy
-#      redis: 
-#        condition: service_healthy
-#      rabbitmq: 
-#        condition: service_healthy
-#
-#  rating-api: 
-#    container_name: rating-api
-#    environment: 
-#      - ASPNETCORE_ENVIRONMENT=Development
-#      - ASPNETCORE_URLS=http://+:8080
-#      - ConnectionStrings__RatingDb=Host=ratingdb;Port=5432;Database=rating_db;UserName=admin;Password=Sebastian@Rating123;Include Error Detail=true
-#      - JwtSettings__Issuer=UserApi
-#      - JwtSettings__Audiences__0=UserClient
-#      - JwtSettings__Audiences__1=RecipeClient
-#      - JwtSettings__Audiences__2=RatingClient
-#      - JwtSettings__AccessTokenExpirationMinutes=300 
-#      - JwtSettings__RefreshTokenExpirationDays=7
-#      - JwtSettings__RsaPublicKey=-----BEGIN PUBLIC KEY-----MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAsE4g3eE2gkXdlcfDnqLZ+n7XwbGZTMMfE6NI9ooS5cx1XedgXIpNT8cKlqZBpCHM/6YQsLza4yOff06fGzOR73eTXGXKSiLWmKL+nPG0Szi22C7rUi2a1gmMovWOr/u2OVroIvfGNhnueTAT4H3vFo3zA8jbAL2m/PY8k5SHl6+6RlOPDdJVqBdE3LqJxSRKtBQD25DBbgZNBJcOfcWsP6y1JEyYju9fDowdZTVFtljCk7nI5yWVRFi/+FwijxZGtKH5r+g7BmQ/u9TvaEgJO+LzXVA6OXxK/STY/rUKFPLsKtZfOHk8ZTZ7v7QifeTD4D03MvlKcRx24gK1jtltNwIDAQAB-----END PUBLIC KEY-----
-#      - RabbitMQ__HostName=rabbitmq-broker
-#      - RabbitMQ__Port=5672
-#      - RabbitMQ__UserName=admin
-#      - RabbitMQ__Password=Sebastian@Rabbit123
-#      - RabbitMQ__VirtualHost=/
-#      - RabbitMQ__RetryCount=5
-#      # Nota las utls de los servicios cambian debido a que van ha estar en contenedores 
-#      - ServiceUrls__RecipesService=http://recipe-api:8080
-#      - ServiceUrls__NotificationService=http://notification-api:8080
-#      - HttpClientSettings__TimeoutSeconds=30
-#      - HttpClientSettings__RetryCount=3
-#      - HttpClientSettings__CircuitBreakerFailuresBeforeOpening=5
-#      - HttpClientSettings__CircuitBreakerDurationOfBreakSeconds=30
-#    ports:
-#      - "5003:8080"
-#    depends_on:
-#      postgres-ratingdb: 
-#        condition: service_healthy
-#      rabbitmq: 
-#        condition: service_healthy
-##      recipe-api: 
-##        condition: service_healthy
-#
-#  recommendation-api: 
-#    container_name: recommendation-api
-#    environment: 
-#      - ASPNETCORE_ENVIRONMENT=Development
-#      - ASPNETCORE_URLS=http://+:8080
-#      - Redis__ConnectionString=redis-cache:6379
-#      - ServicesUrls__UserServiceUrl=http://user-api:8080
-#      - ServicesUrls__RecipeServiceUrl=http://recipe-api:8080
-#      - ServicesUrls__RatingServiceUrl=http://rating-api:8080
-#      - HttpClientSettings__TimeoutSeconds=30
-#      - HttpClientSettings__RetryCount=3
-#      - HttpClientSettings__CircuitBreakerFailuresBeforeOpening=5
-#      - HttpClientSettings__CircuitBreakerDurationOfBreakSeconds=30
-#    ports:
-#      - "5004:8080"
-#    depends_on: 
-#      redis: 
-#        condition: service_healthy
-#      recipe-api: 
-#        condition: service_started
-#      rating-api: 
-#        condition: service_started
-#      user-api: 
-#        condition: service_started
-#
-#  notification-api: 
-#    container_name: notification-api
-#    environment: 
-#      - ASPNETCORE_ENVIRONMENT=Development
-#      - ASPNETCORE_URLS=http://+:8080
-#      - ConnectionStrings__NotificationDb=Host=notificationdb;Port=5432;Database=notification_db;UserName=admin;Password=Sebastian@Notification123;Include Error Detail=true
-#      - JwtSettings__Issuer=UserApi
-#      - JwtSettings__Audiences__0=UserClient
-#      - JwtSettings__Audiences__1=RecipeClient
-#      - JwtSettings__Audiences__2=RatingClient
-#      - JwtSettings__AccessTokenExpirationMinutes=300 
-#      - JwtSettings__RefreshTokenExpirationDays=7
-#      - JwtSettings__RsaPublicKey=-----BEGIN PUBLIC KEY-----MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAsE4g3eE2gkXdlcfDnqLZ+n7XwbGZTMMfE6NI9ooS5cx1XedgXIpNT8cKlqZBpCHM/6YQsLza4yOff06fGzOR73eTXGXKSiLWmKL+nPG0Szi22C7rUi2a1gmMovWOr/u2OVroIvfGNhnueTAT4H3vFo3zA8jbAL2m/PY8k5SHl6+6RlOPDdJVqBdE3LqJxSRKtBQD25DBbgZNBJcOfcWsP6y1JEyYju9fDowdZTVFtljCk7nI5yWVRFi/+FwijxZGtKH5r+g7BmQ/u9TvaEgJO+LzXVA6OXxK/STY/rUKFPLsKtZfOHk8ZTZ7v7QifeTD4D03MvlKcRx24gK1jtltNwIDAQAB-----END PUBLIC KEY-----
-#      - RabbitMQ__HostName=rabbitmq-broker
-#      - RabbitMQ__Port=5672
-#      - RabbitMQ__UserName=admin
-#      - RabbitMQ__Password=Sebastian@Rabbit123
-#      - RabbitMQ__VirtualHost=/
-#      - RabbitMQ__RetryCount=5
-#      - ServicesUrls__UserServiceUrl=http://user-api:8080
-#      - ServicesUrls__RecipeServiceUrl=http://recipe-api:8080
-#      - HttpClientSettings__TimeoutSeconds=30
-#      - HttpClientSettings__RetryCount=3
-#      - HttpClientSettings__CircuitBreakerFailuresBeforeOpening=5
-#      - HttpClientSettings__CircuitBreakerDurationOfBreakSeconds=30
-#    ports:
-#      - "5005:8080"
-#    depends_on:
-#      postgres-notificationdb: 
-#        condition: service_healthy
-#      rabbitmq: 
-#        condition: service_healthy
-#      recipe-api: 
-#        condition: service_started
-#      rating-api: 
-#        condition: service_started
-#
-#  apigateway:
-#    environment:
-#      - SwaggerAggregator__GatewayPublicUrl=http://localhost:5050
-#      - ASPNETCORE_ENVIRONMENT=Development
-#      - ASPNETCORE_URLS=http://+:8080
-#      # JWT 
-#      - JwtSettings__Issuer=UserApi
-#      - JwtSettings__Audiences__0=UserClient
-#      - JwtSettings__Audiences__1=RecipeClient
-#      - JwtSettings__Audiences__2=RatingClient
-#      - JwtSettings__RsaPublicKey=-----BEGIN PUBLIC KEY-----MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAsE4g3eE2gkXdlcfDnqLZ+n7XwbGZTMMfE6NI9ooS5cx1XedgXIpNT8cKlqZBpCHM/6YQsLza4yOff06fGzOR73eTXGXKSiLWmKL+nPG0Szi22C7rUi2a1gmMovWOr/u2OVroIvfGNhnueTAT4H3vFo3zA8jbAL2m/PY8k5SHl6+6RlOPDdJVqBdE3LqJxSRKtBQD25DBbgZNBJcOfcWsP6y1JEyYju9fDowdZTVFtljCk7nI5yWVRFi/+FwijxZGtKH5r+g7BmQ/u9TvaEgJO+LzXVA6OXxK/STY/rUKFPLsKtZfOHk8ZTZ7v7QifeTD4D03MvlKcRx24gK1jtltNwIDAQAB-----END PUBLIC KEY-----
-#      # YARP Destinos 
-#      - ReverseProxy__Clusters__users-cluster__Destinations__users-primary__Address=http://user-api:8080
-#      - ReverseProxy__Clusters__recipes-cluster__Destinations__recipes-primary__Address=http://recipe-api:8080
-#      - ReverseProxy__Clusters__ratings-cluster__Destinations__ratings-primary__Address=http://rating-api:8080
-#      - ReverseProxy__Clusters__recommendations-cluster__Destinations__recommendations-primary__Address=http://recommendation-api:8080
-#      - ReverseProxy__Clusters__notifications-cluster__Destinations__notifications-primary__Address=http://notification-api:8080
-#      # YARP Health checks 
-#      - ReverseProxy__Clusters__users-cluster__HealthCheck__Active__Path=/health
-#      - ReverseProxy__Clusters__recipes-cluster__HealthCheck__Active__Path=/health
-#      - ReverseProxy__Clusters__ratings-cluster__HealthCheck__Active__Path=/health
-#      - ReverseProxy__Clusters__recommendations-cluster__HealthCheck__Active__Path=/health
-#      - ReverseProxy__Clusters__notifications-cluster__HealthCheck__Active__Path=/health
-#      # healthchecks UI 
-#      - HealthChecksUi__HealthChecks__0__Name=User Service
-#      - HealthChecksUi__HealthChecks__0__Uri=http://user-api:8080/health
-#      - HealthChecksUi__HealthChecks__1__Name=Recipe Service
-#      - HealthChecksUi__HealthChecks__1__Uri=http://recipe-api:8080/health
-#      - HealthChecksUi__HealthChecks__2__Name=Rating Service
-#      - HealthChecksUi__HealthChecks__2__Uri=http://rating-api:8080/health
-#      - HealthChecksUi__HealthChecks__3__Name=Recommendation Service
-#      - HealthChecksUi__HealthChecks__3__Uri=http://recommendation-api:8080/health
-#      - HealthChecksUi__HealthChecks__4__Name=Notification Service
-#      - HealthChecksUi__HealthChecks__4__Uri=http://notification-api:8080/health
-#      # Swagger 
-#      - SwaggerAggregator__Services__0__Name=users-service
-#      - SwaggerAggregator__Services__0__DisplayName=Users Service
-#      - SwaggerAggregator__Services__0__SwaggerUrl=http://user-api:8080/swagger/v1/swagger.json
-#      - SwaggerAggregator__Services__1__Name=recipe-service
-#      - SwaggerAggregator__Services__1__DisplayName=Recipe Service
-#      - SwaggerAggregator__Services__1__SwaggerUrl=http://recipe-api:8080/swagger/v1/swagger.json
-#      - SwaggerAggregator__Services__2__Name=rating-service
-#      - SwaggerAggregator__Services__2__DisplayName=Rating Service
-#      - SwaggerAggregator__Services__2__SwaggerUrl=http://rating-api:8080/swagger/v1/swagger.json
-#      - SwaggerAggregator__Services__3__Name=recommendation-service
-#      - SwaggerAggregator__Services__3__DisplayName=Recommendation Service
-#      - SwaggerAggregator__Services__3__SwaggerUrl=http://recommendation-api:8080/swagger/v1/swagger.json
-#      - SwaggerAggregator__Services__4__Name=notification-service
-#      - SwaggerAggregator__Services__4__DisplayName=Notification Service
-#      - SwaggerAggregator__Services__4__SwaggerUrl=http://notification-api:8080/swagger/v1/swagger.json
-#    ports:
-#      - "5050:8080"
-#    depends_on: 
-#      - user-api
-#      - recipe-api
-#      - rating-api
-#      - recommendation-api
-#      - notification-api
+  user-api:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_HTTP_PORTS=8080
+      - ASPNETCORE_HTTPS_PORTS=8081
+      - ConnectionStrings__RecipeUserDb=Host=postgres-userdb;Port=5432;Database=user_db;Username=admin;Password=Sebastian@User123;Include Error Detail=true
+      - JwtSettings__Issuer=UserApi
+      - JwtSettings__Audiences__0=UserClient
+      - JwtSettings__Audiences__1=RecipeClient
+      - JwtSettings__Audiences__2=RatingClient
+      - JwtSettings__AccessTokenExpirationMinutes=300
+      - JwtSettings__RefreshTokenExpirationDays=7
+      - JwtSettings__RsaPrivateKey=-----BEGIN PRIVATE KEY-----MIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQCwTiDd4TaCRd2Vx8Oeotn6ftfBsZlMwx8To0j2ihLlzHVd52Bcik1PxwqWpkGkIcz/phCwvNrjI59/Tp8bM5Hvd5NcZcpKItaYov6c8bRLOLbYLutSLZrWCYyi9Y6v+7Y5Wugi98Y2Ge55MBPgfe8WjfMDyNsAvab89jyTlIeXr7pGU48N0lWoF0TcuonFJEq0FAPbkMFuBk0Elw59xaw/rLUkTJiO718OjB1lNUW2WMKTucjnJZVEWL/4XCKPFka0ofmv6DsGZD+71O9oSAk74vNdUDo5fEr9JNj+tQoU8uwq1l84eTxlNnu/tCJ95MPgPTcy+UpxHHbiArWO2W03AgMBAAECggEAEjSnKTJZ7h7n0FE2DpoTd04E2qALzAT0HxOD881zQR6ZWg6MAVJYxG2x1repXJkO8bFE1PNTiRQDIuLMBEORhNBsu6RZPMmXLmDaePtumjvriaxiqXRDImoPBz7jMqIEAa00/nNmmOyZlxMTYmGuwD39Q71IfC2ZYlLNE5JJZCzZ5V4UkZkLd2bqQt2Qg5ruLrwT6xNJYgZ8fONBBhv+MXYs9eJvID9Uva/mOBOL1pZUzcgKMgpN9DglfEf2F43oD9yrbUr+yVjmZ/BKjDQ8wImUavoILrLNL1PXtUqAIKW5c3ut6tanccAFwImH4WONG0spUUWZjXJvbVBKxrDNfQKBgQDYsdY7AphduPu6GxoH9kgUnat6y7ALigrB4g7UbKbUuYCEFyHh3ZQ1jXCKsSOHU7fcWXEOr/m7awA8EJMw5y/3ZQoxoeCFhaZXKePElctw58Kys0L0hESrVvEoS+rL6jkLWqymJ1l7sxLL9N8A6j6FDduaOlLjcY4StHojGDe4GwKBgQDQSNDax6lefMIq49R32lfSYs+NxAtJjwazxEs2vkIHfdYntKdWTPGVxFdmv5PudZyXUIOM85Kq0/1ESB2WreU6MVwUA7mXarM2aDEKRYKrBitMzgwEmPEKkJUOykXxaJlhXP27np3Np9BLi9aluz0kEIDfqhDWb/ZPJ7MgBBEpFQKBgA5R+lFeA4m2DtSms9qw2OSb4tgzm8e3cKyNbuN05rWKKMcR7EhL515+oWBZAnsP+keSlZkd4ggTsylFAyUpMg9MWxcalobcZTi/aPD14ULt3f0HQbZ9Azi7fyZllfex2+E3Nc+pLA2zsNtPrGkYEdejKc8QaafkOjpcOPIWyJ/fAoGAJkB5OvTYQiYfcskMyEYtQtIq1BphCE1gKbuvJIqkjcOqhPhEkzDmXV8FvjUI8g5fh9qdjlFdakoshVHJPVcKdjmCc5qLhydtalyQRRam/MnRQfXFd0KvYgVTmrfDSKaxJJRzdPWYfaCIPJeeACn2/JybTnhpRzigv8DGwOZ+UFECgYAUG58u1ejI0xRCJCM3CnIucAlcSD3fie8I1EVKuUgxwDePwYVoP3ZkAibF9vKMaT6YCm2NautvPQU7/OrISTmR55KrBMTtOhHolsGVZhomhM3ZP0UF3G+AUjZpqPeOK7q2zSDDtrHeRplXGKa9MCooCr1Hh6gSdJ14A9lUilMKPw==-----END PRIVATE KEY-----
+      - JwtSettings__RsaPublicKey=-----BEGIN PUBLIC KEY-----MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAsE4g3eE2gkXdlcfDnqLZ+n7XwbGZTMMfE6NI9ooS5cx1XedgXIpNT8cKlqZBpCHM/6YQsLza4yOff06fGzOR73eTXGXKSiLWmKL+nPG0Szi22C7rUi2a1gmMovWOr/u2OVroIvfGNhnueTAT4H3vFo3zA8jbAL2m/PY8k5SHl6+6RlOPDdJVqBdE3LqJxSRKtBQD25DBbgZNBJcOfcWsP6y1JEyYju9fDowdZTVFtljCk7nI5yWVRFi/+FwijxZGtKH5r+g7BmQ/u9TvaEgJO+LzXVA6OXxK/STY/rUKFPLsKtZfOHk8ZTZ7v7QifeTD4D03MvlKcRx24gK1jtltNwIDAQAB-----END PUBLIC KEY-----
+    ports:
+      - "6000:8080"
+    depends_on:
+      postgres-userdb:
+        condition: service_healthy
+
+  recipe-api:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_HTTP_PORTS=8080
+      - ASPNETCORE_HTTPS_PORTS=8081
+      - ConnectionStrings__RecipeDb=Host=postgres-recipedb;Port=5432;Database=recipe_db;Username=admin;Password=Sebastian@Recipe123;Include Error Detail=true
+      - JwtSettings__Issuer=UserApi
+      - JwtSettings__Audiences__0=UserClient
+      - JwtSettings__Audiences__1=RecipeClient
+      - JwtSettings__Audiences__2=RatingClient
+      - JwtSettings__AccessTokenExpirationMinutes=300
+      - JwtSettings__RefreshTokenExpirationDays=7
+      - JwtSettings__RsaPublicKey=-----BEGIN PUBLIC KEY-----MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAsE4g3eE2gkXdlcfDnqLZ+n7XwbGZTMMfE6NI9ooS5cx1XedgXIpNT8cKlqZBpCHM/6YQsLza4yOff06fGzOR73eTXGXKSiLWmKL+nPG0Szi22C7rUi2a1gmMovWOr/u2OVroIvfGNhnueTAT4H3vFo3zA8jbAL2m/PY8k5SHl6+6RlOPDdJVqBdE3LqJxSRKtBQD25DBbgZNBJcOfcWsP6y1JEyYju9fDowdZTVFtljCk7nI5yWVRFi/+FwijxZGtKH5r+g7BmQ/u9TvaEgJO+LzXVA6OXxK/STY/rUKFPLsKtZfOHk8ZTZ7v7QifeTD4D03MvlKcRx24gK1jtltNwIDAQAB-----END PUBLIC KEY-----
+      - RabbitMQ__HostName=rabbitmq
+      - RabbitMQ__Port=5672
+      - RabbitMQ__UserName=admin
+      - RabbitMQ__Password=Sebastian@Rabbit123
+      - RabbitMQ__VirtualHost=/
+      - RabbitMQ__RetryCount=5
+    ports:
+      - "6001:8080"
+    depends_on:
+      postgres-recipedb:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
+
+  rating-api:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_HTTP_PORTS=8080
+      - ASPNETCORE_HTTPS_PORTS=8081
+      - ConnectionStrings__RatingDb=Host=postgres-ratingdb;Port=5432;Database=rating_db;Username=admin;Password=Sebastian@Rating123;Include Error Detail=true
+      - JwtSettings__Issuer=UserApi
+      - JwtSettings__Audiences__0=UserClient
+      - JwtSettings__Audiences__1=RecipeClient
+      - JwtSettings__Audiences__2=RatingClient
+      - JwtSettings__AccessTokenExpirationMinutes=300
+      - JwtSettings__RefreshTokenExpirationDays=7
+      - JwtSettings__RsaPublicKey=-----BEGIN PUBLIC KEY-----MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAsE4g3eE2gkXdlcfDnqLZ+n7XwbGZTMMfE6NI9ooS5cx1XedgXIpNT8cKlqZBpCHM/6YQsLza4yOff06fGzOR73eTXGXKSiLWmKL+nPG0Szi22C7rUi2a1gmMovWOr/u2OVroIvfGNhnueTAT4H3vFo3zA8jbAL2m/PY8k5SHl6+6RlOPDdJVqBdE3LqJxSRKtBQD25DBbgZNBJcOfcWsP6y1JEyYju9fDowdZTVFtljCk7nI5yWVRFi/+FwijxZGtKH5r+g7BmQ/u9TvaEgJO+LzXVA6OXxK/STY/rUKFPLsKtZfOHk8ZTZ7v7QifeTD4D03MvlKcRx24gK1jtltNwIDAQAB-----END PUBLIC KEY-----
+      - RabbitMQ__HostName=rabbitmq
+      - RabbitMQ__Port=5672
+      - RabbitMQ__UserName=admin
+      - RabbitMQ__Password=Sebastian@Rabbit123
+      - RabbitMQ__VirtualHost=/
+      - RabbitMQ__RetryCount=5
+      - ServiceUrls__RecipesService=http://recipe-api:8080
+      - ServiceUrls__NotificationService=http://notification-api:8080
+      - HttpClientSettings__TimeoutSeconds=30
+      - HttpClientSettings__RetryCount=3
+      - HttpClientSettings__CircuitBreakerFailuresBeforeOpening=5
+      - HttpClientSettings__CircuitBreakerDurationOfBreakSeconds=30
+    ports:
+      - "6002:8080"
+    depends_on:
+      postgres-ratingdb:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
+      recipe-api:
+        condition: service_started
+
+  recommendation-api:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_HTTP_PORTS=8080
+      - ASPNETCORE_HTTPS_PORTS=8081
+      - Redis__ConnectionString=redis:6379
+      - ServicesUrls__UserServiceUrl=http://user-api:8080
+      - ServicesUrls__RecipeServiceUrl=http://recipe-api:8080
+      - ServicesUrls__RatingServiceUrl=http://rating-api:8080
+      - HttpClientSettings__TimeoutSeconds=30
+      - HttpClientSettings__RetryCount=3
+      - HttpClientSettings__CircuitBreakerFailuresBeforeOpening=5
+      - HttpClientSettings__CircuitBreakerDurationOfBreakSeconds=30
+    ports:
+      - "6003:8080"
+    depends_on:
+      redis:
+        condition: service_healthy
+      recipe-api:
+        condition: service_started
+      rating-api:
+        condition: service_started
+      user-api:
+        condition: service_started
+
+  notification-api:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_HTTP_PORTS=8080
+      - ASPNETCORE_HTTPS_PORTS=8081
+      - ConnectionStrings__NotificationDb=Host=postgres-notificationdb;Port=5432;Database=notification_db;Username=admin;Password=Sebastian@Notification123;Include Error Detail=true
+      - JwtSettings__Issuer=UserApi
+      - JwtSettings__Audiences__0=UserClient
+      - JwtSettings__Audiences__1=RecipeClient
+      - JwtSettings__Audiences__2=RatingClient
+      - JwtSettings__AccessTokenExpirationMinutes=300
+      - JwtSettings__RefreshTokenExpirationDays=7
+      - JwtSettings__RsaPublicKey=-----BEGIN PUBLIC KEY-----MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAsE4g3eE2gkXdlcfDnqLZ+n7XwbGZTMMfE6NI9ooS5cx1XedgXIpNT8cKlqZBpCHM/6YQsLza4yOff06fGzOR73eTXGXKSiLWmKL+nPG0Szi22C7rUi2a1gmMovWOr/u2OVroIvfGNhnueTAT4H3vFo3zA8jbAL2m/PY8k5SHl6+6RlOPDdJVqBdE3LqJxSRKtBQD25DBbgZNBJcOfcWsP6y1JEyYju9fDowdZTVFtljCk7nI5yWVRFi/+FwijxZGtKH5r+g7BmQ/u9TvaEgJO+LzXVA6OXxK/STY/rUKFPLsKtZfOHk8ZTZ7v7QifeTD4D03MvlKcRx24gK1jtltNwIDAQAB-----END PUBLIC KEY-----
+      - RabbitMQ__HostName=rabbitmq
+      - RabbitMQ__Port=5672
+      - RabbitMQ__UserName=admin
+      - RabbitMQ__Password=Sebastian@Rabbit123
+      - RabbitMQ__VirtualHost=/
+      - RabbitMQ__RetryCount=5
+      - ServicesUrls__UserServiceUrl=http://user-api:8080
+      - ServicesUrls__RecipeServiceUrl=http://recipe-api:8080
+      - HttpClientSettings__TimeoutSeconds=30
+      - HttpClientSettings__RetryCount=3
+      - HttpClientSettings__CircuitBreakerFailuresBeforeOpening=5
+      - HttpClientSettings__CircuitBreakerDurationOfBreakSeconds=30
+    ports:
+      - "6004:8080"
+    depends_on:
+      postgres-notificationdb:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
+      recipe-api:
+        condition: service_started
+      rating-api:
+        condition: service_started
+
+  apigateway:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_HTTP_PORTS=8080
+      - ASPNETCORE_HTTPS_PORTS=8081
+      - SwaggerAggregator__GatewayPublicUrl=http://localhost:6005
+      - JwtSettings__Issuer=UserApi
+      - JwtSettings__Audiences__0=UserClient
+      - JwtSettings__Audiences__1=RecipeClient
+      - JwtSettings__Audiences__2=RatingClient
+      - JwtSettings__Audiences__3=NotificationClient
+      - JwtSettings__RsaPublicKey=-----BEGIN PUBLIC KEY-----MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAsE4g3eE2gkXdlcfDnqLZ+n7XwbGZTMMfE6NI9ooS5cx1XedgXIpNT8cKlqZBpCHM/6YQsLza4yOff06fGzOR73eTXGXKSiLWmKL+nPG0Szi22C7rUi2a1gmMovWOr/u2OVroIvfGNhnueTAT4H3vFo3zA8jbAL2m/PY8k5SHl6+6RlOPDdJVqBdE3LqJxSRKtBQD25DBbgZNBJcOfcWsP6y1JEyYju9fDowdZTVFtljCk7nI5yWVRFi/+FwijxZGtKH5r+g7BmQ/u9TvaEgJO+LzXVA6OXxK/STY/rUKFPLsKtZfOHk8ZTZ7v7QifeTD4D03MvlKcRx24gK1jtltNwIDAQAB-----END PUBLIC KEY-----
+      # YARP destinos
+      - ReverseProxy__Clusters__users-cluster__Destinations__users-primary__Address=http://user-api:8080
+      - ReverseProxy__Clusters__recipes-cluster__Destinations__recipes-primary__Address=http://recipe-api:8080
+      - ReverseProxy__Clusters__ratings-cluster__Destinations__ratings-primary__Address=http://rating-api:8080
+      - ReverseProxy__Clusters__recommendations-cluster__Destinations__recommendations-primary__Address=http://recommendation-api:8080
+      - ReverseProxy__Clusters__notifications-cluster__Destinations__notifications-primary__Address=http://notification-api:8080
+      # YARP health checks
+      - ReverseProxy__Clusters__users-cluster__HealthCheck__Active__Path=/health
+      - ReverseProxy__Clusters__recipes-cluster__HealthCheck__Active__Path=/health
+      - ReverseProxy__Clusters__ratings-cluster__HealthCheck__Active__Path=/health
+      - ReverseProxy__Clusters__recommendations-cluster__HealthCheck__Active__Path=/health
+      - ReverseProxy__Clusters__notifications-cluster__HealthCheck__Active__Path=/health
+      # HealthChecks UI
+      - HealthChecksUi__HealthChecks__0__Name=User Service
+      - HealthChecksUi__HealthChecks__0__Uri=http://user-api:8080/health
+      - HealthChecksUi__HealthChecks__1__Name=Recipe Service
+      - HealthChecksUi__HealthChecks__1__Uri=http://recipe-api:8080/health
+      - HealthChecksUi__HealthChecks__2__Name=Rating Service
+      - HealthChecksUi__HealthChecks__2__Uri=http://rating-api:8080/health
+      - HealthChecksUi__HealthChecks__3__Name=Recommendation Service
+      - HealthChecksUi__HealthChecks__3__Uri=http://recommendation-api:8080/health
+      - HealthChecksUi__HealthChecks__4__Name=Notification Service
+      - HealthChecksUi__HealthChecks__4__Uri=http://notification-api:8080/health
+      # Swagger
+      - SwaggerAggregator__Services__0__Name=users-service
+      - SwaggerAggregator__Services__0__DisplayName=Users Service
+      - SwaggerAggregator__Services__0__SwaggerUrl=http://user-api:8080/swagger/v1/swagger.json
+      - SwaggerAggregator__Services__1__Name=recipe-service
+      - SwaggerAggregator__Services__1__DisplayName=Recipe Service
+      - SwaggerAggregator__Services__1__SwaggerUrl=http://recipe-api:8080/swagger/v1/swagger.json
+      - SwaggerAggregator__Services__2__Name=rating-service
+      - SwaggerAggregator__Services__2__DisplayName=Rating Service
+      - SwaggerAggregator__Services__2__SwaggerUrl=http://rating-api:8080/swagger/v1/swagger.json
+      - SwaggerAggregator__Services__3__Name=recommendation-service
+      - SwaggerAggregator__Services__3__DisplayName=Recommendation Service
+      - SwaggerAggregator__Services__3__SwaggerUrl=http://recommendation-api:8080/swagger/v1/swagger.json
+      - SwaggerAggregator__Services__4__Name=notification-service
+      - SwaggerAggregator__Services__4__DisplayName=Notification Service
+      - SwaggerAggregator__Services__4__SwaggerUrl=http://notification-api:8080/swagger/v1/swagger.json
+    ports:
+      - "6005:8080"
+    depends_on:
+      - user-api
+      - recipe-api
+      - rating-api
+      - recommendation-api
+      - notification-api
 
 volumes:
   postgres-userdb-data:

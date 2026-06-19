@@ -51,6 +51,12 @@ namespace ApiGateway.Middleware
                 return;
             }
 
+            if (path.StartsWith("/health", StringComparison.OrdinalIgnoreCase))
+            {
+                await _next(context);
+                return; 
+            }
+
             // if (path.StartsWith("", StringComparison.OrdinalIgnoreCase))
             // {
             //     await _next(context);

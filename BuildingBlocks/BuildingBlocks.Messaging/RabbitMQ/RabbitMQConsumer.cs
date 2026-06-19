@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Polly;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using System.Text;
@@ -15,6 +16,7 @@ namespace BuildingBlocks.Messaging.RabbitMQ
         private IConnection? _connection;
         private IChannel? _channel;
         private readonly JsonSerializerOptions _jsonOptions;
+        private readonly ResiliencePipeline _connectPipeline; 
 
         protected abstract string QueueName { get; }
         protected virtual ushort PrefetchCount => 1;
@@ -39,7 +41,9 @@ namespace BuildingBlocks.Messaging.RabbitMQ
 
             try
             {
-                await InitializeRabbitMQAsync(stoppingToken);
+                await _connectPipeline.ExecuteAsync(
+                    async ct => await InitializeRabbitMQAsync(ct),
+                    stoppingToken);
                 await Task.Delay(Timeout.Infinite, stoppingToken);
             }
             catch (OperationCanceledException)
@@ -48,8 +52,10 @@ namespace BuildingBlocks.Messaging.RabbitMQ
             }
             catch (Exception ex)
             {
-                Logger.LogError(ex, "Error al inicializar consumidor para cola '{Queue}'", QueueName);
-                throw;
+                Logger.LogError(ex,
+                    "Consumidor '{Queue}' falló tras todos los reintentos. " +
+                    "El servicio continúa funcionando sin este consumidor.",
+                    QueueName);
             }
         }
 

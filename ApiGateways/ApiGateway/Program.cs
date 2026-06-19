@@ -53,12 +53,12 @@ builder.Services.AddReverseProxy()
             (sender, cert, chain, errors) => true;
     });
 
-// UI Health Checks 
-// builder.Services
-//     .AddHealthChecksUI()
-//     .AddInMemoryStorage(); 
-//
-// builder.Services.AddHealthChecks(); 
+//UI Health Checks 
+ builder.Services
+     .AddHealthChecksUI()
+     .AddInMemoryStorage();
+
+builder.Services.AddHealthChecks();
 
 // rate limiting 
 builder.Services.AddGatewayRateLimiting();
@@ -120,17 +120,17 @@ app.UseRateLimiter();
 // app.UseAuthentication();
 // app.UseAuthorization();
 
-// app.MapHealthChecks("/health", new HealthCheckOptions
-// {
-//     Predicate = _=> true, 
-//     ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
-// });
+app.MapHealthChecks("/health", new HealthCheckOptions
+{
+    Predicate = _ => true,
+    ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+});
 
-// app.MapHealthChecksUI(config =>
-// {
-//     config.UIPath = "/health-ui";
-//     config.ApiPath = "/health-ui-api"; 
-// });
+app.MapHealthChecksUI(config =>
+{
+    config.UIPath = "/health-ui";
+    config.ApiPath = "/health-ui-api";
+});
 
 app.MapReverseProxy(); // Enrutamiento tambien envia el token a los servicios para que tambien lo validen 
 
