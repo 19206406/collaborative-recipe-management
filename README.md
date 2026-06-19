@@ -1,22 +1,49 @@
-# Collaborative Recipe Management API 
+# collaborative-recipe-management-api 
 
-API REST para gestionar recetas colaborativas entre usuarios autenticados. Construida con ASP.NET y microservicios. Además de que 
-cada servicio esta construido con arquitectura vertical. 
+Se trata de una API REST que se encarga de gestionar recetas colaborativas entre usuarios autenticados. Permite registro de multiples usuarios y la administracción de recetas este proyecto esta basado en una arquitectura orientada a servicios. 
 
-## Tecnologías 
-El proyecto esta construido con ASP.NET Core para la construción de las API REST de cada servicio ya que 
-es un framework de desarrollo muy potente además de que proporciona una buena estructuración a nivel de codigo y reglas de negoció
-incluyendo tambien diferentes paquetes que potencian el desarrollo con ASP.NET Core como por ejemplo Entity Framework Core, MediatR, 
-Master, JWT entre otros, cada servicio del proyecto cuenta cada uno con una base de datos diferente estableciendo 
-una caracteristica clave de la arquitectura de microservicios y los motores de bases utilizados han sido sql server y postgresql. 
+## Objectivo 
 
-## Resumen de tecnologías utilizadas 
+Permite a los usuarios crear y compartir recetas, recibir ratings y recomendaciones personalizadas, y recibir notificaciones sobre actividad en sus recetas.
 
-- C#
-- ASP.NET Core (.NET 10)
-- RabbitMQ
-- Entity Framework Core (ORM)
-- SQL Server - PostgreSQL - Redis
-- Docker - Docker Compose
+## Arquitectura 
+
+El proyecto sigue una arquitectura basada en servicios conectados entre si mediante httpClient y a traves de un broker de mensajeria como lo es RabbitMQ además en cada uno de los servicios, siguen una arquitectura de vertical Slice Arquitecture la cual le proporciona a cada uno de los servicios una flexibilidad para la escalibilidad para nuevas funcionalidades sin embargo aunque cada uno de los proyectos sigue esta arquitectura tambien cuentan con ciertas estracciones de arquitecturas como clean architecture sobre la persistencia de los datos. Sobre la persistencia de los datos en este proyecto cada uno de los servicios cuenta con su propia base de datos. Además de utilizar patrones de diseño como CQRS y Repository Pattern. 
+
+## Tecnologias 
+- .NET 10 
+- ASP.NET Core 
+- Entity Framework Core 
+- Postgres 
+- Redis 
+- RabbitMQ 
 - JWT Authentication 
+- Swagger multi-servicio 
+
+
+## Instalación 
+
+Se debe de contar previamente instalado docker-compose para ejecutar la aplicación. Y luego aplicar los siguiente comandos: 
+
+```bash 
+git clone https://github.com/19206406/collaborative-recipe-management.git 
+
+docker-compose up -d
+```
+
+Tambien se puede ejecutar el proyecto desde un IDE clonando y luego correr el docker-compose esto se puede hacer en IDES como Visual Studio o Rider. 
+
+## Documentación de la API 
+http://localhost:6005/swagger 
+
+## Desiciones Tecnicas 
+
+## Problemas Resueltos 
+
+## Mejoras futuras 
+
+## Autor 
+Sebastian Urrego Graciano 
+- GitHub: https://github.com/19206406 
+- LinkedIn: https://www.linkedin.com/feed/ 
 

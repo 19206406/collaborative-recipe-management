@@ -63,6 +63,16 @@ namespace ApiGateway.Middleware
             //     return; 
             // }
 
+            if (path.StartsWith("/swagger", StringComparison.OrdinalIgnoreCase) ||
+                path.StartsWith("/health", StringComparison.OrdinalIgnoreCase) ||
+                path.StartsWith("/ui/", StringComparison.OrdinalIgnoreCase) ||        
+                path.Equals("/favicon.ico", StringComparison.OrdinalIgnoreCase))       
+            {
+                await _next(context);
+                return;
+            }
+
+
             if (IsPublicRoute(method,path))
             {
                 await _next(context);
