@@ -20,8 +20,8 @@ namespace Notification.API.Features.Notification.MarkAsRead
             Put("/api/notifications/{id}/read");
             Summary(x =>
             {
-                x.Summary = "Marcar una notificación como leída";
-                x.Description = "Marcar una notificación como leída";
+                x.Summary = "Mark notification as read";
+                x.Description = "Marks a specific notification as read by its ID.";
             });
             Description(x => x.WithTags("Notifications")); 
         }

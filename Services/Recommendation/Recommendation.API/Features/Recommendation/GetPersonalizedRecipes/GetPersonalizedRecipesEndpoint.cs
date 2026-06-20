@@ -19,8 +19,8 @@ namespace Recommendation.API.Features.Recommendation.GetPersonalizedRecipes
             Get("api/recommendations/user/{userId}");
             Summary(x =>
             {
-                x.Summary = "Recetas personalizadas";
-                x.Description = "Obtiene recetas personalizadas para cada uno de los usuarios";
+                x.Summary = "Get personalized recommendations";
+                x.Description = "Returns a list of personalized recipe recommendations based on the user's preferences and rating history.";
             });
             Description(x => x.WithTags("Recommendations"));
             AllowAnonymous(); 

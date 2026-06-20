@@ -16,7 +16,6 @@ namespace Recipe.API.Features.Recipe.RemoveRecipe
 
         public async Task<Unit> Handle(RemoveRecipeCommand command, CancellationToken cancellationToken)
         {
-            //TODO: cambiar el GetRecipe con un repositorio que solo traiga la receta solo y no con todo y relaciones 
             var recipe = await _recipeRepository.GetRecipe(command.Id);
 
             if (recipe is null)

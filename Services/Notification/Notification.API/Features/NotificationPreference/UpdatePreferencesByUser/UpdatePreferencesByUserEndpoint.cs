@@ -21,10 +21,9 @@ namespace Notification.API.Features.NotificationPreference.UpdatePreferencesByUs
             Put("/api/notifications/preferences");
             Summary(x =>
             {
-                x.Summary = "Actualizar preferencias usuario";
-                x.Description = "Actualizar las preferencias de un usuario";
+                x.Summary = "Update notification preferences";
+                x.Description = "Updates the notification preferences of the currently authenticated user.";
             });
-
             Description(x => x.WithTags("NotificationPreferences")); 
         }
 

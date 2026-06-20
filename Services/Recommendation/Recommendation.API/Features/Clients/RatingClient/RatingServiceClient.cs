@@ -3,7 +3,6 @@ using Recommendation.API.Common.Dtos;
 
 namespace Recommendation.API.Features.Clients.RatingClient
 {
-    // TODO: Debo de verificar si los endpoints de los otros servicios si me estan retornando lo que necesito en este servicio
     public class RatingServiceClient : IRatingServiceClient
     {
         private readonly HttpClient _httpClient;

@@ -23,8 +23,8 @@ namespace Recipe.API.Features.Recipe.GetListOfRecipes
             Get("/api/recipes");
             Summary(x =>
             {
-                x.Summary = "Obtener recetas";
-                x.Description = "Obtiene todas las recetas con paginación y filtros incluidos";
+                x.Summary = "Get recipes";
+                x.Description = "Returns a paginated list of all recipes. Supports filtering by multiple criteria.";
             });
             Description(x => x.WithTags("Recipes"));
             AllowAnonymous(); 

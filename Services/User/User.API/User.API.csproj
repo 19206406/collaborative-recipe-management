@@ -10,10 +10,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="util.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="AspNetCore.HealthChecks.NpgSql" Version="9.0.0" />
     <PackageReference Include="AspNetCore.HealthChecks.UI.Client" Version="9.0.0" />
     <PackageReference Include="FastEndpoints" Version="7.2.0" />
@@ -39,10 +35,6 @@
 
   <ItemGroup>
     <Folder Include="Common\Database\Migrations\" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="util.cs" />
   </ItemGroup>
 
 </Project>

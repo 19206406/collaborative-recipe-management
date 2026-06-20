@@ -19,9 +19,9 @@ namespace Notification.API.Features.Notification.GetNotificationsByUser
             Get("/api/notifications");
             Summary(x =>
             {
-                x.Summary = "Obtener las notificaciones de un usuario";
-                x.Description = "Obtener las notificaciones de un usuario por medio de su id";
-            }); 
+                x.Summary = "Get user notifications";
+                x.Description = "Returns all notifications for the currently authenticated user.";
+            });
             Description(x => x.WithTags("Notifications"));
         }
 

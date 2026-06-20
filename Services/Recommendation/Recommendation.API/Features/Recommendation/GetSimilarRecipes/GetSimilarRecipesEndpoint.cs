@@ -20,8 +20,8 @@ namespace Recommendation.API.Features.Recommendation.GetSimilarRecipes
             Get("api/recommendations/similar/{recipeId}");
             Summary(x =>
             {
-                x.Summary = "Recetas similares";
-                x.Description = "Obtiene recetas similares dado una receta que le guste al usuario";
+                x.Summary = "Get similar recipes";
+                x.Description = "Returns a list of recipes similar to the specified recipe, based on shared tags, ingredients, or category.";
             });
             Description(x => x.WithTags("Recommendations"));
             AllowAnonymous(); 

@@ -72,9 +72,6 @@ namespace Rating.API.Features.Rating.CreateAndUpdateRating
                 if (rating is not null)
                     throw new InvalidOperationException("No puedes ejecutar esta acción de nuevo");
 
-                // TODO: Implementar cambios de clients entre otros cuando se guarde en db 
-                // Lo mismo que lo anterior necesitamos que los cambios esten sincronizados con los cambios 
-                // en db pero buscare hacer esto luego despues de que todo este bien y funcionando
                 var notification = await _notificationClient.CreateNewNotificationAsync
                     (new CreateNotificationRequest(command.RecipeId, command.Rating, command.UserId));
 

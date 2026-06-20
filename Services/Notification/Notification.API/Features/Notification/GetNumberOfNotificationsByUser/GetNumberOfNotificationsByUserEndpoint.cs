@@ -18,8 +18,8 @@ namespace Notification.API.Features.Notification.GetNumberOfNotificationsByUser
             Get("/api/notifications/without-reading");
             Summary(x =>
             {
-                x.Summary = "Obtener las notificaciones de un usuario sin leer";
-                x.Description = "Obtener las notificaciones de un usuario sin leer";
+                x.Summary = "Get unread notifications";
+                x.Description = "Returns all unread notifications for the currently authenticated user.";
             });
             Description(x => x.WithTags("Notifications"));
         }

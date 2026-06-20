@@ -20,9 +20,9 @@ namespace User.API.Features.User.UpdateUser
             Put("/api/users/profile");
             Summary(s =>
             {
-                s.Summary = "Actualizar un usuario";
-                s.Description = "Actualizar la información basica de un usuario";
-            }); 
+                s.Summary = "Update user profile";
+                s.Description = "Updates the basic information of the currently authenticated user.";
+            });
             Description(x => x.WithTags("Users")); 
         }
 

@@ -17,8 +17,8 @@ namespace Recipe.API.Features.Recipe.GetTopRecipes
             Get("/api/recipes/trending");
             Summary(x =>
             {
-                x.Summary = "Recetas trending"; 
-                x.Description = "Recetas trending"; 
+                x.Summary = "Get trending recipes";
+                x.Description = "Returns the most popular recipes based on ratings and recent activity.";
             });
             Description(x => x.WithTags("Recipes"));
             AllowAnonymous(); 

@@ -20,11 +20,11 @@ namespace User.API.Features.User.RegisterUser
             Post("/api/users/register");
             Summary(s =>
             {
-                s.Summary = "Registro de un nuevo usuario";
-                s.Description = "Registro de un nuevo usuario";
+                s.Summary = "Register a new user";
+                s.Description = "Creates a new user account in the system.";
             });
             Description(x => x.WithTags("Users"));
-            AllowAnonymous(); 
+            AllowAnonymous();
         }
 
         public override async Task HandleAsync(RegisterUserRequest req, CancellationToken ct)

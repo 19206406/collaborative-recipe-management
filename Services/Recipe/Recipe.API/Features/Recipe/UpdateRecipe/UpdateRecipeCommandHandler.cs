@@ -64,9 +64,8 @@ namespace Recipe.API.Features.Recipe.UpdateRecipe
         private async Task<CollectionSummary> ReplaceIngredientsAsync(UpdateRecipeCommand command)
         {
             var existing = await _ingredientRepository.GetIngredientsByIdRecipeAsync(command.Id);
-            // ingredientes para actualizar ya que son los que tienen ids en su estructura 
             var incomingIds = command.Ingredients
-                .Where(i => i.Id.HasValue) // solo se puede utilizar HasValue cuando la propiedad es nullable
+                .Where(i => i.Id.HasValue) 
                 .Select(i => i.Id!.Value)
                 .ToHashSet();
 
@@ -75,7 +74,6 @@ namespace Recipe.API.Features.Recipe.UpdateRecipe
             foreach (var item in toDelete)
                 await _ingredientRepository.DeleteIngredientAsync(item.Id);
 
-            // TODO: Implementar el CollectionSummary 
             int created = 0;
             int updated = 0; 
 

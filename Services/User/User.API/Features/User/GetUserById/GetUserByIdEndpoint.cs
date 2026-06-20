@@ -18,8 +18,8 @@ namespace User.API.Features.User.GetUserById
             Get("api/users/{id}/basic");
             Summary(x =>
             {
-                x.Summary = "Obtener información basica de usuario";
-                x.Summary = "Obtener información basica de usuario para el consumo de otros servicios de la aplicación";
+                x.Summary = "Get basic user information";
+                x.Description = "Returns basic user information intended for internal consumption by other services within the application.";
             });
             Description(x => x.WithTags("Users"));
             AllowAnonymous(); 

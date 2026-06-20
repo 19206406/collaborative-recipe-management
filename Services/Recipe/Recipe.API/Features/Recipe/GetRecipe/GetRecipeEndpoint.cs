@@ -21,8 +21,8 @@ namespace Recipe.API.Features.Recipe.GetRecipe
             Get(Route);
             Summary(x =>
             {
-                x.Summary = "Obtener una receta";
-                x.Description = "Obtener una receta con detalles";
+                x.Summary = "Get recipe with details";
+                x.Description = "Returns a single recipe with its full details, including steps, ingredients, tags, and ratings.";
             });
             Description(x => x.WithTags("Recipes"));
             AllowAnonymous(); 

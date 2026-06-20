@@ -22,10 +22,9 @@ namespace User.API.Features.UserPreference.AddPreferencesToUser
             Post("/api/users/{id}/preferences");
             Summary(x =>
             {
-                x.Summary = "Agregar preferencias";
-                x.Description = "Agrega preferencias a un usuario todos las preferencias " +
-                "son nuevas para dicho usuario esta acción no permite actualizar";
-            }); 
+                x.Summary = "Add user preferences";
+                x.Description = "Adds new preferences to a user. All preferences provided must be new for the given user. This action does not update existing preferences.";
+            });
             Description(x => x.WithTags("UserPreferences")); 
         }
 

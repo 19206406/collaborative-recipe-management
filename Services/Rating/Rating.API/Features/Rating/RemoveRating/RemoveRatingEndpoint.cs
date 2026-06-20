@@ -26,8 +26,8 @@ namespace Rating.API.Features.Rating.RemoveRating
             Delete("api/ratings/{id}");
             Summary(x =>
             {
-                x.Summary = "Elimina una calificación existente.";
-                x.Description = "Elimina una calificación existente. Requiere autenticación.";
+                x.Summary = "Delete a rating";
+                x.Description = "Permanently deletes an existing rating. Requires authentication.";
             });
             Description(x => x.WithTags("Ratings")); 
         }

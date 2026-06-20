@@ -24,8 +24,8 @@ namespace Recipe.API.Features.Recipe.CreateRecipe
             Post("/api/recipes");
             Summary(x =>
             {
-                x.Summary = "Crear receta";
-                x.Description = "Crear receta con todas sus relaciones ('pasos', ingredientes, tags')";
+                x.Summary = "Create recipe";
+                x.Description = "Creates a new recipe along with all its related data, including steps, ingredients, and tags.";
             });
             Description(x => x.WithTags("Recipes")); 
         }

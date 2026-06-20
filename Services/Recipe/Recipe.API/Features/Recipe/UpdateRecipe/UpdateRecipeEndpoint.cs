@@ -25,8 +25,8 @@ namespace Recipe.API.Features.Recipe.UpdateRecipe
             Put("/api/recipes/{id}");
             Summary(x =>
             {
-                x.Summary = "Actualizar una receta";
-                x.Description = "Actualizar una receta con todas sus relaciones";
+                x.Summary = "Update recipe";
+                x.Description = "Updates a recipe along with all its related data, including steps, ingredients, and tags.";
             });
             Description(x => x.WithTags("Recipes")); 
         }

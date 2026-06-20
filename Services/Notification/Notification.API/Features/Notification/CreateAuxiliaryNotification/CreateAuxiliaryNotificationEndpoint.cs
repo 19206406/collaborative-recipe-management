@@ -19,8 +19,8 @@ namespace Notification.API.Features.Notification.CreateAuxiliaryNotification
             Post("/api/notifications");
             Summary(x =>
             {
-                x.Summary = "Crear una notificación";
-                x.Description = "Crea una notificación de prueba para testear el funcionamiento de los demás endpoints de este servicio";
+                x.Summary = "Create a test notification";
+                x.Description = "Creates a test notification for development and testing purposes.";
             });
             Description(x => x.WithTags("Notifications"));
             AllowAnonymous(); 

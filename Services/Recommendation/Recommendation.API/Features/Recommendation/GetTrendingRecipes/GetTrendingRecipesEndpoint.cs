@@ -18,8 +18,8 @@ namespace Recommendation.API.Features.Recommendation.GetTrendingRecipes
             Get("/api/recommendations/trending");
             Summary(x =>
             {
-                x.Summary = "obtener top recetas";
-                x.Description = "Obtener las 20 recetas con mayor trending";
+                x.Summary = "Get top trending recipes";
+                x.Description = "Returns the top 20 recipes with the highest trending score based on recent ratings and activity.";
             });
             Description(x => x.WithTags("Recommendations"));
             AllowAnonymous(); 

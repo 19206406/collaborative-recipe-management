@@ -104,9 +104,9 @@ app.UseSwaggerUI(c =>
         );
     }
 
-    c.RoutePrefix = "swagger"; // Accesible en /swagger
+    c.RoutePrefix = "swagger"; 
     c.DocumentTitle = "Microservicios - API Docs";
-    c.DefaultModelsExpandDepth(-1); // Oculta los schemas por defecto (más limpio)
+    c.DefaultModelsExpandDepth(-1);
 });
 app.UseMiddleware<GatewayJwtMiddleware>();
 
@@ -132,6 +132,6 @@ app.MapHealthChecksUI(config =>
     config.ApiPath = "/health-ui-api";
 });
 
-app.MapReverseProxy(); // Enrutamiento tambien envia el token a los servicios para que tambien lo validen 
+app.MapReverseProxy(); 
 
 app.Run();

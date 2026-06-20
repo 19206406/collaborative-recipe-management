@@ -19,11 +19,11 @@ namespace User.API.Features.User.LoginUser
             Post("/api/users/login");
             Summary(s =>
             {
-                s.Summary = "Login del usuario";
-                s.Description = "Login del usuario para el ingreso al sistema";
+                s.Summary = "User login";
+                s.Description = "Authenticates a user and returns a JWT token to access protected resources.";
             });
             Description(x => x.WithTags("Users"));
-            AllowAnonymous(); 
+            AllowAnonymous();
         }
 
         public override async Task HandleAsync(LoginUserRequest req, CancellationToken ct)

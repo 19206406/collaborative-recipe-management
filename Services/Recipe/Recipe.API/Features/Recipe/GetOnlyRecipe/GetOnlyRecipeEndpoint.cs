@@ -18,8 +18,8 @@ namespace Recipe.API.Features.Recipe.GetOnlyRecipe
             Get("/api/recipes/get-only-recipe/{Id}");
             Summary(x =>
             {
-                x.Summary = "Obtener solo la receta";
-                x.Description = "Obtener solo una receta teniendo solo la información basica";
+                x.Summary = "Get recipe (basic)";
+                x.Description = "Returns a single recipe with only its basic information, without related data such as steps or ingredients.";
             });
             Description(x => x.WithTags("Recipes"));
             AllowAnonymous(); 

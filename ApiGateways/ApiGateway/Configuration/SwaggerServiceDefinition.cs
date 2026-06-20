@@ -11,7 +11,7 @@
     {
         public const string Section = "SwaggerAggregator";
         
-        // este elemento nos ayuda que el swagger del microservicio 
+        // este campo nos ayuda que el swagger del microservicio 
         // apunte a la direccion del api-gateway y no al servicio en concreto
         public string? GatewayPublicUrl { get; set; }
 

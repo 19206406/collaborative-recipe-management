@@ -20,8 +20,8 @@ namespace User.API.Features.UserPreference.UpdatePreferencesToUser
             Put("/api/users/{id}/preferences");
             Summary(x =>
             {
-                x.Summary = "Actualizar preferencias de usuario";
-                x.Description = "Actualizar las preferencias de usuario actualiza, agrega y elimina las preferencias especificadas";
+                x.Summary = "Update user preferences";
+                x.Description = "Updates the user's preferences. This action adds, updates, and removes preferences based on the provided list.";
             });
             Description(x => x.WithTags("UserPreferences")); 
         }

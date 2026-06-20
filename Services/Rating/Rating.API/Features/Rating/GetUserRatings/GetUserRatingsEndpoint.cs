@@ -19,8 +19,8 @@ namespace Rating.API.Features.Rating.GetUserRatings
             Get("/api/ratings/user/{userId}");
             Summary(x =>
             {
-                x.Summary = "Obtiene las calificaciones realizadas por un usuario específico.";
-                x.Description = "Devuelve una lista de calificaciones realizadas por el usuario identificado por su ID.";
+                x.Summary = "Get ratings by user";
+                x.Description = "Returns a list of all ratings submitted by a specific user.";
             });
             Description(x => x.WithTags("Ratings"));
             AllowAnonymous(); 

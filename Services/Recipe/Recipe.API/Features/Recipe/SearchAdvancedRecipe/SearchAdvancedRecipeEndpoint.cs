@@ -19,8 +19,8 @@ namespace Recipe.API.Features.Recipe.SearchAdvancedRecipe
             Get("api/recipes/search");
             Summary(x =>
             {
-                x.Summary = "Búsqueda avanzada de recetas";
-                x.Description = "Permite buscar recetas utilizando múltiples filtros avanzados";
+                x.Summary = "Advanced recipe search";
+                x.Description = "Searches for recipes using multiple advanced filters such as name, tags, ingredients, and more.";
             });
             Description(x => x.WithTags("Recipes"));
             AllowAnonymous(); 

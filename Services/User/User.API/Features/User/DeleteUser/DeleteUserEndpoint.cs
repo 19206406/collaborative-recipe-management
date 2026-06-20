@@ -21,8 +21,8 @@ namespace User.API.Features.User.DeleteUser
             Delete("/api/users/{id}");
             Summary(s =>
             {
-                s.Summary = "Eliminar usuario del sistema";
-                s.Description = "Eliminar usuario del sistema";
+                s.Summary = "Delete user";
+                s.Description = "Permanently removes a user account from the system. Requires authentication.";
             });
             Description(x => x.WithTags("Users"));
         }

@@ -22,11 +22,10 @@ namespace User.API.Features.User.GetUser
             Get("api/users/profile");
             Summary(s =>
             {
-                s.Summary = "Obtener usuario autenticado";
-                s.Description = "Obtener usuario autenticado";
+                s.Summary = "Get authenticated user";
+                s.Description = "Returns the profile information of the currently authenticated user based on the provided JWT token.";
             });
             Description(x => x.WithTags("Users"));
-            //AllowAnonymous(); 
         }
 
         public override async Task HandleAsync(CancellationToken ct)

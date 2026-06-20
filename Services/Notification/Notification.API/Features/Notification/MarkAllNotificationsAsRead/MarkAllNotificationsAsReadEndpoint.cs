@@ -18,8 +18,8 @@ namespace Notification.API.Features.Notification.MarkAllNotificationsAsRead
             Put("/api/notifications/read-all");
             Summary(x =>
             {
-                x.Summary = "Marcar todas las notificaciones como leidas.";
-                x.Description = "Marcar todas las notificaciones como leidas.";
+                x.Summary = "Mark all notifications as read";
+                x.Description = "Marks all notifications of the currently authenticated user as read.";
             });
             Description(x => x.WithTags("Notifications")); 
         }

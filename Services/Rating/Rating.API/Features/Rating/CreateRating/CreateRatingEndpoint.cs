@@ -20,8 +20,8 @@ namespace Rating.API.Features.Rating.CreateRating
             Post("api/ratings/only");
             Summary(x =>
             {
-                x.Summary = "Crear y actualizar una recomendación";
-                x.Description = "Crea una nueva recomendación para una receta específica. Si el usuario ya ha calificado la receta, se actualizará la calificación existente.";
+                x.Summary = "Create a rating (standalone)";
+                x.Description = "Creates a rating for a specific recipe without triggering any additional side effects such as recommendation updates.";
             });
             Description(x => x.WithTags("Ratings")); 
         }

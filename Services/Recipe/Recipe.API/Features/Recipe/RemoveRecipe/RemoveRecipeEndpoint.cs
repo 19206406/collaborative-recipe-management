@@ -19,8 +19,8 @@ namespace Recipe.API.Features.Recipe.RemoveRecipe
             Delete("/api/recipes/{id}");
             Summary(x =>
             {
-                x.Summary = "Eliminar receta";
-                x.Description = "Elimina una receta de un usuario pero solo lo podra eliminar el usuario que lo creo";
+                x.Summary = "Delete recipe";
+                x.Description = "Permanently deletes a recipe. Only the user who created the recipe is authorized to perform this action.";
             });
             Description(x => x.WithTags("Recipes")); 
         }

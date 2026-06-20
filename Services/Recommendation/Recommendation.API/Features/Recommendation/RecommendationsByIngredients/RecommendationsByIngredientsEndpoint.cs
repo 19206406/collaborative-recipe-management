@@ -21,8 +21,8 @@ namespace Recommendation.API.Features.Recommendation.RecommendationsByIngredient
             Post("/api/recommendations/by-ingredients");
             Summary(x =>
             {
-                x.Summary = "Recomendaciones de recetas";
-                x.Description = "Recomienda recetas por medio de una lista de ingredientes además trae las recetas que tengan un cierto porcentaje de match";
+                x.Summary = "Get recipe recommendations by ingredients";
+                x.Description = "Returns recipe recommendations based on a provided list of ingredients. Only recipes that meet a minimum match percentage are included in the results.";
             });
             Description(x => x.WithTags("Recommendations"));
             AllowAnonymous(); 

@@ -18,8 +18,8 @@ namespace Rating.API.Features.Rating.GetRecipeRatings
             Get("/api/ratings/recipe/{recipeId}");
             Summary(x =>
             {
-                x.Summary = "Obtiene las calificaciones de una receta específica.";
-                x.Description = "Devuelve una lista de calificaciones para la receta indicada por su ID.";
+                x.Summary = "Get all ratings for a recipe";
+                x.Description = "Returns a list of all ratings submitted for a specific recipe.";
             });
             Description(x => x.WithTags("Ratings"));
             AllowAnonymous(); 

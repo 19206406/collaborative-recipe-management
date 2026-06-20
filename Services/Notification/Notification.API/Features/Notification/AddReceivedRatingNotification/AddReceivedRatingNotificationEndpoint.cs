@@ -19,8 +19,8 @@ namespace Notification.API.Features.Notification.AddReceivedRatingNotification
             Post("/api/notifications/rating-received");
             Summary(x =>
             {
-                x.Summary = "Uso interno para el servicio de rating";
-                x.Description = "Crea una nueva notificación con información del servicio de rating";
+                x.Summary = "Receive rating notification (internal)";
+                x.Description = "Internal endpoint used by the Rating Service to create a notification when a recipe receives a new rating.";
             });
             Description(x => x.WithTags("Notifications"));
             AllowAnonymous(); 

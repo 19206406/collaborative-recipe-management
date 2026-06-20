@@ -19,8 +19,8 @@ namespace Rating.API.Features.Rating.GetAEspecificRating
             Get("/api/ratings/user/{userId}/recipe/{recipeId}");
             Summary(x =>
             {
-                x.Summary = "Obtiene la calificación específica de un usuario para una receta.";
-                x.Description = "Permite obtener la calificación que un usuario ha dado a una receta específica.";
+                x.Summary = "Get user rating for a recipe";
+                x.Description = "Returns the rating that a specific user has given to a specific recipe.";
             });
             Description(x => x.WithTags("Ratings"));
             AllowAnonymous(); 

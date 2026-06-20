@@ -18,9 +18,9 @@ namespace Recipe.API.Features.Recipe.UpdateRecipeRating
             Put("/api/recipes/{id}/rating");
             Summary(x =>
             {
-                x.Summary = "Actualizar el rating de una receta";
-                x.Description = "Permite actualizar rating para la calificación interna de las recetas";
-            }); 
+                x.Summary = "Update recipe internal rating";
+                x.Description = "Updates the internal rating score of a recipe. This endpoint is used to sync the recipe's cached rating value.";
+            });
             Description(x => x.WithTags("Recipes"));
             AllowAnonymous(); 
         }

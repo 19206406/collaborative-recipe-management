@@ -18,8 +18,8 @@ namespace Notification.API.Features.NotificationPreference.GetPreferencesByUser
             Get("/api/notifications/preferences");
             Summary(x =>
             {
-                x.Summary = "Obtener preferencias de un usuario.";
-                x.Description = "Obtener preferencias de un usuario por medio de su id.";
+                x.Summary = "Get notification preferences";
+                x.Description = "Returns the notification preferences of the currently authenticated user.";
             });
             Description(x => x.WithTags("NotificationPreferences"));
         }

@@ -21,8 +21,8 @@ namespace User.API.Features.UserPreference.GetUserPreferences
             Get(Route);
             Summary(x =>
             {
-                x.Summary = "Obtener un usuario con sus preferencias";
-                x.Description = "Obtener un usuario con sus preferencias";
+                x.Summary = "Get user with preferences";
+                x.Description = "Returns a user along with their associated preferences.";
             });
             Description(x => x.WithTags("UserPreferences"));
             AllowAnonymous(); 

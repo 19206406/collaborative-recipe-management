@@ -18,8 +18,8 @@ namespace Recipe.API.Features.Recipe.GetRecipesByIngredients
             Get("/api/recipes/by-ingredients");
             Summary(x =>
             {
-                x.Summary = "Obtener recetas";
-                x.Description = "Obtener recetas por medio de una lista de ingredientes";
+                x.Summary = "Get recipes by ingredients";
+                x.Description = "Returns a list of recipes that match a provided list of ingredients.";
             });
             Description(x => x.WithTags("Recipes"));
             AllowAnonymous(); 

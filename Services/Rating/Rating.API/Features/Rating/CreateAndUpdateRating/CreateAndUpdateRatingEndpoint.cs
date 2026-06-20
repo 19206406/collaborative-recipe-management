@@ -25,8 +25,8 @@ namespace Rating.API.Features.Rating.CreateAndUpdateRating
             Post("api/ratings");
             Summary(x =>
             {
-                x.Summary = "Crear o actualizar una calificación";
-                x.Description = "Permite crear o actualizar una calificación para una receta específica.";
+                x.Summary = "Create or update a rating";
+                x.Description = "Creates a new rating for a specific recipe. If the user has already rated the recipe, the existing rating will be updated.";
             });
             Description(x => x.WithTags("Ratings"));
         }

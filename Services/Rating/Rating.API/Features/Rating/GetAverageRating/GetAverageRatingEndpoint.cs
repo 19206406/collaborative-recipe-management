@@ -18,10 +18,9 @@ namespace Rating.API.Features.Rating.GetAverageRating
             Get("api/ratings/recipe/{RecipeId}/average");
             Summary(x =>
             {
-                x.Summary = "Obtiene el promedio de calificaciones para una receta específica.";
-                x.Description = "Devuelve el promedio de calificaciones para la receta identificada por RecipeId.";
+                x.Summary = "Get average rating for a recipe";
+                x.Description = "Returns the average rating score for the recipe identified by the provided ID.";
             });
-
             Description(x => x.WithTags("Ratings"));
             AllowAnonymous(); 
         }
