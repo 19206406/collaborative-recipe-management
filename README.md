@@ -8,8 +8,6 @@ Permite a los usuarios crear y compartir recetas, recibir calificaciones y recom
 
 ## Arquitectura
 
-## Arquitectura del sistema
-
 ```mermaid
 graph TD
     Client["Cliente"]
