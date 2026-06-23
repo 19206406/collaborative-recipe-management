@@ -8,6 +8,45 @@ Permite a los usuarios crear y compartir recetas, recibir calificaciones y recom
 
 ## Arquitectura
 
+## Arquitectura del sistema
+
+```mermaid
+graph TD
+    Client["Cliente"]
+    GW["API Gateway (YARP)"]
+
+    US["User Service"]
+    RS["Recipe Service"]
+    RTS["Rating Service"]
+    RCS["Recommendation Service"]
+    NS["Notification Service"]
+
+    MQ["RabbitMQ"]
+
+    UDB[("PostgreSQL\nuserdb")]
+    RDB[("PostgreSQL\nrecipedb")]
+    RTDB[("PostgreSQL\nratingdb")]
+    NDB[("PostgreSQL\nnotifdb")]
+    RCDB[("PostgreSQL\nrecommenddb")]
+
+    Client --> GW
+
+    GW --> US
+    GW --> RS
+    GW --> RTS
+    GW --> RCS
+    GW --> NS
+
+    US --- UDB
+    RS --- RDB
+    RTS --- RTDB
+    NS --- NDB
+    RCS --- RCDB
+
+    RTS -- "Publica eventos" --> MQ
+    MQ -- "Escucha eventos" --> RS
+```
+
 El proyecto sigue una arquitectura basada en servicios conectados entre sí mediante HttpClient y a través de un broker de mensajería como lo es RabbitMQ. Además, cada uno de los servicios sigue una arquitectura de Vertical Slice, la cual le proporciona flexibilidad y escalabilidad para nuevas funcionalidades. Sin embargo, aunque cada servicio sigue esta arquitectura, también cuentan con ciertas abstracciones propias de Clean Architecture, principalmente sobre la capa de persistencia de datos. Cada servicio cuenta con su propia base de datos y hace uso de patrones de diseño como CQRS y Repository Pattern.
 
 ## Tecnologías
